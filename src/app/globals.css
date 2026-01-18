@@ -1,7 +1,17 @@
 @import 'tailwindcss';
 
 @theme {
+  --color-blue-50: #eff6ff;
+  --color-blue-100: #bfdbfe;
   --color-blue-300: #596e83;
+  --color-blue-500: #111184;
+  --color-blue-700: #1d4ed8;
+
+  --color-green-100: #dcfce7;
+  --color-green-500: #1ea382;
+  --color-green-700: #047857;
+
+  --color-rose-50: #eae0df;
 }
 
 @layer utilities {

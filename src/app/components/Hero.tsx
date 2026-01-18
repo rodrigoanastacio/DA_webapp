@@ -7,14 +7,14 @@ export const Hero = () => {
       <div className="container mx-auto flex flex-col items-center justify-center gap-6 px-4 md:flex-row md:justify-between md:items-start md:h-full">
         {/* Headline */}
         <div className="w-full z-10 py-10 md:py-20 md:w-1/2 md:flex-none">
-          <p className="inline-flex items-center px-4 py-1 mb-1 text-sm font-semibold text-blue-700 bg-blue-50 border border-blue-100 rounded-full">
+          <p className="inline-flex items-center px-4 py-1 mb-2 text-sm font-semibold text-blue-300 bg-blue-50 border border-blue-100 rounded-full">
             Gestão e Assessoria Virtual
           </p>
-          <h1 className="mb-2 text-3xl font-extrabold text-slate-900 md:text-4xl lg:text-5xl">
+          <h1 className="mb-4 text-3xl font-extrabold text-gray-600 md:text-4xl lg:text-5xl">
             Assessoria Virtual para Advogados que Precisam de{' '}
             <strong>Organização</strong> e <strong>Gestão</strong>
           </h1>
-          <p className="mb-8 text-lg text-slate-600 md:text-xl max-w-lg">
+          <p className="mb-8 text-lg text-gray-400 md:text-xl max-w-lg">
             Assessoria especializada para advogados que já faturam bem, mas
             estão sobrecarregados com rotinas, desorganização e falta de
             processos eficientes.
@@ -23,7 +23,7 @@ export const Hero = () => {
           <div className="flex gap-4">
             <Link
               href="/diagnostico-de-gestao"
-              className="inline-flex items-center justify-center px-6 py-3 text-base font-bold text-white transition-colors duration-200 bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              className="inline-flex items-center justify-center px-6 py-3 text-base font-bold text-white transition-colors duration-200 bg-gray-500 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
             >
               Quero organizar meu escritório
             </Link>
