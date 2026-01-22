@@ -60,8 +60,6 @@ export default function DiagnosticWizard() {
     const isValid = await methods.trigger(fieldsToValidate)
     if (isValid) {
       if (currentStep === 5) {
-        // Final Submission (Mock)
-        alert('Diagnóstico enviado com sucesso! (Dados no console)')
         console.log('Form Data:', methods.getValues())
         return
       }
@@ -157,12 +155,12 @@ export default function DiagnosticWizard() {
                   <button
                     type="button"
                     onClick={nextStep}
-                    className="inline-flex min-w-[160px] h-11 items-center justify-center rounded-lg px-4 bg-blue-700 hover:bg-blue-600 transition-colors text-white text-sm font-bold shadow-lg shadow-blue-700/20"
+                    className="inline-flex min-w-[160px] h-11 items-center justify-center rounded-lg px-4 bg-blue-700 hover:bg-blue-600 transition-colors text-white text-sm font-bold shadow-lg shadow-blue-700/20 gap-2 cursor-pointer"
                   >
                     {currentStep === 5 ? (
                       <>
                         Enviar Diagnóstico
-                        <span className="material-symbols-outlined text-[20px] ml-2">
+                        <span className="material-symbols-outlined text-[20px] leading-none">
                           send
                         </span>
                       </>
@@ -171,8 +169,8 @@ export default function DiagnosticWizard() {
                         {STEPS[currentStep].nextLabel.includes('Finalização')
                           ? 'Ir para Finalização'
                           : 'Próxima Etapa'}
-                        <span className="material-symbols-outlined text-[20px] ml-2">
-                          →
+                        <span className="material-symbols-outlined text-[20px] leading-none">
+                          arrow_forward
                         </span>
                       </>
                     )}
