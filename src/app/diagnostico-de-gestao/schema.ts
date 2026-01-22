@@ -31,7 +31,15 @@ export const diagnosticSchema = z.object({
   // Step 5: Financial Moment
   revenue: z
     .string({ message: 'Selecione a faixa de faturamento' })
-    .min(1, 'Selecione a faixa de faturamento')
+    .min(1, 'Selecione a faixa de faturamento'),
+
+  // Step 6: Finalization
+  expectativas: z
+    .string({ message: 'Descreva suas expectativas' })
+    .min(10, 'Faça uma breve descrição das expectativas'),
+  investment: z
+    .string({ message: 'Selecione uma opção de investimento' })
+    .min(1, 'Selecione uma opção de investimento')
 })
 
 export type DiagnosticFormData = z.infer<typeof diagnosticSchema>

@@ -9,6 +9,7 @@ import { Step2ProfessionalProfile } from './steps/Step2ProfessionalProfile'
 import { Step3Structure } from './steps/Step3Structure'
 import { Step4Challenges } from './steps/Step4Challenges'
 import { Step5Financial } from './steps/Step5Financial'
+import { Step6Final } from './steps/Step6Final'
 
 const STEPS = [
   { id: 0, label: 'Etapa 1 de 6', nextLabel: 'Próximo: Perfil Profissional' },
@@ -19,7 +20,12 @@ const STEPS = [
   },
   { id: 2, label: 'Etapa 3 de 6', nextLabel: 'Próximo: Dificuldades Atuais' },
   { id: 3, label: 'Etapa 4 de 6', nextLabel: 'Próximo: Momento Financeiro' },
-  { id: 4, label: 'Etapa 5 de 6', nextLabel: 'Próximo: Resultado Final' }
+  {
+    id: 4,
+    label: 'Etapa 5 de 6',
+    nextLabel: 'Próximo: Intenção e Expectativas'
+  },
+  { id: 5, label: 'Etapa 6 de 6', nextLabel: 'Finalização' }
   // Add more steps as needed
 ]
 
@@ -47,10 +53,19 @@ export default function DiagnosticWizard() {
       fieldsToValidate = ['dificuldades']
     } else if (currentStep === 4) {
       fieldsToValidate = ['revenue']
+    } else if (currentStep === 5) {
+      fieldsToValidate = ['expectativas', 'investment']
     }
 
     const isValid = await methods.trigger(fieldsToValidate)
     if (isValid) {
+      if (currentStep === 5) {
+        // Final Submission (Mock)
+        alert('Diagnóstico enviado com sucesso! (Dados no console)')
+        console.log('Form Data:', methods.getValues())
+        return
+      }
+
       setCurrentStep((prev) => prev + 1)
       window.scrollTo({ top: 0, behavior: 'smooth' })
     }
@@ -72,6 +87,8 @@ export default function DiagnosticWizard() {
         return <Step4Challenges />
       case 4:
         return <Step5Financial />
+      case 5:
+        return <Step6Final />
       default:
         return null
     }
@@ -86,12 +103,25 @@ export default function DiagnosticWizard() {
         {/* Header with Progress */}
         <div className="mb-6 px-4 flex flex-col gap-2">
           <div className="flex items-center justify-between">
-            <p className="text-blue-700 text-sm font-bold uppercase tracking-wider">
-              {currentStepData.label}
-            </p>
-            <span className="text-blue-700 text-xs font-medium">
-              {currentStepData.nextLabel}
-            </span>
+            {currentStep === 5 ? (
+              <div className="flex items-center gap-2">
+                <p className="text-blue-700 text-sm font-bold uppercase tracking-wider">
+                  Etapa 6 de 6
+                </p>
+                <span className="inline-flex items-center rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
+                  100% Completo
+                </span>
+              </div>
+            ) : (
+              <div className="flex items-center justify-between w-full">
+                <p className="text-blue-700 text-sm font-bold uppercase tracking-wider">
+                  {currentStepData.label}
+                </p>
+                <span className="text-blue-700 text-xs font-medium">
+                  {currentStepData.nextLabel}
+                </span>
+              </div>
+            )}
           </div>
           <div className="h-2 w-full rounded-full bg-blue-100 overflow-hidden">
             <div
@@ -99,6 +129,11 @@ export default function DiagnosticWizard() {
               style={{ width: `${progressPercentage}%` }}
             />
           </div>
+          {currentStep === 5 && (
+            <p className="text-blue-300 text-xs font-medium">
+              Finalização e Envio
+            </p>
+          )}
         </div>
 
         {/* Card Container */}
@@ -124,10 +159,23 @@ export default function DiagnosticWizard() {
                     onClick={nextStep}
                     className="inline-flex min-w-[160px] h-11 items-center justify-center rounded-lg px-4 bg-blue-700 hover:bg-blue-600 transition-colors text-white text-sm font-bold shadow-lg shadow-blue-700/20"
                   >
-                    {currentStep === 5 ? 'Finalizar' : 'Próxima Etapa'}
-                    <span className="material-symbols-outlined text-[20px] ml-2">
-                      →
-                    </span>
+                    {currentStep === 5 ? (
+                      <>
+                        Enviar Diagnóstico
+                        <span className="material-symbols-outlined text-[20px] ml-2">
+                          send
+                        </span>
+                      </>
+                    ) : (
+                      <>
+                        {STEPS[currentStep].nextLabel.includes('Finalização')
+                          ? 'Ir para Finalização'
+                          : 'Próxima Etapa'}
+                        <span className="material-symbols-outlined text-[20px] ml-2">
+                          →
+                        </span>
+                      </>
+                    )}
                   </button>
                 </div>
               </form>
