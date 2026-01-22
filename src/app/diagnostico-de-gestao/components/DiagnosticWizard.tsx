@@ -7,6 +7,7 @@ import { DiagnosticFormData, diagnosticSchema } from '../schema'
 import { Step1Introduction } from './steps/Step1Introduction'
 import { Step2ProfessionalProfile } from './steps/Step2ProfessionalProfile'
 import { Step3Structure } from './steps/Step3Structure'
+import { Step4Challenges } from './steps/Step4Challenges'
 
 const STEPS = [
   { id: 0, label: 'Etapa 1 de 6', nextLabel: 'Próximo: Perfil Profissional' },
@@ -15,7 +16,8 @@ const STEPS = [
     label: 'Etapa 2 de 6',
     nextLabel: 'Próximo: Estrutura do Escritório'
   },
-  { id: 2, label: 'Etapa 3 de 6', nextLabel: 'Próximo: Desafios Financeiros' }
+  { id: 2, label: 'Etapa 3 de 6', nextLabel: 'Próximo: Dificuldades Atuais' },
+  { id: 3, label: 'Etapa 4 de 6', nextLabel: 'Próximo: Diagnóstico Financeiro' }
   // Add more steps as needed
 ]
 
@@ -23,7 +25,10 @@ export default function DiagnosticWizard() {
   const [currentStep, setCurrentStep] = useState(0)
   const methods = useForm<DiagnosticFormData>({
     resolver: zodResolver(diagnosticSchema),
-    mode: 'onChange'
+    mode: 'onChange',
+    defaultValues: {
+      dificuldades: [] // Initialize array for checkboxes
+    }
   })
 
   // Validate only current step fields before moving
@@ -36,6 +41,8 @@ export default function DiagnosticWizard() {
       fieldsToValidate = ['experienceTime', 'currentRole']
     } else if (currentStep === 2) {
       fieldsToValidate = ['teamStructure', 'managementLevel']
+    } else if (currentStep === 3) {
+      fieldsToValidate = ['dificuldades']
     }
 
     const isValid = await methods.trigger(fieldsToValidate)
@@ -57,6 +64,8 @@ export default function DiagnosticWizard() {
         return <Step2ProfessionalProfile />
       case 2:
         return <Step3Structure />
+      case 3:
+        return <Step4Challenges />
       default:
         return null
     }

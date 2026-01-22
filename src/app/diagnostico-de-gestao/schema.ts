@@ -21,7 +21,12 @@ export const diagnosticSchema = z.object({
     .min(1, 'Selecione a estrutura da equipe'),
   managementLevel: z
     .string({ message: 'Selecione o nível de gestão' })
-    .min(1, 'Selecione o nível de gestão')
+    .min(1, 'Selecione o nível de gestão'),
+
+  // Step 4: Challenges (Multiple choice)
+  dificuldades: z
+    .array(z.string())
+    .min(1, 'Selecione pelo menos uma dificuldade')
 })
 
 export type DiagnosticFormData = z.infer<typeof diagnosticSchema>
