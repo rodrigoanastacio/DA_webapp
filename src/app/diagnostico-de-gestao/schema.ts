@@ -8,13 +8,20 @@ export const diagnosticSchema = z.object({
   cityState: z.string().min(2, 'Cidade/Estado é obrigatório'),
 
   // Step 2: Professional Profile
-  experienceTime: z.string().min(1, 'Selecione o tempo de atuação'),
-  currentRole: z.string().min(1, 'Selecione sua atuação atual'),
+  experienceTime: z
+    .string({ message: 'Selecione o tempo de atuação' })
+    .min(1, 'Selecione o tempo de atuação'),
+  currentRole: z
+    .string({ message: 'Selecione sua atuação atual' })
+    .min(1, 'Selecione sua atuação atual'),
 
-  // Step 3: Business
-  role: z.string().min(2, 'Cargo é obrigatório'),
-  teamSize: z.string().min(1, 'Selecione o tamanho da equipe'),
-  challenges: z.string().min(10, 'Descreva brevemente os desafios')
+  // Step 3: Structure
+  teamStructure: z
+    .string({ message: 'Selecione a estrutura da equipe' })
+    .min(1, 'Selecione a estrutura da equipe'),
+  managementLevel: z
+    .string({ message: 'Selecione o nível de gestão' })
+    .min(1, 'Selecione o nível de gestão')
 })
 
 export type DiagnosticFormData = z.infer<typeof diagnosticSchema>

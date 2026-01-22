@@ -6,10 +6,16 @@ import { FormProvider, useForm } from 'react-hook-form'
 import { DiagnosticFormData, diagnosticSchema } from '../schema'
 import { Step1Introduction } from './steps/Step1Introduction'
 import { Step2ProfessionalProfile } from './steps/Step2ProfessionalProfile'
+import { Step3Structure } from './steps/Step3Structure'
 
 const STEPS = [
   { id: 0, label: 'Etapa 1 de 6', nextLabel: 'Próximo: Perfil Profissional' },
-  { id: 1, label: 'Etapa 2 de 6', nextLabel: 'Próximo: Detalhes do Negócio' }
+  {
+    id: 1,
+    label: 'Etapa 2 de 6',
+    nextLabel: 'Próximo: Estrutura do Escritório'
+  },
+  { id: 2, label: 'Etapa 3 de 6', nextLabel: 'Próximo: Desafios Financeiros' }
   // Add more steps as needed
 ]
 
@@ -26,6 +32,10 @@ export default function DiagnosticWizard() {
 
     if (currentStep === 0) {
       fieldsToValidate = ['name', 'email', 'whatsapp', 'cityState']
+    } else if (currentStep === 1) {
+      fieldsToValidate = ['experienceTime', 'currentRole']
+    } else if (currentStep === 2) {
+      fieldsToValidate = ['teamStructure', 'managementLevel']
     }
 
     const isValid = await methods.trigger(fieldsToValidate)
@@ -45,6 +55,8 @@ export default function DiagnosticWizard() {
         return <Step1Introduction />
       case 1:
         return <Step2ProfessionalProfile />
+      case 2:
+        return <Step3Structure />
       default:
         return null
     }
