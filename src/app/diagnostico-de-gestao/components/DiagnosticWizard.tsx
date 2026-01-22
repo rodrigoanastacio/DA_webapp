@@ -8,6 +8,7 @@ import { Step1Introduction } from './steps/Step1Introduction'
 import { Step2ProfessionalProfile } from './steps/Step2ProfessionalProfile'
 import { Step3Structure } from './steps/Step3Structure'
 import { Step4Challenges } from './steps/Step4Challenges'
+import { Step5Financial } from './steps/Step5Financial'
 
 const STEPS = [
   { id: 0, label: 'Etapa 1 de 6', nextLabel: 'Próximo: Perfil Profissional' },
@@ -17,7 +18,8 @@ const STEPS = [
     nextLabel: 'Próximo: Estrutura do Escritório'
   },
   { id: 2, label: 'Etapa 3 de 6', nextLabel: 'Próximo: Dificuldades Atuais' },
-  { id: 3, label: 'Etapa 4 de 6', nextLabel: 'Próximo: Diagnóstico Financeiro' }
+  { id: 3, label: 'Etapa 4 de 6', nextLabel: 'Próximo: Momento Financeiro' },
+  { id: 4, label: 'Etapa 5 de 6', nextLabel: 'Próximo: Resultado Final' }
   // Add more steps as needed
 ]
 
@@ -43,6 +45,8 @@ export default function DiagnosticWizard() {
       fieldsToValidate = ['teamStructure', 'managementLevel']
     } else if (currentStep === 3) {
       fieldsToValidate = ['dificuldades']
+    } else if (currentStep === 4) {
+      fieldsToValidate = ['revenue']
     }
 
     const isValid = await methods.trigger(fieldsToValidate)
@@ -66,6 +70,8 @@ export default function DiagnosticWizard() {
         return <Step3Structure />
       case 3:
         return <Step4Challenges />
+      case 4:
+        return <Step5Financial />
       default:
         return null
     }
