@@ -10,6 +10,7 @@ import { Step3Structure } from './steps/Step3Structure'
 import { Step4Challenges } from './steps/Step4Challenges'
 import { Step5Financial } from './steps/Step5Financial'
 import { Step6Final } from './steps/Step6Final'
+import { StepSuccess } from './steps/StepSuccess'
 
 const STEPS = [
   { id: 0, label: 'Etapa 1 de 6', nextLabel: 'Próximo: Perfil Profissional' },
@@ -26,16 +27,16 @@ const STEPS = [
     nextLabel: 'Próximo: Intenção e Expectativas'
   },
   { id: 5, label: 'Etapa 6 de 6', nextLabel: 'Finalização' }
-  // Add more steps as needed
 ]
 
 export default function DiagnosticWizard() {
   const [currentStep, setCurrentStep] = useState(0)
+  const [isSubmitted, setIsSubmitted] = useState(false)
   const methods = useForm<DiagnosticFormData>({
     resolver: zodResolver(diagnosticSchema),
     mode: 'onChange',
     defaultValues: {
-      dificuldades: [] // Initialize array for checkboxes
+      dificuldades: []
     }
   })
 
@@ -60,7 +61,10 @@ export default function DiagnosticWizard() {
     const isValid = await methods.trigger(fieldsToValidate)
     if (isValid) {
       if (currentStep === 5) {
+        // Final Submission (Mock)
         console.log('Form Data:', methods.getValues())
+        setIsSubmitted(true)
+        window.scrollTo({ top: 0, behavior: 'smooth' })
         return
       }
 
@@ -90,6 +94,20 @@ export default function DiagnosticWizard() {
       default:
         return null
     }
+  }
+
+  if (isSubmitted) {
+    return (
+      <section className="min-h-screen flex flex-col items-center font-sans bg-blue-50 text-gray-800 py-20 px-4">
+        <div className="w-full max-w-[960px] mx-auto">
+          <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+            <div className="p-8 md:p-12">
+              <StepSuccess />
+            </div>
+          </div>
+        </div>
+      </section>
+    )
   }
 
   const currentStepData = STEPS[currentStep] || STEPS[0]
