@@ -1,5 +1,5 @@
+import { DiagnosticoFormData } from '@/shared/entities/diagnostico/diagnostico.schema'
 import { useFormContext } from 'react-hook-form'
-import { DiagnosticFormData } from '../../schema'
 
 const EXPERIENCE_OPTIONS = [
   { value: 'less_1', label: 'Menos de 1 ano' },
@@ -35,7 +35,7 @@ export function Step2ProfessionalProfile() {
   const {
     register,
     formState: { errors }
-  } = useFormContext<DiagnosticFormData>()
+  } = useFormContext<DiagnosticoFormData>()
 
   return (
     <div className="flex flex-col gap-8">

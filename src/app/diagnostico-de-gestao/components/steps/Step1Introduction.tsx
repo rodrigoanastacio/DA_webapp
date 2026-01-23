@@ -1,11 +1,11 @@
+import { DiagnosticoFormData } from '@/shared/entities/diagnostico/diagnostico.schema'
 import { useFormContext } from 'react-hook-form'
-import { DiagnosticFormData } from '../../schema'
 
 export function Step1Introduction() {
   const {
     register,
     formState: { errors }
-  } = useFormContext<DiagnosticFormData>()
+  } = useFormContext<DiagnosticoFormData>()
 
   return (
     <div className="flex flex-col gap-8">

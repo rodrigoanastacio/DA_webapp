@@ -1,13 +1,13 @@
 import { z } from 'zod'
 
-export const diagnosticSchema = z.object({
-  // Step 1: Contact
+export const diagnosticoSchema = z.object({
+  // Step 1: Contato
   name: z.string().min(2, 'Nome é obrigatório'),
   email: z.string().email('E-mail inválido'),
   whatsapp: z.string().min(10, 'WhatsApp inválido'),
   cityState: z.string().min(2, 'Cidade/Estado é obrigatório'),
 
-  // Step 2: Professional Profile
+  // Step 2: Perfil Profissional
   experienceTime: z
     .string({ message: 'Selecione o tempo de atuação' })
     .min(1, 'Selecione o tempo de atuação'),
@@ -15,7 +15,7 @@ export const diagnosticSchema = z.object({
     .string({ message: 'Selecione sua atuação atual' })
     .min(1, 'Selecione sua atuação atual'),
 
-  // Step 3: Structure
+  // Step 3: Estrutura
   teamStructure: z
     .string({ message: 'Selecione a estrutura da equipe' })
     .min(1, 'Selecione a estrutura da equipe'),
@@ -23,17 +23,17 @@ export const diagnosticSchema = z.object({
     .string({ message: 'Selecione o nível de gestão' })
     .min(1, 'Selecione o nível de gestão'),
 
-  // Step 4: Challenges (Multiple choice)
+  // Step 4: Desafios
   dificuldades: z
     .array(z.string())
     .min(1, 'Selecione pelo menos uma dificuldade'),
 
-  // Step 5: Financial Moment
+  // Step 5: Momento Financeiro
   revenue: z
     .string({ message: 'Selecione a faixa de faturamento' })
     .min(1, 'Selecione a faixa de faturamento'),
 
-  // Step 6: Finalization
+  // Step 6: Finalização
   expectativas: z
     .string({ message: 'Descreva suas expectativas' })
     .min(10, 'Faça uma breve descrição das expectativas'),
@@ -42,4 +42,4 @@ export const diagnosticSchema = z.object({
     .min(1, 'Selecione uma opção de investimento')
 })
 
-export type DiagnosticFormData = z.infer<typeof diagnosticSchema>
+export type DiagnosticoFormData = z.infer<typeof diagnosticoSchema>

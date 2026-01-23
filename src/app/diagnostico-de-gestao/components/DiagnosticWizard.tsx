@@ -1,9 +1,7 @@
 'use client'
 
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useState } from 'react'
-import { FormProvider, useForm } from 'react-hook-form'
-import { DiagnosticFormData, diagnosticSchema } from '../schema'
+import { FormProvider } from 'react-hook-form'
+import { useDiagnosticoForm } from '../hooks/use-diagnostico-form'
 import { Step1Introduction } from './steps/Step1Introduction'
 import { Step2ProfessionalProfile } from './steps/Step2ProfessionalProfile'
 import { Step3Structure } from './steps/Step3Structure'
@@ -12,7 +10,7 @@ import { Step5Financial } from './steps/Step5Financial'
 import { Step6Final } from './steps/Step6Final'
 import { StepSuccess } from './steps/StepSuccess'
 
-const STEPS = [
+const STEPS_DATA = [
   { id: 0, label: 'Etapa 1 de 6', nextLabel: 'Próximo: Perfil Profissional' },
   {
     id: 1,
@@ -30,71 +28,32 @@ const STEPS = [
 ]
 
 export default function DiagnosticWizard() {
-  const [currentStep, setCurrentStep] = useState(0)
-  const [isSubmitted, setIsSubmitted] = useState(false)
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const methods = useForm<DiagnosticFormData>({
-    resolver: zodResolver(diagnosticSchema),
-    mode: 'onChange',
-    defaultValues: {
-      dificuldades: []
-    }
-  })
+  const {
+    currentStep,
+    isSubmitted,
+    isSubmitting,
+    methods,
+    nextStep,
+    prevStep
+  } = useDiagnosticoForm()
 
-  // Validate only current step fields before moving
-  const nextStep = async () => {
-    let fieldsToValidate: (keyof DiagnosticFormData)[] = []
+  const progressPercentage = ((currentStep + 1) / 6) * 100
 
-    if (currentStep === 0) {
-      fieldsToValidate = ['name', 'email', 'whatsapp', 'cityState']
-    } else if (currentStep === 1) {
-      fieldsToValidate = ['experienceTime', 'currentRole']
-    } else if (currentStep === 2) {
-      fieldsToValidate = ['teamStructure', 'managementLevel']
-    } else if (currentStep === 3) {
-      fieldsToValidate = ['dificuldades']
-    } else if (currentStep === 4) {
-      fieldsToValidate = ['revenue']
-    } else if (currentStep === 5) {
-      fieldsToValidate = ['expectativas', 'investment']
-    }
-
-    const isValid = await methods.trigger(fieldsToValidate)
-    if (isValid) {
-      if (currentStep === 5) {
-        // Final Submission to API Proxy Layer
-        setIsSubmitting(true)
-        try {
-          const response = await fetch('/api/diagnostico', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(methods.getValues())
-          })
-
-          const result = await response.json()
-
-          if (result.success) {
-            setIsSubmitted(true)
-            window.scrollTo({ top: 0, behavior: 'smooth' })
-          } else {
-            console.error('Submission error:', result.error, result.message)
-          }
-        } catch (error) {
-          console.error('Submission error:', error)
-        } finally {
-          setIsSubmitting(false)
-        }
-        return
-      }
-
-      setCurrentStep((prev) => prev + 1)
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-    }
+  if (isSubmitted) {
+    return (
+      <section className="min-h-screen flex flex-col items-center font-sans bg-blue-50 text-gray-800 py-20 px-4">
+        <div className="w-full max-w-[960px] mx-auto">
+          <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+            <div className="p-8 md:p-12">
+              <StepSuccess />
+            </div>
+          </div>
+        </div>
+      </section>
+    )
   }
 
-  const prevStep = () => {
-    setCurrentStep((prev) => prev - 1)
-  }
+  const currentStepData = STEPS_DATA[currentStep] || STEPS_DATA[0]
 
   const renderStep = () => {
     switch (currentStep) {
@@ -114,23 +73,6 @@ export default function DiagnosticWizard() {
         return null
     }
   }
-
-  if (isSubmitted) {
-    return (
-      <section className="min-h-screen flex flex-col items-center font-sans bg-blue-50 text-gray-800 py-20 px-4">
-        <div className="w-full max-w-[960px] mx-auto">
-          <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-            <div className="p-8 md:p-12">
-              <StepSuccess />
-            </div>
-          </div>
-        </div>
-      </section>
-    )
-  }
-
-  const currentStepData = STEPS[currentStep] || STEPS[0]
-  const progressPercentage = ((currentStep + 1) / 6) * 100 // Based on 6 steps
 
   return (
     <section className="min-h-screen flex flex-col items-center font-sans bg-blue-50 text-gray-800 py-20 px-4">
@@ -209,7 +151,7 @@ export default function DiagnosticWizard() {
                       </>
                     ) : (
                       <>
-                        {STEPS[currentStep].nextLabel.includes('Finalização')
+                        {currentStepData.nextLabel.includes('Finalização')
                           ? 'Ir para Finalização'
                           : 'Próxima Etapa'}
                         <span className="material-symbols-outlined text-[20px] leading-none">

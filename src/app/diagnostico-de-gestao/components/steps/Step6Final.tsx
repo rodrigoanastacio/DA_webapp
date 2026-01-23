@@ -1,5 +1,5 @@
+import { DiagnosticoFormData } from '@/shared/entities/diagnostico/diagnostico.schema'
 import { useFormContext } from 'react-hook-form'
-import { DiagnosticFormData } from '../../schema'
 
 const INVESTMENT_OPTIONS = [
   {
@@ -23,7 +23,7 @@ export function Step6Final() {
   const {
     register,
     formState: { errors }
-  } = useFormContext<DiagnosticFormData>()
+  } = useFormContext<DiagnosticoFormData>()
 
   return (
     <div className="flex flex-col gap-8">
