@@ -1,0 +1,95 @@
+'use client'
+
+import { cn } from '@/lib/utils'
+import {
+  BarChart2,
+  Calendar,
+  LogOut,
+  Scale,
+  Settings,
+  Users
+} from 'lucide-react'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+
+const navigation = [
+  { name: 'Leads', href: '/dashboard', icon: Users },
+  { name: 'Agenda', href: '/dashboard/agenda', icon: Calendar },
+  { name: 'Relatórios', href: '/dashboard/reports', icon: BarChart2 },
+  { name: 'Configurações', href: '/dashboard/settings', icon: Settings }
+]
+
+export function DashboardSidebar() {
+  const pathname = usePathname()
+
+  return (
+    <div className="flex h-full flex-col bg-white border-r border-gray-100">
+      {/* Brand Logo */}
+      <div className="flex h-24 shrink-0 items-center px-8">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-white shadow-lg shadow-blue-200">
+            <Scale className="w-6 h-6" />
+          </div>
+          <div className="flex flex-col">
+            <span className="text-xl font-bold tracking-tight text-gray-900 leading-tight">
+              JURÍDICO
+            </span>
+            <span className="text-[10px] font-medium text-gray-400 uppercase tracking-[2px] -mt-1">
+              Consultoria
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* Navigation */}
+      <nav className="flex flex-1 flex-col px-4">
+        <ul role="list" className="flex flex-1 flex-col gap-y-7">
+          <li className="flex-1">
+            <ul role="list" className="space-y-2">
+              {navigation.map((item) => {
+                const isActive = pathname === item.href
+                return (
+                  <li key={item.name} className="relative">
+                    <Link
+                      href={item.href}
+                      className={cn(
+                        isActive
+                          ? 'bg-blue-50/50 text-blue-600'
+                          : 'text-gray-500 hover:text-blue-600 hover:bg-gray-50',
+                        'group flex gap-x-4 rounded-xl p-3 text-sm font-semibold transition-all duration-200 items-center'
+                      )}
+                    >
+                      <item.icon
+                        className={cn(
+                          isActive
+                            ? 'text-blue-600'
+                            : 'text-gray-400 group-hover:text-blue-600',
+                          'h-5 w-5 shrink-0 transition-colors'
+                        )}
+                        aria-hidden="true"
+                      />
+                      {item.name}
+
+                      {/* Active Indicator Bar */}
+                      {isActive && (
+                        <span className="absolute right-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-blue-600 rounded-l-full" />
+                      )}
+                    </Link>
+                  </li>
+                )
+              })}
+            </ul>
+          </li>
+
+          {/* Logout at Bottom */}
+          <li className="mt-auto px-2 pb-8">
+            <button className="flex items-center gap-4 p-3 rounded-xl text-gray-500 hover:text-red-600 hover:bg-red-50 transition-all duration-200 w-full group font-semibold text-sm">
+              <LogOut className="h-5 w-5 shrink-0 transition-colors" />
+              Sair
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  )
+}
