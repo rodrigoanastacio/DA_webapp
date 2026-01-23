@@ -55,18 +55,18 @@ export default function DashboardPage() {
       {/* Stats Cards */}
       <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         {/* Total de Leads */}
-        <div className="bg-white rounded-[24px] p-8 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-gray-50 flex flex-col justify-between h-48">
+        <div className="bg-white p-8 shadow-[0_4px_20px_rgba(0,0,0,0.01)] border border-gray-100 flex flex-col justify-between h-48">
           <div className="flex items-center justify-between mb-6">
             <p className="text-[12px] font-bold text-gray-400 uppercase tracking-widest">
               Total de Leads
             </p>
-            <div className="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center">
-              <Users className="w-5 h-5 text-gray-400" />
+            <div className="w-10 h-10 flex items-center justify-center">
+              <Users className="w-10 h-10 text-gray-200" />
             </div>
           </div>
           <div className="flex items-baseline gap-3">
             <span className="text-4xl font-extrabold text-gray-900 tracking-tight">
-              1,240
+              180.240
             </span>
             <div className="flex items-center gap-0.5 text-emerald-500 font-bold text-xs bg-emerald-50 px-2 py-0.5 rounded-full">
               <TrendingUp className="w-3 h-3" />
@@ -76,13 +76,13 @@ export default function DashboardPage() {
         </div>
 
         {/* Alto Potencial */}
-        <div className="bg-white rounded-[24px] p-8 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-gray-50 flex flex-col justify-between h-48">
+        <div className="bg-white p-8 shadow-[0_4px_20px_rgba(0,0,0,0.01)] border border-gray-100 flex flex-col justify-between h-48">
           <div className="flex items-center justify-between mb-6">
             <p className="text-[12px] font-bold text-gray-400 uppercase tracking-widest">
               Leads P0 (Alto Potencial)
             </p>
-            <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center">
-              <Star className="w-5 h-5 text-blue-600 fill-blue-600" />
+            <div className="w-10 h-10 flex items-center justify-center">
+              <Star className="w-10 h-10 text-gray-200 fill-gray-100" />
             </div>
           </div>
           <div className="flex items-baseline gap-3">
@@ -97,13 +97,13 @@ export default function DashboardPage() {
         </div>
 
         {/* Taxa de Conversão */}
-        <div className="bg-white rounded-[24px] p-8 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-gray-50 flex flex-col justify-between h-48">
+        <div className="bg-white p-8 shadow-[0_4px_20px_rgba(0,0,0,0.01)] border border-gray-100 flex flex-col justify-between h-48">
           <div className="flex items-center justify-between mb-6">
             <p className="text-[12px] font-bold text-gray-400 uppercase tracking-widest">
               Taxa de Conversão
             </p>
-            <div className="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center">
-              <BarChart3 className="w-5 h-5 text-gray-400" />
+            <div className="w-10 h-10 flex items-center justify-center">
+              <BarChart3 className="w-10 h-10 text-gray-200" />
             </div>
           </div>
           <div className="flex items-baseline gap-3">
@@ -170,19 +170,19 @@ export default function DashboardPage() {
                   >
                     <td className="px-8 py-6 whitespace-nowrap">
                       <div className="flex items-center gap-4">
-                        <div className="w-5 flex justify-center">
+                        {/* <div className="w-5 flex justify-center">
                           {isP0 && (
                             <Star className="w-4 h-4 text-blue-600 fill-blue-600 shrink-0" />
                           )}
-                        </div>
-                        <div
+                        </div> */}
+                        {/* <div
                           className={cn(
                             'w-12 h-12 rounded-full flex items-center justify-center font-bold text-sm tracking-tighter shrink-0 transition-transform group-hover:scale-105',
                             avatarColors[index % avatarColors.length]
                           )}
                         >
                           {getInitials(lead.nome_completo)}
-                        </div>
+                        </div> */}
                         <div className="flex flex-col">
                           <span className="font-extrabold text-gray-900 text-[15px]">
                             {lead.nome_completo}
