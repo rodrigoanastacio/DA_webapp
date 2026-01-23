@@ -32,6 +32,7 @@ const STEPS = [
 export default function DiagnosticWizard() {
   const [currentStep, setCurrentStep] = useState(0)
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const methods = useForm<DiagnosticFormData>({
     resolver: zodResolver(diagnosticSchema),
     mode: 'onChange',
@@ -61,10 +62,28 @@ export default function DiagnosticWizard() {
     const isValid = await methods.trigger(fieldsToValidate)
     if (isValid) {
       if (currentStep === 5) {
-        // Final Submission (Mock)
-        console.log('Form Data:', methods.getValues())
-        setIsSubmitted(true)
-        window.scrollTo({ top: 0, behavior: 'smooth' })
+        // Final Submission to API Proxy Layer
+        setIsSubmitting(true)
+        try {
+          const response = await fetch('/api/diagnostico', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(methods.getValues())
+          })
+
+          const result = await response.json()
+
+          if (result.success) {
+            setIsSubmitted(true)
+            window.scrollTo({ top: 0, behavior: 'smooth' })
+          } else {
+            console.error('Submission error:', result.error, result.message)
+          }
+        } catch (error) {
+          console.error('Submission error:', error)
+        } finally {
+          setIsSubmitting(false)
+        }
         return
       }
 
@@ -173,9 +192,15 @@ export default function DiagnosticWizard() {
                   <button
                     type="button"
                     onClick={nextStep}
-                    className="inline-flex min-w-[160px] h-11 items-center justify-center rounded-lg px-4 bg-blue-700 hover:bg-blue-600 transition-colors text-white text-sm font-bold shadow-lg shadow-blue-700/20 gap-2 cursor-pointer"
+                    disabled={isSubmitting}
+                    className="inline-flex min-w-[160px] h-11 items-center justify-center rounded-lg px-4 bg-blue-700 hover:bg-blue-600 transition-colors text-white text-sm font-bold shadow-lg shadow-blue-700/20 gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    {currentStep === 5 ? (
+                    {isSubmitting ? (
+                      <span className="flex items-center gap-2">
+                        Enviando...
+                        <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      </span>
+                    ) : currentStep === 5 ? (
                       <>
                         Enviar Diagnóstico
                         <span className="material-symbols-outlined text-[20px] leading-none">
