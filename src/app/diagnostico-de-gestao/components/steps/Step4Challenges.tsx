@@ -1,4 +1,4 @@
-import { DiagnosticoFormData } from '@/shared/entities/diagnostico/diagnostico.schema'
+import { DiagnosticoFormData } from '@/lib/zod/diagnostico.schema'
 import { useFormContext } from 'react-hook-form'
 
 const DIFFICULTY_OPTIONS = [

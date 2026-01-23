@@ -4,17 +4,33 @@
 
 Nesta camada, separamos o **O QUE** deve ser feito (regras e cálculos) do **COMO** a UI deve se comportar.
 
-### 📁 Entidades (`src/shared/entities/`)
+### 📁 Schemas de Validação (`src/lib/zod/`)
 
-As entidades contêm o "coração" da aplicação. Aqui definimos os contratos de dados através de schemas **Zod**.
+Os schemas Zod definem a **forma** dos dados e garantem que a entrada seja válida antes de processarmos qualquer lógica. Eles são usados tanto no Frontend (formulários) quanto na API (validação de request).
 
 ```typescript
-// Exemplo: src/shared/entities/diagnostico/diagnostico.schema.ts
-export const diagnosticoSchema = z.object({
-  nome: z.string().min(2),
-  email: z.string().email()
-  // ...
-})
+// Exemplo: src/lib/zod/diagnostico.schema.ts
+export const diagnosticoSchema = z.object({ ... })
+```
+
+### 📁 Entidades de Domínio (`src/shared/entities/`)
+
+As entidades representam os conceitos de negócio e contêm **comportamento** (lógica que não depende de banco ou UI). Elas são criadas a partir dos dados validados.
+
+**Diferença:**
+
+- **Zod Schema**: "O dado tem o formato correto?" (Validar e-mail, campos obrigatórios).
+- **Entidade**: "O que esse dado significa para o negócio?" (Calcular score, verificar potencial, classificar perfil).
+
+```typescript
+// Exemplo: src/shared/entities/diagnostico/diagnostico.entity.ts
+export class Diagnostico {
+  constructor(data: DiagnosticoFormData) { ... }
+
+  get isHighPotential() {
+      return this.revenue === 'more_100k' || this.investment === 'more_5k';
+  }
+}
 ```
 
 ### 📁 Hooks Customizados (`src/app/**/hooks/`)

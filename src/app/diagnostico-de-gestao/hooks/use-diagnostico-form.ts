@@ -1,8 +1,8 @@
-import { diagnosticoService } from '@/services/diagnostico/diagnostico.service'
 import {
   DiagnosticoFormData,
   diagnosticoSchema
-} from '@/shared/entities/diagnostico/diagnostico.schema'
+} from '@/lib/zod/diagnostico.schema'
+import { diagnosticoService } from '@/services/diagnostico/diagnostico.service'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'

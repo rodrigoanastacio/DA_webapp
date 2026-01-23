@@ -1,5 +1,6 @@
 import { supabase } from '@/lib/supabase'
-import { DiagnosticoFormData } from '@/shared/entities/diagnostico/diagnostico.schema'
+import { DiagnosticoFormData } from '@/lib/zod/diagnostico.schema'
+import { Diagnostico } from '@/shared/entities/diagnostico/diagnostico.entity'
 
 export const diagnosticoHandler = {
   /**
@@ -10,20 +11,31 @@ export const diagnosticoHandler = {
     data: DiagnosticoFormData,
     metadata: { clientIp: string; userAgent: string }
   ) => {
+    // 1. Instancia a Entidade de Domínio para usar lógica de negócio
+    const diagnostico = new Diagnostico(data)
+
+    // Exemplo de uso da lógica da entidade antes de persistir
+    if (diagnostico.isHighPotential) {
+      console.log(
+        `[ALERTA] Lead de alto potencial identificado: ${diagnostico.name}`
+      )
+    }
+
+    // 2. Mapeamento para o banco de dados (PT-BR snake_case)
     const { error } = await supabase.from('diagnosticos').insert([
       {
-        nome_completo: data.name.trim(),
-        email: data.email.trim().toLowerCase(),
-        whatsapp: data.whatsapp.replace(/\D/g, ''),
-        cidade_estado: data.cityState.trim(),
-        tempo: data.experienceTime,
-        atuacao: data.currentRole,
-        estrutura_equipe: data.teamStructure,
-        nivel_gestao: data.managementLevel,
-        dificuldades: data.dificuldades,
-        faturamento: data.revenue,
-        expectativas: data.expectativas.trim(),
-        investimento: data.investment,
+        nome_completo: diagnostico.name.trim(),
+        email: diagnostico.email.trim().toLowerCase(),
+        whatsapp: diagnostico.whatsapp.replace(/\D/g, ''),
+        cidade_estado: diagnostico.cityState.trim(),
+        tempo: diagnostico.experienceTime,
+        atuacao: diagnostico.currentRole,
+        estrutura_equipe: diagnostico.teamStructure,
+        nivel_gestao: diagnostico.managementLevel,
+        dificuldades: diagnostico.dificuldades,
+        faturamento: diagnostico.revenue,
+        expectativas: diagnostico.expectativas.trim(),
+        investimento: diagnostico.investment,
         ip_cliente: metadata.clientIp,
         agente_usuario: metadata.userAgent
       }

@@ -1,5 +1,5 @@
+import { diagnosticoSchema } from '@/lib/zod/diagnostico.schema'
 import { diagnosticoHandler } from '@/shared/api-handlers/diagnostico/diagnostico.handler'
-import { diagnosticoSchema } from '@/shared/entities/diagnostico/diagnostico.schema'
 import { NextResponse } from 'next/server'
 
 export async function POST(request: Request) {

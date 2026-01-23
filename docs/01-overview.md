@@ -33,8 +33,10 @@ O projeto **Dayane Anastácio LP** utiliza uma **Arquitetura em Camadas** que pr
 ```mermaid
 graph TD
     UI[Camada de Apresentação] --> Logic[Camada de Lógica de Negócio]
+    Logic --> Entities[Entidades de Domínio /shared/entities/]
+    Logic --> Zod[Schemas de Validação /lib/zod/]
     Logic --> Services[Camada de Serviços]
-    Services --> API[Camada de API REST Proxy]
+    Services --> API[Camada de API Proxy]
     API --> Handlers[Camada de API Handlers]
     Handlers --> Supabase[(Supabase DB)]
 ```
@@ -50,7 +52,7 @@ Responsável pela renderização da interface e eventos do usuário.
 
 Contém regras de negócio, validações e orquestração de estado.
 
-- **Entidades (Entities)**: `src/shared/entities/{module}/` (Schemas Zod e tipos).
+- **Zod Schemas**: `src/lib/zod/` (Schemas de validação e tipos).
 - **Hooks**: `src/app/{module}/{feature}/hooks/` (hooks customizados como `use-diagnostico-form.ts`).
 
 ### 3. Camada de Serviços (Service Layer)
