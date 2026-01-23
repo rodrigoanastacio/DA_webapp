@@ -2,8 +2,8 @@
 
 import { Input } from '@/components/ui/input'
 import { Bell, HelpCircle, Plus, Search } from 'lucide-react'
-import Image from 'next/image'
 import { MobileNav } from './MobileNav'
+import { UserProfile } from './UserProfile'
 
 export function DashboardHeader() {
   return (
@@ -44,25 +44,11 @@ export function DashboardHeader() {
           {/* Divider */}
           <div className="hidden sm:block w-px h-6 bg-gray-200 mx-2" />
 
-          {/* User Profile in Header */}
-          <button className="flex items-center gap-3 p-1 rounded-xl hover:bg-white hover:shadow-sm transition-all duration-200 group border border-transparent hover:border-gray-100">
-            <div className="relative w-9 h-9 rounded-lg overflow-hidden shadow-sm">
-              <Image
-                src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                alt="User avatar"
-                fill
-                className="object-cover"
-              />
-            </div>
-            <div className="hidden md:flex flex-col items-start leading-tight">
-              <span className="text-[13px] font-bold text-gray-900">
-                Dayane Oliveira
-              </span>
-              <span className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">
-                Senior Partner
-              </span>
-            </div>
-          </button>
+          <UserProfile
+            name="Dayane Anastácio"
+            role="Administradora"
+            avatarUrl="/assets/avatar.jpg"
+          />
         </div>
       </div>
     </header>
