@@ -2,13 +2,13 @@
 
 import Image from 'next/image'
 
-interface UserProfileProps {
+interface IUserProfileProps {
   name: string
   role: string
   avatarUrl: string
 }
 
-export function UserProfile({ name, role, avatarUrl }: UserProfileProps) {
+export function UserProfile({ name, role, avatarUrl }: IUserProfileProps) {
   return (
     <div className="flex items-center gap-3 p-1">
       <div className="relative w-9 h-9 rounded-lg overflow-hidden shadow-sm">
