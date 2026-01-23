@@ -1,5 +1,5 @@
+import { api } from '@/lib/api/fetcher'
 import { DiagnosticoFormData } from '@/lib/zod/diagnostico.schema'
-import { api } from '../api'
 
 export const diagnosticoService = {
   /**

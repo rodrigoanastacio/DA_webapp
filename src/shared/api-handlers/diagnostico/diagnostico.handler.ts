@@ -1,4 +1,4 @@
-import { supabase } from '@/lib/supabase'
+import { supabase } from '@/lib/supabase/client'
 import { DiagnosticoFormData } from '@/lib/zod/diagnostico.schema'
 import { Diagnostico } from '@/shared/entities/diagnostico/diagnostico.entity'
 

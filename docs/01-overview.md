@@ -45,34 +45,36 @@ graph TD
 
 Responsável pela renderização da interface e eventos do usuário.
 
-- **Local**: `src/app/{module}/{feature}/components/`
+- **Local**: `src/app/(public)/diagnostico-de-gestao/components/`
 - **Exemplo**: `DiagnosticWizard.tsx`
 
 ### 2. Camada de Lógica de Negócio (Business Logic)
 
 Contém regras de negócio, validações e orquestração de estado.
 
-- **Zod Schemas**: `src/lib/zod/` (Schemas de validação e tipos).
-- **Hooks**: `src/app/{module}/{feature}/hooks/` (hooks customizados como `use-diagnostico-form.ts`).
+- **Zod Schemas**: `src/lib/zod/` (Validação de dados).
+- **Entidades (Entities)**: `src/shared/entities/` (Modelos com comportamento).
+- **Hooks**: `src/app/(public)/diagnostico-de-gestao/hooks/` (Hooks de UI).
 
 ### 3. Camada de Serviços (Service Layer)
 
 Encapsula chamadas HTTP para a nossa própria API.
 
-- **Local**: `src/services/{module}/*.service.ts`
-- **Config**: `src/services/api.ts`
+- **Local**: `src/services/`
+- **Config**: `src/lib/api/fetcher.ts`
 
 ### 4. Camada de API REST (Proxy)
 
 Endpoints do Next.js que garantem segurança e validação no servidor.
 
-- **Local**: `src/app/api/{module}/route.ts`
+- **Local**: `src/app/api/`
 
 ### 5. Camada de API Handlers
 
 Onde a mágica do banco de dados acontece. Faz a ponte direta com o Supabase.
 
-- **Local**: `src/shared/api-handlers/{module}/*.handler.ts`
+- **Local**: `src/shared/api-handlers/`
+- **Supabase Client**: `src/lib/supabase/client.ts`
 
 ---
 
