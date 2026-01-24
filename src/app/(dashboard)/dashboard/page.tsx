@@ -1,14 +1,25 @@
 'use client'
 
+import { LeadDetailsDrawer } from '@/components/dashboard/LeadDetailsDrawer'
+
 import { Badge } from '@/components/ui/badge'
-import { MOCK_LEADS } from '@/lib/mock-data'
+import { Lead, MOCK_LEADS } from '@/lib/mock-data'
 import { cn } from '@/lib/utils'
 import { BarChart3, MoreVertical, Star, TrendingUp, Users } from 'lucide-react'
+import { useState } from 'react'
 
 export default function DashboardPage() {
+  const [selectedLead, setSelectedLead] = useState<Lead | null>(null)
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
+
   const totalLeads = 1240 // Matching screenshot
   const highPotentialLeads = 42
   const recentLeads = MOCK_LEADS.slice(0, 4)
+
+  const handleLeadClick = (lead: Lead) => {
+    setSelectedLead(lead)
+    setIsDrawerOpen(true)
+  }
 
   // Helper para gerar avatar com iniciais
   const getInitials = (name: string) => {
@@ -167,6 +178,7 @@ export default function DashboardPage() {
                   <tr
                     key={lead.id}
                     className="hover:bg-gray-50/50 transition-colors cursor-pointer group"
+                    onClick={() => handleLeadClick(lead)}
                   >
                     <td className="px-8 py-6 whitespace-nowrap">
                       <div className="flex items-center gap-4">
@@ -253,6 +265,12 @@ export default function DashboardPage() {
           </div>
         </div>
       </div>
+
+      <LeadDetailsDrawer
+        lead={selectedLead}
+        isOpen={isDrawerOpen}
+        onClose={() => setIsDrawerOpen(false)}
+      />
     </div>
   )
 }
