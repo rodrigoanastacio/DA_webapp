@@ -1,9 +1,12 @@
+import { PhoneInput } from '@/components/ui/phone-input'
+import { cn } from '@/lib/utils'
 import { DiagnosticoFormData } from '@/lib/zod/diagnostico.schema'
-import { useFormContext } from 'react-hook-form'
+import { Controller, useFormContext } from 'react-hook-form'
 
 export function Step1Introduction() {
   const {
     register,
+    control,
     formState: { errors }
   } = useFormContext<DiagnosticoFormData>()
 
@@ -71,15 +74,21 @@ export function Step1Introduction() {
             <span className="text-blue-300 text-sm font-semibold pb-2">
               WhatsApp <span className="text-blue-300">*</span>
             </span>
-            <input
-              {...register('whatsapp')}
-              placeholder="(00) 00000-0000"
-              type="tel"
-              className={`form-input w-full rounded-lg border bg-white focus:ring-1 focus:ring-blue-700 placeholder:text-gray-400 h-12 px-3 text-sm transition-colors ${
-                errors.whatsapp
-                  ? 'border-red-300 focus:border-red-500'
-                  : 'border-gray-200 focus:border-blue-700'
-              }`}
+            <Controller
+              name="whatsapp"
+              control={control}
+              render={({ field }) => (
+                <PhoneInput
+                  {...field}
+                  placeholder="(00) 00000-0000"
+                  className={cn(
+                    'h-12',
+                    errors.whatsapp
+                      ? 'border-red-300 focus:border-red-500'
+                      : 'border-gray-200 focus:border-blue-700'
+                  )}
+                />
+              )}
             />
             {errors.whatsapp && (
               <span className="text-red-500 text-xs mt-1">
