@@ -1,20 +1,29 @@
-'use client'
-
 import { useState } from 'react'
+import { loginAction } from '../login-actions'
 
 export function useLogin() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
+    setError(null)
 
     try {
-      // Login logic will be implemented here with supabase or server actions
-      console.log('Login attempt:', { email, password })
-      // await loginAction(email, password)
+      const formData = new FormData()
+      formData.append('email', email)
+      formData.append('password', password)
+
+      const result = await loginAction(formData)
+
+      if (result?.error) {
+        setError(result.error)
+      }
+    } catch (err) {
+      setError('Ocorreu um erro inesperado no login.')
     } finally {
       setIsLoading(false)
     }
@@ -26,6 +35,7 @@ export function useLogin() {
     password,
     setPassword,
     isLoading,
+    error,
     handleLogin
   }
 }

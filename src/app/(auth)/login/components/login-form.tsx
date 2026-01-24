@@ -6,8 +6,15 @@ import Link from 'next/link'
 import { useLogin } from '../hooks/use-login'
 
 export function LoginForm() {
-  const { email, setEmail, password, setPassword, isLoading, handleLogin } =
-    useLogin()
+  const {
+    email,
+    setEmail,
+    password,
+    setPassword,
+    isLoading,
+    error,
+    handleLogin
+  } = useLogin()
 
   return (
     <div className="max-w-[400px] w-full animate-in fade-in slide-in-from-right-8 duration-700">
@@ -21,6 +28,11 @@ export function LoginForm() {
       </div>
 
       <form onSubmit={handleLogin} className="space-y-6">
+        {error && (
+          <div className="bg-red-50 border border-red-100 text-red-600 px-4 py-3 rounded-xl text-sm font-bold animate-in fade-in slide-in-from-top-2 duration-300">
+            {error}
+          </div>
+        )}
         <div className="space-y-2">
           <label
             htmlFor="email"
