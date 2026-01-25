@@ -1,8 +1,8 @@
 'use client'
 
 import { LeadDetailsDrawer } from '@/components/dashboard/LeadDetailsDrawer'
-
 import { StatCard } from '@/components/dashboard/StatCard'
+import { Summary } from '@/components/dashboard/Summary'
 import { Badge } from '@/components/ui/badge'
 import { Lead, MOCK_LEADS } from '@/lib/mock-data'
 import { cn } from '@/lib/utils'
@@ -64,8 +64,7 @@ export default function DashboardPage() {
         </p>
       </div>
 
-      {/* Stats Cards */}
-      <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+      <Summary>
         <StatCard
           label="Total de Leads"
           value="180.240"
@@ -87,10 +86,10 @@ export default function DashboardPage() {
           icon={BarChart3}
           trend={{ value: '+0.8%', direction: 'up' }}
         />
-      </div>
+      </Summary>
 
       {/* Tabela de Leads */}
-      <div className="bg-white rounded-[24px] shadow-[0_4px_30px_rgba(0,0,0,0.03)] border border-gray-50 overflow-hidden">
+      <div className="bg-white rounded-[24px] shadow-[0_4px_30px_rgba(0,0,0,0.01)] border border-gray-50 overflow-hidden">
         <div className="px-8 py-6 border-b border-gray-50 flex items-center justify-between bg-white">
           <h2 className="text-[16px] font-extrabold text-gray-900 uppercase tracking-wider">
             Gestão de Leads

@@ -1,6 +1,7 @@
 'use client'
 
 import { StatCard } from '@/components/dashboard/StatCard'
+import { Summary } from '@/components/dashboard/Summary'
 import { Button } from '@/components/ui/button'
 import { Mail, Plus, ShieldCheck, User } from 'lucide-react'
 import { useState } from 'react'
@@ -34,7 +35,7 @@ export function TeamHeader({ totalMembers, adminsCount }: TeamHeaderProps) {
         </Button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <Summary>
         <StatCard
           variant="compact"
           label="Total de Membros"
@@ -56,7 +57,7 @@ export function TeamHeader({ totalMembers, adminsCount }: TeamHeaderProps) {
           icon={Mail}
           iconColor="text-gray-200"
         />
-      </div>
+      </Summary>
 
       <MemberDetailsDrawer
         isOpen={isDrawerOpen}
