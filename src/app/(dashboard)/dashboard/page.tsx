@@ -2,10 +2,11 @@
 
 import { LeadDetailsDrawer } from '@/components/dashboard/LeadDetailsDrawer'
 
+import { StatCard } from '@/components/dashboard/StatCard'
 import { Badge } from '@/components/ui/badge'
 import { Lead, MOCK_LEADS } from '@/lib/mock-data'
 import { cn } from '@/lib/utils'
-import { BarChart3, MoreVertical, Star, TrendingUp, Users } from 'lucide-react'
+import { BarChart3, MoreVertical, Star, Users } from 'lucide-react'
 import { useState } from 'react'
 
 export default function DashboardPage() {
@@ -65,68 +66,27 @@ export default function DashboardPage() {
 
       {/* Stats Cards */}
       <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-        {/* Total de Leads */}
-        <div className="bg-white p-8 shadow-[0_4px_20px_rgba(0,0,0,0.01)] border border-gray-100 flex flex-col justify-between h-48">
-          <div className="flex items-center justify-between mb-6">
-            <p className="text-[12px] font-bold text-gray-400 uppercase tracking-widest">
-              Total de Leads
-            </p>
-            <div className="w-10 h-10 flex items-center justify-center">
-              <Users className="w-10 h-10 text-gray-200" />
-            </div>
-          </div>
-          <div className="flex items-baseline gap-3">
-            <span className="text-4xl font-extrabold text-gray-900 tracking-tight">
-              180.240
-            </span>
-            <div className="flex items-center gap-0.5 text-emerald-500 font-bold text-xs bg-emerald-50 px-2 py-0.5 rounded-full">
-              <TrendingUp className="w-3 h-3" />
-              <span>+5.2%</span>
-            </div>
-          </div>
-        </div>
+        <StatCard
+          label="Total de Leads"
+          value="180.240"
+          icon={Users}
+          trend={{ value: '+5.2%', direction: 'up' }}
+        />
 
-        {/* Alto Potencial */}
-        <div className="bg-white p-8 shadow-[0_4px_20px_rgba(0,0,0,0.01)] border border-gray-100 flex flex-col justify-between h-48">
-          <div className="flex items-center justify-between mb-6">
-            <p className="text-[12px] font-bold text-gray-400 uppercase tracking-widest">
-              Leads P0 (Alto Potencial)
-            </p>
-            <div className="w-10 h-10 flex items-center justify-center">
-              <Star className="w-10 h-10 text-gray-200 fill-gray-100" />
-            </div>
-          </div>
-          <div className="flex items-baseline gap-3">
-            <span className="text-4xl font-extrabold text-gray-900 tracking-tight">
-              42
-            </span>
-            <div className="flex items-center gap-0.5 text-emerald-500 font-bold text-xs bg-emerald-50 px-2 py-0.5 rounded-full">
-              <TrendingUp className="w-3 h-3" />
-              <span>+2.1%</span>
-            </div>
-          </div>
-        </div>
+        <StatCard
+          label="Leads P0 (Alto Potencial)"
+          value="42"
+          icon={Star}
+          trend={{ value: '+2.1%', direction: 'up' }}
+          iconColor="text-gray-200 fill-gray-100"
+        />
 
-        {/* Taxa de Conversão */}
-        <div className="bg-white p-8 shadow-[0_4px_20px_rgba(0,0,0,0.01)] border border-gray-100 flex flex-col justify-between h-48">
-          <div className="flex items-center justify-between mb-6">
-            <p className="text-[12px] font-bold text-gray-400 uppercase tracking-widest">
-              Taxa de Conversão
-            </p>
-            <div className="w-10 h-10 flex items-center justify-center">
-              <BarChart3 className="w-10 h-10 text-gray-200" />
-            </div>
-          </div>
-          <div className="flex items-baseline gap-3">
-            <span className="text-4xl font-extrabold text-gray-900 tracking-tight">
-              12.4%
-            </span>
-            <div className="flex items-center gap-0.5 text-emerald-500 font-bold text-xs bg-emerald-50 px-2 py-0.5 rounded-full">
-              <TrendingUp className="w-3 h-3" />
-              <span>+0.8%</span>
-            </div>
-          </div>
-        </div>
+        <StatCard
+          label="Taxa de Conversão"
+          value="12.4%"
+          icon={BarChart3}
+          trend={{ value: '+0.8%', direction: 'up' }}
+        />
       </div>
 
       {/* Tabela de Leads */}

@@ -1,5 +1,6 @@
 'use client'
 
+import { StatCard } from '@/components/dashboard/StatCard'
 import { Button } from '@/components/ui/button'
 import { Mail, Plus, ShieldCheck, User } from 'lucide-react'
 import { useState } from 'react'
@@ -33,41 +34,28 @@ export function TeamHeader({ totalMembers, adminsCount }: TeamHeaderProps) {
         </Button>
       </div>
 
-      {/* Stats Quick View */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-center gap-4">
-          <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-blue-400">
-            <User className="w-6 h-6" />
-          </div>
-          <div>
-            <p className="text-sm font-bold text-gray-400 uppercase tracking-widest text-[10px]">
-              Total de Membros
-            </p>
-            <p className="text-2xl font-black text-gray-900">{totalMembers}</p>
-          </div>
-        </div>
-        <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-center gap-4">
-          <div className="w-12 h-12 bg-green-50 rounded-xl flex items-center justify-center text-green-500">
-            <ShieldCheck className="w-6 h-6" />
-          </div>
-          <div>
-            <p className="text-sm font-bold text-gray-400 uppercase tracking-widest text-[10px]">
-              Administradores
-            </p>
-            <p className="text-2xl font-black text-gray-900">{adminsCount}</p>
-          </div>
-        </div>
-        <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-center gap-4">
-          <div className="w-12 h-12 bg-orange-50 rounded-xl flex items-center justify-center text-orange-400">
-            <Mail className="w-6 h-6" />
-          </div>
-          <div>
-            <p className="text-sm font-bold text-gray-400 uppercase tracking-widest text-[10px]">
-              Convites Pendentes
-            </p>
-            <p className="text-2xl font-black text-gray-900">0</p>
-          </div>
-        </div>
+        <StatCard
+          variant="compact"
+          label="Total de Membros"
+          value={totalMembers}
+          icon={User}
+          iconColor="text-gray-200"
+        />
+        <StatCard
+          variant="compact"
+          label="Administradores"
+          value={adminsCount}
+          icon={ShieldCheck}
+          iconColor="text-gray-200"
+        />
+        <StatCard
+          variant="compact"
+          label="Convites Pendentes"
+          value={0}
+          icon={Mail}
+          iconColor="text-gray-200"
+        />
       </div>
 
       <MemberDetailsDrawer
