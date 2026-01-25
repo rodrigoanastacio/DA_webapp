@@ -10,6 +10,7 @@ Bem-vindo à documentação técnica do projeto. Esta estrutura segue os princí
 4. **[04. Serviços](./04-service-layer.md)**: Comunicação HTTP com a API.
 5. **[05. API REST](./05-api-layer.md)**: Route Handlers e segurança (Proxy).
 6. **[06. API Handlers](./06-api-handlers-layer.md)**: Integração com o banco de dados (Supabase).
+7. **[07. Autenticação & RBAC](./07-auth-rbac.md)**: Como funciona a segurança e níveis de acesso.
 
 ---
 

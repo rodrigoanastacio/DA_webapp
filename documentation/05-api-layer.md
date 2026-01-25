@@ -27,7 +27,7 @@ export async function POST(req: Request) {
 
   // 2. Delegação para o Handler
   try {
-    const result = await diagnosticoHandler.create(validated.data)
+    const result = await someModuleHandler.create(validated.data)
     return Response.json(result)
   } catch (err) {
     return Response.json({ error: 'Erro Interno' }, { status: 500 })

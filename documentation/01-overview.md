@@ -85,3 +85,4 @@ Onde a mágica do banco de dados acontece. Faz a ponte direta com o Supabase.
 - **[04 - Camada de Serviços](./04-service-layer.md)**
 - **[05 - Camada de API REST](./05-api-layer.md)**
 - **[06 - Camada de API Handlers](./06-api-handlers-layer.md)**
+- **[07 - Autenticação & RBAC](./07-auth-rbac.md)**

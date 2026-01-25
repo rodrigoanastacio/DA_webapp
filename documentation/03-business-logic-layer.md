@@ -23,12 +23,21 @@ As entidades representam os conceitos de negócio e contêm **comportamento** (l
 - **Entidade**: "O que esse dado significa para o negócio?" (Calcular score, verificar potencial, classificar perfil).
 
 ```typescript
-// Exemplo: src/shared/entities/diagnostico/diagnostico.entity.ts
+// Exemplo 1: src/shared/entities/diagnostico/diagnostico.entity.ts
 export class Diagnostico {
   constructor(data: DiagnosticoFormData) { ... }
 
   get isHighPotential() {
       return this.revenue === 'more_100k' || this.investment === 'more_5k';
+  }
+}
+
+// Exemplo 2: src/shared/entities/team/team-member.entity.ts
+export class TeamMember {
+  constructor(data: TeamMemberResponse) { ... }
+
+  get initials() {
+    return this.fullName.split(' ').map(n => n[0]).join('');
   }
 }
 ```

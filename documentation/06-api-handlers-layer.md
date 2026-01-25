@@ -10,8 +10,9 @@ A camada de **API Handlers** é responsável pela integração direta com fontes
 
 1. **Integração com Supabase**: Usar o cliente Supabase para realizar operações de CRUD.
 2. **Mapeamento de Dados**: Converter objetos vindos da API (Camel Case) para o formato esperado pelo banco de dados (Snake Case + PT-BR).
-3. **Tratamento de Erros de Banco**: Capturar violações de constraints (como o erro de email que corrigimos) e retornar mensagens tratadas.
+3. **Tratamento de Erros de Banco**: Capturar violações de constraints e retornar mensagens tratadas.
 4. **Sanitização Final**: Aplicar `trim()`, `toLowerCase()`, etc., antes da persistência definitiva.
+5. **Aplicação de Lógica de Domínio**: Instanciar Entidades (ex: `TeamMember`) para processar dados antes da resposta.
 
 ## Exemplo Prático
 
