@@ -1,6 +1,5 @@
-import { Input } from '@/components/ui/input'
 import { teamHandler } from '@/shared/api-handlers/team/team.handler'
-import { MoreHorizontal, Search } from 'lucide-react'
+import { MoreHorizontal } from 'lucide-react'
 import { TeamHeader } from './components/TeamHeader'
 
 import { createClient } from '@/lib/supabase/server'
@@ -19,7 +18,7 @@ export default async function TeamPage() {
       />
 
       {/* Filters & Search */}
-      <div className="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex flex-col md:flex-row gap-4 items-center">
+      {/* <div className="bg-white p-4 border border-gray-100 flex flex-col md:flex-row gap-4 items-center">
         <div className="relative flex-1 w-full">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-300" />
           <Input
@@ -35,10 +34,10 @@ export default async function TeamPage() {
             <option>Viewer</option>
           </select>
         </div>
-      </div>
+      </div> */}
 
       {/* Team Table */}
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+      <div className="bg-white border border-gray-100 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>

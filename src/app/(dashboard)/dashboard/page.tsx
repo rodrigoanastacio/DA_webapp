@@ -89,7 +89,7 @@ export default function DashboardPage() {
       </Summary>
 
       {/* Tabela de Leads */}
-      <div className="bg-white rounded-[24px] shadow-[0_4px_30px_rgba(0,0,0,0.01)] border border-gray-50 overflow-hidden">
+      <div className="bg-white shadow-[0_4px_30px_rgba(0,0,0,0.01)] border border-gray-50 overflow-hidden">
         <div className="px-8 py-6 border-b border-gray-50 flex items-center justify-between bg-white">
           <h2 className="text-[16px] font-extrabold text-gray-900 uppercase tracking-wider">
             Gestão de Leads
