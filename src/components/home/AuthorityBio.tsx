@@ -8,7 +8,6 @@ export const AuthorityBio = () => {
           {/* Image */}
           <div className="w-full md:w-1/2 relative">
             <div className="relative aspect-4/5 bg-gray-100">
-              {/* Placeholder for Dayane's image - ensuring we use the one available or a generic placeholder if needed */}
               <Image
                 src="/assets/dayane-anastacio-gestao-e-assistencia-remota.jpg"
                 alt="Dayane Anastacio"
