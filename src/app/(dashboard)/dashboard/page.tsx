@@ -1,12 +1,15 @@
 'use client'
 
+import InteractiveTable, {
+  type Column
+} from '@/components/dashboard/InteractiveTable'
 import { LeadDetailsDrawer } from '@/components/dashboard/LeadDetailsDrawer'
 import { StatCard } from '@/components/dashboard/StatCard'
 import { Summary } from '@/components/dashboard/Summary'
 import { Badge } from '@/components/ui/badge'
 import { Lead, MOCK_LEADS } from '@/lib/mock-data'
 import { cn } from '@/lib/utils'
-import { BarChart3, MoreVertical, Star, Users } from 'lucide-react'
+import { BarChart3, Star, Users } from 'lucide-react'
 import { useState } from 'react'
 
 export default function DashboardPage() {
@@ -22,22 +25,78 @@ export default function DashboardPage() {
     setIsDrawerOpen(true)
   }
 
-  // Helper para gerar avatar com iniciais
-  const getInitials = (name: string) => {
-    return name
-      .split(' ')
-      .map((n) => n[0])
-      .join('')
-      .toUpperCase()
-      .slice(0, 2)
-  }
-
-  // Cores para avatares
-  const avatarColors = [
-    'bg-blue-100 text-blue-600',
-    'bg-amber-100 text-amber-600',
-    'bg-emerald-100 text-emerald-600',
-    'bg-purple-100 text-purple-600'
+  const columns: Column<Lead>[] = [
+    {
+      key: 'nome_completo',
+      label: 'Nome do Lead',
+      sortable: true,
+      render: (lead) => (
+        <div className="flex flex-col">
+          <span className="font-extrabold text-gray-900 text-[15px]">
+            {lead.nome_completo}
+          </span>
+          <span className="text-xs font-medium text-gray-400">
+            {lead.email}
+          </span>
+        </div>
+      )
+    },
+    {
+      key: 'atuacao',
+      label: 'Empresa',
+      render: (lead) => (
+        <span className="text-sm font-bold text-gray-500">
+          {lead.atuacao === 'advogado_autonomo'
+            ? 'Advogado Autônomo'
+            : 'Escritório Jurídico'}
+        </span>
+      )
+    },
+    {
+      key: 'faturamento',
+      label: 'Faturamento Est.',
+      sortable: false,
+      render: (lead) => (
+        <span className="text-[15px] font-extrabold text-gray-900">
+          R$ {lead.faturamento.replace('_', '-')}
+        </span>
+      )
+    },
+    {
+      key: 'created_at',
+      label: 'Data',
+      sortable: false,
+      render: (lead) => (
+        <div className="flex flex-col">
+          <span className="text-[13px] font-bold text-gray-500">
+            {new Date(lead.created_at).toLocaleDateString('pt-BR', {
+              day: '2-digit',
+              month: 'short'
+            })}
+          </span>
+          <span className="text-[11px] font-medium text-gray-400 uppercase">
+            {new Date(lead.created_at).getFullYear()}
+          </span>
+        </div>
+      )
+    },
+    {
+      key: 'status',
+      label: 'Status',
+      render: (_lead, idx) => {
+        const statusInfo = getStatusInfo(idx ?? 0)
+        return (
+          <Badge
+            className={cn(
+              'border-0 shadow-none font-extrabold text-[10px] tracking-widest px-4 py-1.5 rounded-lg',
+              statusInfo.className
+            )}
+          >
+            {statusInfo.label}
+          </Badge>
+        )
+      }
+    }
   ]
 
   // Mock statuses mapping
@@ -104,125 +163,14 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead>
-              <tr className="bg-white border-b border-gray-50">
-                <th className="px-8 py-5 text-left text-[10px] font-extrabold text-gray-400 uppercase tracking-widest">
-                  Nome do Lead
-                </th>
-                <th className="px-8 py-5 text-left text-[10px] font-extrabold text-gray-400 uppercase tracking-widest">
-                  Empresa
-                </th>
-                <th className="px-8 py-5 text-left text-[10px] font-extrabold text-gray-400 uppercase tracking-widest">
-                  Faturamento Est.
-                </th>
-                <th className="px-8 py-5 text-left text-[10px] font-extrabold text-gray-400 uppercase tracking-widest">
-                  Data
-                </th>
-                <th className="px-8 py-5 text-left text-[10px] font-extrabold text-gray-400 uppercase tracking-widest">
-                  Status
-                </th>
-                <th className="px-8 py-5 text-center text-[10px] font-extrabold text-gray-400 uppercase tracking-widest">
-                  Ação
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-50">
-              {recentLeads.map((lead, index) => {
-                const statusInfo = getStatusInfo(index)
-                const isP0 = index % 2 === 0 // Ricardo and Felipe in screenshot are marked with star
-
-                return (
-                  <tr
-                    key={lead.id}
-                    className="hover:bg-gray-50/50 transition-colors cursor-pointer group"
-                    onClick={() => handleLeadClick(lead)}
-                  >
-                    <td className="px-8 py-6 whitespace-nowrap">
-                      <div className="flex items-center gap-4">
-                        {/* <div className="w-5 flex justify-center">
-                          {isP0 && (
-                            <Star className="w-4 h-4 text-blue-600 fill-blue-600 shrink-0" />
-                          )}
-                        </div> */}
-                        {/* <div
-                          className={cn(
-                            'w-12 h-12 rounded-full flex items-center justify-center font-bold text-sm tracking-tighter shrink-0 transition-transform group-hover:scale-105',
-                            avatarColors[index % avatarColors.length]
-                          )}
-                        >
-                          {getInitials(lead.nome_completo)}
-                        </div> */}
-                        <div className="flex flex-col">
-                          <span className="font-extrabold text-gray-900 text-[15px]">
-                            {lead.nome_completo}
-                          </span>
-                          <span className="text-xs font-medium text-gray-400">
-                            {lead.email}
-                          </span>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-8 py-6 whitespace-nowrap">
-                      <span className="text-sm font-bold text-gray-500">
-                        {lead.atuacao === 'advogado_autonomo'
-                          ? 'Advogado Autônomo'
-                          : 'Escritório Jurídico'}
-                      </span>
-                    </td>
-                    <td className="px-8 py-6 whitespace-nowrap">
-                      <span className="text-[15px] font-extrabold text-gray-900">
-                        R$ {lead.faturamento.replace('_', '-')}
-                      </span>
-                    </td>
-                    <td className="px-8 py-6 whitespace-nowrap">
-                      <div className="flex flex-col">
-                        <span className="text-[13px] font-bold text-gray-500">
-                          {new Date(lead.created_at).toLocaleDateString(
-                            'pt-BR',
-                            { day: '2-digit', month: 'short' }
-                          )}
-                        </span>
-                        <span className="text-[11px] font-medium text-gray-400 uppercase">
-                          {new Date(lead.created_at).getFullYear()}
-                        </span>
-                      </div>
-                    </td>
-                    <td className="px-8 py-6 whitespace-nowrap">
-                      <Badge
-                        className={cn(
-                          'border-0 shadow-none font-extrabold text-[10px] tracking-widest px-4 py-1.5 rounded-lg',
-                          statusInfo.className
-                        )}
-                      >
-                        {statusInfo.label}
-                      </Badge>
-                    </td>
-                    <td className="px-8 py-6 whitespace-nowrap text-center">
-                      <button className="p-2 hover:bg-white rounded-xl transition-colors inline-block hover:shadow-sm">
-                        <MoreVertical className="w-5 h-5 text-gray-300 group-hover:text-gray-600 transition-colors" />
-                      </button>
-                    </td>
-                  </tr>
-                )
-              })}
-            </tbody>
-          </table>
-        </div>
-
-        {/* Pagination Footer */}
-        <div className="px-8 py-6 border-t border-gray-50 flex items-center justify-between text-gray-400 font-bold text-[11px] uppercase tracking-[2px]">
-          <span>Página 1 de 8</span>
-          <div className="flex items-center gap-6">
-            <button className="hover:text-gray-900 transition-colors cursor-not-allowed opacity-50">
-              Anterior
-            </button>
-            <button className="hover:text-blue-600 transition-colors font-extrabold">
-              Próxima
-            </button>
-          </div>
-        </div>
+        <InteractiveTable<Lead>
+          columns={columns}
+          rows={recentLeads}
+          pagination
+          rowsPerPageOptions={[10, 20, 50]}
+          initialsKey="nome_completo"
+          onRowClick={handleLeadClick}
+        />
       </div>
 
       <LeadDetailsDrawer
