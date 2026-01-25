@@ -42,6 +42,7 @@ export function LoginForm() {
           </label>
           <Input
             id="email"
+            name="email"
             type="email"
             placeholder="digite seu e-mail"
             required
@@ -68,6 +69,7 @@ export function LoginForm() {
           </div>
           <Input
             id="password"
+            name="password"
             type="password"
             placeholder="digite sua senha"
             required

@@ -54,18 +54,13 @@ export async function proxy(request: NextRequest) {
     }
   )
 
-  console.log('Middleware Path:', request.nextUrl.pathname)
-
   const {
     data: { user }
   } = await supabase.auth.getUser()
 
-  console.log('User detected:', !!user)
-
   // Protect dashboard route
   if (request.nextUrl.pathname.startsWith('/dashboard')) {
     if (!user) {
-      console.log('REDIRECTING TO LOGIN - NO USER')
       const url = request.nextUrl.clone()
       url.pathname = '/login'
       return NextResponse.redirect(url)

@@ -6,14 +6,13 @@ import { redirect } from 'next/navigation'
 /**
  * Server action to handle login logic with Supabase Auth.
  */
-export async function loginAction(formData: FormData) {
+export async function loginAction(data: { email: string; password: string }) {
   const supabase = await createClient()
-
-  const { email, password } = Object.fromEntries(formData)
+  const { email, password } = data
 
   const { error } = await supabase.auth.signInWithPassword({
-    email: email as string,
-    password: password as string
+    email,
+    password
   })
 
   if (error) {
