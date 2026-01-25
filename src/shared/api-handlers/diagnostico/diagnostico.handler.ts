@@ -1,6 +1,6 @@
-import { supabase } from '@/lib/supabase/client'
 import { DiagnosticoFormData } from '@/lib/zod/diagnostico.schema'
 import { Diagnostico } from '@/shared/entities/diagnostico/diagnostico.entity'
+import { SupabaseClient } from '@supabase/supabase-js'
 
 export const diagnosticoHandler = {
   /**
@@ -8,6 +8,7 @@ export const diagnosticoHandler = {
    * Realiza o mapeamento de campos CamelCase para SnakeCase (PT-BR)
    */
   create: async (
+    supabase: SupabaseClient,
     data: DiagnosticoFormData,
     metadata: { clientIp: string; userAgent: string }
   ) => {

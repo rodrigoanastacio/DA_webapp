@@ -1,3 +1,4 @@
+import { createClient } from '@/lib/supabase/server'
 import { diagnosticoSchema } from '@/lib/zod/diagnostico.schema'
 import { diagnosticoHandler } from '@/shared/api-handlers/diagnostico/diagnostico.handler'
 import { NextResponse } from 'next/server'
@@ -25,7 +26,9 @@ export async function POST(request: Request) {
       userAgent: request.headers.get('user-agent') || 'unknown'
     }
 
-    await diagnosticoHandler.create(validation.data, metadata)
+    const supabase = await createClient()
+
+    await diagnosticoHandler.create(supabase, validation.data, metadata)
 
     return NextResponse.json({ success: true })
   } catch (err: any) {

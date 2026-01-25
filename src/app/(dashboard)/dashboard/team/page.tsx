@@ -3,9 +3,12 @@ import { teamHandler } from '@/shared/api-handlers/team/team.handler'
 import { MoreHorizontal, Search } from 'lucide-react'
 import { TeamHeader } from './components/TeamHeader'
 
+import { createClient } from '@/lib/supabase/server'
+
 export default async function TeamPage() {
+  const supabase = await createClient()
   // Chamada via API Handler (Camada de Integração)
-  const members = await teamHandler.list()
+  const members = await teamHandler.list(supabase)
 
   return (
     <div className="space-y-8 animate-in fade-in duration-700">
