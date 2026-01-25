@@ -1,6 +1,6 @@
 import { teamHandler } from '@/shared/api-handlers/team/team.handler'
-import { TeamHeader } from './components/TeamHeader'
-import { TeamListTable } from './components/TeamListTable'
+import { TeamHeader } from '../components/TeamHeader'
+import { TeamListTable } from '../components/TeamListTable'
 
 import { createClient } from '@/lib/supabase/server'
 
