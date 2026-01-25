@@ -7,7 +7,7 @@ export const AuthorityBio = () => {
         <div className="flex flex-col md:flex-row items-center gap-12 md:gap-20">
           {/* Image */}
           <div className="w-full md:w-1/2 relative">
-            <div className="aspect-[4/5] relative bg-gray-100">
+            <div className="relative aspect-4/5 bg-gray-100">
               {/* Placeholder for Dayane's image - ensuring we use the one available or a generic placeholder if needed */}
               <Image
                 src="/assets/dayane-anastacio-gestao-e-assistencia-remota.jpg"

@@ -3,8 +3,8 @@ import { z } from 'zod'
 export const teamMemberSchema = z.object({
   full_name: z.string().min(3, 'Nome deve ter pelo menos 3 caracteres'),
   email: z.string().email('E-mail inválido'),
-  role: z.enum(['admin', 'editor', 'viewer'], {
-    errorMap: () => ({ message: 'Selecione um nível de permissão válido' })
+  role: z.enum(['admin', 'editor', 'viewer'] as const, {
+    message: 'Selecione um nível de permissão válido'
   })
 })
 
