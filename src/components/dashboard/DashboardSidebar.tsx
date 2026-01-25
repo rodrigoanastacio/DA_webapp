@@ -1,5 +1,6 @@
 'use client'
 
+import { useDashboard } from '@/app/(dashboard)/hooks/useDashboard'
 import { cn } from '@/lib/utils'
 import {
   BarChart2,
@@ -23,6 +24,7 @@ const navigation = [
 
 export function DashboardSidebar() {
   const pathname = usePathname()
+  const { handleLogout, isLoggingOut } = useDashboard()
 
   return (
     <div className="flex h-full flex-col bg-white border-r border-gray-100">
@@ -85,9 +87,18 @@ export function DashboardSidebar() {
 
           {/* Logout at Bottom */}
           <li className="mt-auto px-2 pb-8">
-            <button className="flex items-center gap-4 p-3 rounded-xl text-gray-500 hover:text-red-600 hover:bg-red-50 transition-all duration-200 w-full group font-semibold text-sm">
-              <LogOut className="h-5 w-5 shrink-0 transition-colors" />
-              Sair
+            <button
+              onClick={handleLogout}
+              disabled={isLoggingOut}
+              className="flex items-center gap-4 p-3 rounded-xl text-gray-500 hover:text-red-600 hover:bg-red-50 transition-all duration-200 w-full group font-semibold text-sm disabled:opacity-50"
+            >
+              <LogOut
+                className={cn(
+                  'h-5 w-5 shrink-0 transition-colors',
+                  isLoggingOut && 'animate-pulse'
+                )}
+              />
+              {isLoggingOut ? 'Saindo...' : 'Sair'}
             </button>
           </li>
         </ul>
