@@ -36,3 +36,24 @@ function DiagnosticWizard() {
   )
 }
 ```
+
+### Componentes Compartilhados
+
+Componentes reutilizáveis devem ser flexíveis e configuráveis via props, evitando lógica de negócio acoplada.
+
+**Exemplo: `InteractiveTable`**
+Localizado em `src/components/dashboard/InteractiveTable.tsx`, este componente gerencia a exibição de dados tabulares, suportando:
+- Paginação local
+- Ordenação
+- Seleção múltipla (opcional via `showCheckbox`)
+- Coluna de iniciais/avatar (opcional via `showInitials` e `initialsKey`)
+
+```tsx
+<InteractiveTable
+  columns={columns}
+  rows={data}
+  showCheckbox
+  showInitials
+  initialsKey="fullName"
+/>
+```
