@@ -1,59 +1,79 @@
+import { Target, TrendingUp, User } from 'lucide-react'
 import Image from 'next/image'
 
 export const AuthorityBio = () => {
+  const credentials = [
+    {
+      icon: User,
+      title: '10+ anos de experiência',
+      subtitle: 'MERCADO JURÍDICO'
+    },
+    {
+      icon: TrendingUp,
+      title: 'Expert em Fluxos e Processos',
+      subtitle: 'OTIMIZAÇÃO OPERACIONAL'
+    },
+    {
+      icon: Target,
+      title: 'Foco em Escala e Lucro',
+      subtitle: 'VISÃO DE NEGÓCIO'
+    }
+  ]
+
   return (
-    <section className="py-24 bg-white border-b border-gray-100">
+    <section className="py-24 bg-gray-50">
       <div className="container mx-auto px-4">
-        <div className="flex flex-col md:flex-row items-center gap-12 md:gap-20">
-          {/* Image */}
-          <div className="w-full md:w-1/2 relative">
-            <div className="relative aspect-4/5 bg-gray-100">
+        <div className="flex flex-col md:flex-row items-center gap-12 md:gap-16">
+          <div className="w-full md:w-5/12">
+            <div className="relative aspect-4/5 bg-white rounded-2xl overflow-hidden shadow-xl">
               <Image
-                src="/assets/dayane-anastacio-gestao-e-assistencia-remota.jpg"
+                src="/assets/dayane-anastacio.jpg"
                 alt="Dayane Anastacio"
                 fill
-                className="object-cover grayscale hover:grayscale-0 transition-all duration-700"
+                className="object-cover"
               />
             </div>
-            {/* Decorative Element */}
-            <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-gray-900 -z-10" />
           </div>
 
-          {/* Content */}
-          <div className="w-full md:w-1/2">
-            <span className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4 block">
-              Quem é Dayane Anastacio
+          <div className="w-full md:w-7/12">
+            <span className="text-sm font-bold text-blue-600 uppercase tracking-widest mb-4 block">
+              Especialista em Gestão para escritórios de advocacia
             </span>
-            <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-8 leading-tight">
-              Especialista em Gestão para Escritórios de Advocacia
-            </h2>
-            <div className="space-y-6 text-lg text-gray-600">
-              <p>
-                Com anos de experiência no setor jurídico, entendo exatamente
-                onde o calo aperta. Não sou apenas uma assistente virtual; sou
-                sua parceira estratégica.
-              </p>
-              <p>
-                Minha missão é devolver ao advogado a liberdade de focar no que
-                realmente importa:
-                <strong className="text-gray-900 font-bold">
-                  {' '}
-                  defender seus clientes
-                </strong>
-                , enquanto eu cuido de toda a engrenagem administrativa que faz
-                o escritório rodar.
-              </p>
-              <p>
-                Já ajudei dezenas de escritórios a saírem do caos operacional
-                para a previsibilidade financeira e administrativa.
-              </p>
-            </div>
 
-            <div className="mt-10 border-l-4 border-gray-900 pl-6">
-              <p className="text-xl italic text-gray-800 font-serif">
-                "Organização não é luxo, é a base para qualquer crescimento
-                sustentável na advocacia."
-              </p>
+            <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6 leading-tight">
+              Quem vai organizar seu escritório
+            </h2>
+
+            <p className="text-lg text-gray-600 mb-10 leading-relaxed">
+              Dayane Anastácio é consultora especializada em gestão de alta
+              performance para escritórios de advocacia. Com uma visão analítica
+              e sistêmica, ela transforma estruturas operacionais complexas em
+              processos fluidos e lucrativos.
+            </p>
+
+            {/* Credentials Cards */}
+            <div className="space-y-4 mb-10">
+              {credentials.map((item, idx) => {
+                const Icon = item.icon
+                return (
+                  <div
+                    key={idx}
+                    className="flex items-start gap-4 p-4 bg-white rounded-xl border border-gray-100"
+                  >
+                    <div className="shrink-0 w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center">
+                      <Icon className="w-6 h-6 text-blue-600" />
+                    </div>
+                    <div>
+                      <h3 className="text-base font-bold text-gray-900 mb-1">
+                        {item.title}
+                      </h3>
+                      <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide">
+                        {item.subtitle}
+                      </p>
+                    </div>
+                  </div>
+                )
+              })}
             </div>
           </div>
         </div>
