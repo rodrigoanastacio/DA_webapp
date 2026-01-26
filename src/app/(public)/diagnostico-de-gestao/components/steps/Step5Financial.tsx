@@ -1,23 +1,6 @@
 import { DiagnosticoFormData } from '@/lib/zod/diagnostico.schema'
+import { REVENUE_OPTIONS } from '@/shared/constants/diagnostico.constants'
 import { useFormContext } from 'react-hook-form'
-
-const REVENUE_OPTIONS = [
-  {
-    value: 'low',
-    label: 'Até R$ 20.000,00',
-    description: 'Escritórios em fase inicial ou reestruturação.'
-  },
-  {
-    value: 'medium',
-    label: 'De R$ 20.000,00 a R$ 40.000,00',
-    description: 'Escritórios em crescimento sustentável.'
-  },
-  {
-    value: 'high',
-    label: 'Acima de R$ 40.000,00',
-    description: 'Escritórios consolidados e alta performance.'
-  }
-]
 
 export function Step5Financial() {
   const {
@@ -27,7 +10,6 @@ export function Step5Financial() {
 
   return (
     <div className="flex flex-col gap-8">
-      {/* Header */}
       <div className="flex flex-col gap-2">
         <h1 className="text-3xl md:text-4xl font-extrabold leading-tight tracking-tight text-gray-800">
           Qual é o faturamento médio mensal do escritório?
@@ -38,8 +20,6 @@ export function Step5Financial() {
           diagnóstico.
         </p>
       </div>
-
-      {/* Revenue Options */}
       <div className="flex flex-col gap-3">
         {REVENUE_OPTIONS.map((option) => (
           <label

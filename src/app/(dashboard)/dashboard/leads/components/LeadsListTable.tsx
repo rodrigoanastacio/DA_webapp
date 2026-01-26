@@ -19,9 +19,10 @@ export function LeadsListTable({ leads }: LeadsListTableProps) {
     isDrawerOpen,
     handleLeadClick,
     handleCloseDrawer,
-    getStatusInfo,
     formatAtuacao,
-    formatFaturamento
+    formatRevenue,
+    formatLeadStatus,
+    getLeadStatusStyle
   } = useLeads()
 
   const columns: Column<Lead>[] = [
@@ -55,7 +56,7 @@ export function LeadsListTable({ leads }: LeadsListTableProps) {
       sortable: false,
       render: (lead) => (
         <span className="text-[15px] font-extrabold text-gray-900">
-          {formatFaturamento(lead.faturamento)}
+          {formatRevenue(lead.faturamento)}
         </span>
       )
     },
@@ -80,19 +81,16 @@ export function LeadsListTable({ leads }: LeadsListTableProps) {
     {
       key: 'status',
       label: 'Status',
-      render: (_lead, idx) => {
-        const statusInfo = getStatusInfo(idx ?? 0)
-        return (
-          <Badge
-            className={cn(
-              'border-0 shadow-none font-extrabold text-[10px] tracking-widest px-4 py-1.5 rounded-lg',
-              statusInfo.className
-            )}
-          >
-            {statusInfo.label}
-          </Badge>
-        )
-      }
+      render: (lead) => (
+        <Badge
+          className={cn(
+            'border-0 shadow-none font-extrabold text-[10px] tracking-widest px-4 py-1.5 rounded-lg',
+            getLeadStatusStyle(lead.status)
+          )}
+        >
+          {formatLeadStatus(lead.status)}
+        </Badge>
+      )
     }
   ]
 

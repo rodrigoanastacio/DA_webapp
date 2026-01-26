@@ -1,4 +1,5 @@
 import { DiagnosticoFormData } from '@/lib/zod/diagnostico.schema'
+import { ATUACAO_OPTIONS } from '@/shared/constants/diagnostico.constants'
 import { useFormContext } from 'react-hook-form'
 
 const EXPERIENCE_OPTIONS = [
@@ -6,29 +7,6 @@ const EXPERIENCE_OPTIONS = [
   { value: '1_3', label: '1 a 3 anos' },
   { value: '3_5', label: '3 a 5 anos' },
   { value: 'more_5', label: 'Mais de 5 anos' }
-]
-
-const ROLE_OPTIONS = [
-  {
-    value: 'autonomo',
-    label: 'Advogado Autônomo',
-    description: 'Atua sozinho, sem sócios ou equipe fixa.'
-  },
-  {
-    value: 'socio',
-    label: 'Sócio de Escritório',
-    description: 'Possui participação societária em uma banca de advocacia.'
-  },
-  {
-    value: 'associado',
-    label: 'Advogado Associado',
-    description: 'Trabalha em escritório sem participação societária.'
-  },
-  {
-    value: 'dept_juridico',
-    label: 'Departamento Jurídico',
-    description: 'Atua internamente em empresas ou instituições.'
-  }
 ]
 
 export function Step2ProfessionalProfile() {
@@ -95,7 +73,7 @@ export function Step2ProfessionalProfile() {
         </div>
 
         <div className="flex flex-col gap-3">
-          {ROLE_OPTIONS.map((option) => (
+          {ATUACAO_OPTIONS.map((option) => (
             <label
               key={option.value}
               className="relative flex items-start p-4 rounded-lg border border-blue-100 cursor-pointer hover:border-blue-700 hover:bg-blue-50/50 transition-all group"

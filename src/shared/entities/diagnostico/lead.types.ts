@@ -14,7 +14,7 @@ export interface Lead {
   investimento: string
   created_at: string
   is_high_potential: boolean
-  // Campos adicionais do banco
+  status: string
   ip_cliente?: string
   agente_usuario?: string
 }
@@ -34,6 +34,7 @@ export interface DiagnosticoRow {
   expectativas: string
   investimento: string
   created_at: string
+  status: string
   ip_cliente: string | null
   agente_usuario: string | null
 }

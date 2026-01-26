@@ -36,6 +36,7 @@ export const diagnosticoHandler = {
         faturamento: diagnostico.revenue,
         expectativas: diagnostico.expectativas.trim(),
         investimento: diagnostico.investment,
+        status: 'novo_lead',
         ip_cliente: metadata.clientIp,
         agente_usuario: metadata.userAgent
       }
@@ -95,9 +96,9 @@ export const diagnosticoHandler = {
       expectativas: row.expectativas,
       investimento: row.investimento,
       created_at: row.created_at,
+      status: row.status,
       ip_cliente: row.ip_cliente || undefined,
       agente_usuario: row.agente_usuario || undefined,
-      // Calcular high potential usando mesma lógica da entidade
       is_high_potential: calculateHighPotential(row)
     }))
 
