@@ -1,13 +1,9 @@
 import { DiagnosticoFormData } from '@/lib/zod/diagnostico.schema'
-import { ATUACAO_OPTIONS } from '@/shared/constants/diagnostico.constants'
+import {
+  ATUACAO_OPTIONS,
+  EXPERIENCE_OPTIONS
+} from '@/shared/constants/diagnostico.constants'
 import { useFormContext } from 'react-hook-form'
-
-const EXPERIENCE_OPTIONS = [
-  { value: 'less_1', label: 'Menos de 1 ano' },
-  { value: '1_3', label: '1 a 3 anos' },
-  { value: '3_5', label: '3 a 5 anos' },
-  { value: 'more_5', label: 'Mais de 5 anos' }
-]
 
 export function Step2ProfessionalProfile() {
   const {

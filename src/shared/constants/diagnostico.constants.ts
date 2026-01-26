@@ -112,3 +112,74 @@ export function getLeadStatusStyle(status: string): string {
     LEAD_STATUS_STYLES[status as LeadStatusType] || 'bg-gray-100 text-gray-700'
   )
 }
+
+// Experience Time
+export const EXPERIENCE_OPTIONS = [
+  { value: 'less_1', label: 'Menos de 1 ano' },
+  { value: '1_3', label: '1 a 3 anos' },
+  { value: '3_5', label: '3 a 5 anos' },
+  { value: 'more_5', label: 'Mais de 5 anos' }
+]
+
+export function formatExperience(experience: string): string {
+  const option = EXPERIENCE_OPTIONS.find((opt) => opt.value === experience)
+  return option ? option.label : experience
+}
+
+// Team Structure
+export const TEAM_STRUCTURE_OPTIONS = [
+  {
+    value: 'clt_associados',
+    label: 'Sim, tenho funcionários CLT/Associados',
+    description: 'Escritório com equipe fixa e estrutura formal'
+  },
+  {
+    value: 'solo',
+    label: 'Não, atuo sozinho',
+    description: 'Advocacia autônoma ou em parceria pontual'
+  },
+  {
+    value: 'estagiarios',
+    label: 'Tenho apenas estagiários',
+    description: 'Estrutura enxuta com apoio acadêmico'
+  }
+]
+
+export function formatTeamStructure(structure: string): string {
+  const option = TEAM_STRUCTURE_OPTIONS.find((opt) => opt.value === structure)
+  return option ? option.label : structure
+}
+
+// Management Level
+export const MANAGEMENT_LEVEL_OPTIONS = [
+  {
+    value: 'precaria',
+    label: 'Precária / Inexistente',
+    description: 'Não há controle de processos ou fluxo de caixa organizado.',
+    icon: 'warning'
+  },
+  {
+    value: 'basica',
+    label: 'Básica (Financeiro)',
+    description: 'Controle mínimo de contas a pagar e receber, sem estratégia.',
+    icon: 'attach_money'
+  },
+  {
+    value: 'desenvolvimento',
+    label: 'Em desenvolvimento',
+    description:
+      'Existem processos definidos mas não documentados ou seguidos.',
+    icon: 'trending_up'
+  },
+  {
+    value: 'avancada',
+    label: 'Profissional / Avançada',
+    description: 'Gestão baseada em indicadores (KPIs), CRM e metas claras.',
+    icon: 'verified'
+  }
+]
+
+export function formatManagementLevel(level: string): string {
+  const option = MANAGEMENT_LEVEL_OPTIONS.find((opt) => opt.value === level)
+  return option ? option.label : level
+}

@@ -49,6 +49,23 @@ export const diagnosticoHandler = {
     return { success: true }
   },
 
+  updateStatus: async (
+    supabase: SupabaseClient,
+    id: string,
+    status: string
+  ) => {
+    const { error } = await supabase
+      .from('diagnosticos')
+      .update({ status })
+      .eq('id', id)
+
+    if (error) {
+      throw error
+    }
+
+    return { success: true }
+  },
+
   list: async (
     supabase: SupabaseClient,
     options: {

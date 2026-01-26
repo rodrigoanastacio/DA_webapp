@@ -3,11 +3,27 @@
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger
+} from '@/components/ui/dropdown-menu'
+import {
   Sheet,
   SheetContent,
   SheetDescription,
   SheetTitle
 } from '@/components/ui/sheet'
+import {
+  formatAtuacao,
+  formatExperience,
+  formatLeadStatus,
+  formatManagementLevel,
+  formatRevenue,
+  formatTeamStructure,
+  getLeadStatusStyle,
+  LeadStatusType
+} from '@/shared/constants/diagnostico.constants'
 import { Lead } from '@/shared/entities/diagnostico/lead.types'
 import {
   AlertCircle,
@@ -26,18 +42,16 @@ interface LeadDetailsDrawerProps {
   lead: Lead | null
   isOpen: boolean
   onClose: () => void
+  onUpdateStatus?: (status: string) => void
 }
 
 export function LeadDetailsDrawer({
   lead,
   isOpen,
-  onClose
+  onClose,
+  onUpdateStatus
 }: LeadDetailsDrawerProps) {
   if (!lead) return null
-
-  const formatValue = (value: string) => {
-    return value.replace(/_/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase())
-  }
 
   return (
     <Sheet open={isOpen} onOpenChange={onClose}>
@@ -73,7 +87,15 @@ export function LeadDetailsDrawer({
           </div>
 
           <div className="flex flex-wrap gap-3 mt-8">
-            <Button className="bg-[#10B981] hover:bg-[#059669] text-white flex items-center gap-2 rounded-xl h-12 px-6 font-bold shadow-sm transition-all active:scale-95">
+            <Button
+              className="bg-[#10B981] hover:bg-[#059669] text-white flex items-center gap-2 rounded-xl h-12 px-6 font-bold shadow-sm transition-all active:scale-95"
+              onClick={() =>
+                window.open(
+                  `https://wa.me/55${lead.whatsapp.replace(/\D/g, '')}`,
+                  '_blank'
+                )
+              }
+            >
               <MessageCircle className="w-5 h-5" />
               WHATSAPP
             </Button>
@@ -82,12 +104,36 @@ export function LeadDetailsDrawer({
               AGENDAR
             </Button>
             <div className="flex-1 min-w-[180px]">
-              <button className="w-full flex items-center justify-between px-5 h-12 rounded-xl border-2 border-gray-100 bg-white text-[13px] font-extrabold text-gray-900 group hover:border-blue-400 transition-colors">
-                <span className="flex items-center gap-2">
-                  STATUS: <span className="text-blue-600">NOVO LEAD</span>
-                </span>
-                <ChevronDown className="w-4 h-4 text-gray-400 group-hover:text-blue-400" />
-              </button>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button className="w-full flex items-center justify-between px-5 h-12 rounded-xl border-2 border-gray-100 bg-white text-[13px] font-extrabold text-gray-900 group hover:border-blue-400 transition-colors cursor-pointer outline-none focus:ring-2 focus:ring-blue-400/20">
+                    <span className="flex items-center gap-2">
+                      STATUS:{' '}
+                      <Badge
+                        className={`border-0 shadow-none font-extrabold text-[10px] tracking-widest px-2 py-0.5 rounded ${getLeadStatusStyle(lead.status)}`}
+                      >
+                        {formatLeadStatus(lead.status)}
+                      </Badge>
+                    </span>
+                    <ChevronDown className="w-4 h-4 text-gray-400 group-hover:text-blue-400" />
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-[200px]">
+                  {Object.values(LeadStatusType).map((status) => (
+                    <DropdownMenuItem
+                      key={status}
+                      onClick={() => onUpdateStatus?.(status)}
+                      className="cursor-pointer"
+                    >
+                      <Badge
+                        className={`w-full justify-center border-0 shadow-none font-extrabold text-[10px] tracking-widest px-2 py-1 rounded ${getLeadStatusStyle(status)}`}
+                      >
+                        {formatLeadStatus(status)}
+                      </Badge>
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
         </div>
@@ -106,28 +152,13 @@ export function LeadDetailsDrawer({
             </div>
 
             <div className="grid grid-cols-2 gap-x-12 gap-y-8 p-8 rounded-[24px] bg-[#f8fafc]/50 border border-gray-100/50">
-              <div className="space-y-1">
-                <p className="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest">
-                  Especialidade
-                </p>
-                <p className="text-[15px] font-bold text-gray-900">
-                  Direito Geral
-                </p>
-              </div>
-              <div className="space-y-1">
-                <p className="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest">
-                  Registro OAB
-                </p>
-                <p className="text-[15px] font-bold text-gray-900">
-                  OAB/SP XXX.XXX
-                </p>
-              </div>
+              {/* Removido campos mock (Especialidade/OAB) pois não existem no banco */}
               <div className="space-y-1">
                 <p className="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest">
                   Tempo de Atuação
                 </p>
                 <p className="text-[15px] font-bold text-gray-900">
-                  {formatValue(lead.tempo)}
+                  {formatExperience(lead.tempo)}
                 </p>
               </div>
               <div className="space-y-1">
@@ -158,7 +189,7 @@ export function LeadDetailsDrawer({
                   Tamanho da Equipe
                 </p>
                 <p className="text-[15px] font-bold text-gray-900">
-                  {formatValue(lead.estrutura_equipe)}
+                  {formatTeamStructure(lead.estrutura_equipe)}
                 </p>
               </div>
               <div className="space-y-1">
@@ -166,7 +197,7 @@ export function LeadDetailsDrawer({
                   Modelo de Negócio
                 </p>
                 <p className="text-[15px] font-bold text-gray-900">
-                  {formatValue(lead.atuacao)}
+                  {formatAtuacao(lead.atuacao)}
                 </p>
               </div>
               <div className="space-y-1 col-span-2">
@@ -178,13 +209,13 @@ export function LeadDetailsDrawer({
                     variant="secondary"
                     className="bg-white border-gray-200 text-gray-600 px-3 py-1 text-[11px] font-bold"
                   >
-                    Gestão {formatValue(lead.nivel_gestao)}
+                    Gestão {formatManagementLevel(lead.nivel_gestao)}
                   </Badge>
                   <Badge
                     variant="secondary"
                     className="bg-white border-gray-200 text-gray-600 px-3 py-1 text-[11px] font-bold"
                   >
-                    Faturamento: {formatValue(lead.faturamento)}
+                    Faturamento: {formatRevenue(lead.faturamento)}
                   </Badge>
                 </div>
               </div>
@@ -213,7 +244,9 @@ export function LeadDetailsDrawer({
                   </div>
                   <div className="space-y-1">
                     <p className="text-[14px] font-bold text-rose-900 leading-tight">
-                      {formatValue(dificuldade)}
+                      {dificuldade
+                        .replace(/_/g, ' ')
+                        .replace(/\b\w/g, (l) => l.toUpperCase())}
                     </p>
                     <p className="text-[12px] text-rose-600/70 font-medium">
                       Dificuldade crítica identificada no diagnóstico inicial.

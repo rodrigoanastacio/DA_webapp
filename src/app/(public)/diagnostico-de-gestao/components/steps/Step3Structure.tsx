@@ -1,51 +1,9 @@
 import { DiagnosticoFormData } from '@/lib/zod/diagnostico.schema'
+import {
+  MANAGEMENT_LEVEL_OPTIONS,
+  TEAM_STRUCTURE_OPTIONS
+} from '@/shared/constants/diagnostico.constants'
 import { useFormContext } from 'react-hook-form'
-
-const TEAM_STRUCTURE_OPTIONS = [
-  {
-    value: 'clt_associados',
-    label: 'Sim, tenho funcionários CLT/Associados',
-    description: 'Escritório com equipe fixa e estrutura formal'
-  },
-  {
-    value: 'solo',
-    label: 'Não, atuo sozinho',
-    description: 'Advocacia autônoma ou em parceria pontual'
-  },
-  {
-    value: 'estagiarios',
-    label: 'Tenho apenas estagiários',
-    description: 'Estrutura enxuta com apoio acadêmico'
-  }
-]
-
-const MANAGEMENT_LEVEL_OPTIONS = [
-  {
-    value: 'precaria',
-    label: 'Precária / Inexistente',
-    description: 'Não há controle de processos ou fluxo de caixa organizado.',
-    icon: 'warning'
-  },
-  {
-    value: 'basica',
-    label: 'Básica (Financeiro)',
-    description: 'Controle mínimo de contas a pagar e receber, sem estratégia.',
-    icon: 'attach_money'
-  },
-  {
-    value: 'desenvolvimento',
-    label: 'Em desenvolvimento',
-    description:
-      'Existem processos definidos mas não documentados ou seguidos.',
-    icon: 'trending_up'
-  },
-  {
-    value: 'avancada',
-    label: 'Profissional / Avançada',
-    description: 'Gestão baseada em indicadores (KPIs), CRM e metas claras.',
-    icon: 'verified'
-  }
-]
 
 export function Step3Structure() {
   const {

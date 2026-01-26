@@ -1,5 +1,6 @@
 'use client'
 
+import { updateLeadStatus } from '@/app/(dashboard)/dashboard/leads/actions/updateLeadStatus'
 import {
   formatAtuacao,
   formatLeadStatus,
@@ -23,11 +24,26 @@ export function useLeads() {
     setSelectedLead(null)
   }
 
+  const handleUpdateStatus = async (status: string) => {
+    if (!selectedLead) return
+
+    const updatedLead = { ...selectedLead, status }
+    setSelectedLead(updatedLead)
+
+    const result = await updateLeadStatus(selectedLead.id, status)
+
+    if (!result.success) {
+      setSelectedLead(selectedLead)
+      console.error('Failed to update status')
+    }
+  }
+
   return {
     selectedLead,
     isDrawerOpen,
     handleLeadClick,
     handleCloseDrawer,
+    handleUpdateStatus,
     formatAtuacao,
     formatRevenue,
     formatLeadStatus,

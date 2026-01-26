@@ -19,6 +19,7 @@ export function LeadsListTable({ leads }: LeadsListTableProps) {
     isDrawerOpen,
     handleLeadClick,
     handleCloseDrawer,
+    handleUpdateStatus,
     formatAtuacao,
     formatRevenue,
     formatLeadStatus,
@@ -125,6 +126,7 @@ export function LeadsListTable({ leads }: LeadsListTableProps) {
         lead={selectedLead}
         isOpen={isDrawerOpen}
         onClose={handleCloseDrawer}
+        onUpdateStatus={handleUpdateStatus}
       />
     </>
   )
