@@ -14,9 +14,7 @@ export function StepSuccess() {
           Diagnóstico Recebido!
         </h1>
         <p className="text-blue-300 text-base md:text-lg leading-relaxed max-w-2xl mx-auto">
-          Obrigado por compartilhar as informações do seu escritório.
-          <br className="hidden md:block" />
-          Nossa equipe de especialistas já iniciou a análise do seu perfil.
+          Obrigada por compartilhar comigo suas informações.
         </p>
       </div>
 
@@ -24,9 +22,10 @@ export function StepSuccess() {
       <div className="bg-blue-50/50 rounded-xl p-6 md:p-8 max-w-xl w-full border border-blue-100">
         <h3 className="text-blue-700 font-bold mb-2">Próximos Passos</h3>
         <p className="text-gray-600 text-sm leading-relaxed">
-          Entraremos em contato via WhatsApp em até{' '}
-          <strong>24 horas úteis</strong> para apresentar o resultado detalhado
-          do seu diagnóstico e sugerir um plano de ação personalizado.
+          Entrarei em contato via WhatsApp em até{' '}
+          <strong>24 horas úteis</strong> para alinharmos uma reunião inicial, e
+          te apresentar o resultado do seu diagnóstico e sugerir seu plano de
+          ação personalizado.
         </p>
       </div>
 

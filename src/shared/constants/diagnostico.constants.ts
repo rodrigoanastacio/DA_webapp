@@ -21,7 +21,7 @@ export const ATUACAO_OPTIONS = [
   {
     value: AtuacaoType.SOCIO,
     label: ATUACAO_LABELS[AtuacaoType.SOCIO],
-    description: 'Possui participação societária em uma banca de advocacia.'
+    description: 'Participação societária em escritório de advocacia.'
   },
   {
     value: AtuacaoType.ASSOCIADO,
@@ -60,12 +60,12 @@ export const REVENUE_OPTIONS = [
   {
     value: RevenueType.MEDIUM,
     label: 'De R$ 20.000,00 a R$ 40.000,00',
-    description: 'Escritórios em crescimento sustentável.'
+    description: 'Escritórios em crescimento/expansão.'
   },
   {
     value: RevenueType.HIGH,
     label: 'Acima de R$ 40.000,00',
-    description: 'Escritórios consolidados e alta performance.'
+    description: 'Escritórios consolidados.'
   }
 ]
 
@@ -170,12 +170,6 @@ export const MANAGEMENT_LEVEL_OPTIONS = [
     description:
       'Existem processos definidos mas não documentados ou seguidos.',
     icon: 'trending_up'
-  },
-  {
-    value: 'avancada',
-    label: 'Profissional / Avançada',
-    description: 'Gestão baseada em indicadores (KPIs), CRM e metas claras.',
-    icon: 'verified'
   }
 ]
 

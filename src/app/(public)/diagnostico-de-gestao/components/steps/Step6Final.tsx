@@ -33,8 +33,8 @@ export function Step6Final() {
           Intenção e Expectativas
         </h1>
         <p className="text-blue-300 text-base md:text-lg leading-relaxed">
-          Para finalizarmos, conte-nos o que você busca e seu nível de
-          comprometimento com a mudança.
+          Para finalizar, me conta de forma breve quais suas expectativas com um
+          serviço de gestão e organização jurídica.
         </p>
       </div>
 
