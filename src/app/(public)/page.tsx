@@ -1,3 +1,4 @@
+import { Footer } from '@/components/Footer'
 import { Agitation } from '@/components/home/Agitation'
 import { AuthorityBio } from '@/components/home/AuthorityBio'
 import { FAQ } from '@/components/home/FAQ'
@@ -14,11 +15,11 @@ export default function Home() {
       <Agitation />
       <SolutionPresentation />
       <MethodGerar />
-      {/* <TargetAudience /> */}
       <AuthorityBio />
       <HowItWorks />
       <FinalCTA />
       <FAQ />
+      <Footer />
     </main>
   )
 }
