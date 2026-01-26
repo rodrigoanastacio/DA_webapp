@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import DiagnosticWizard from './components/DiagnosticWizard'
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://dayaneanastacio.com.br'),
   title: 'Formulário de Diagnóstico Inicial | Dayane Anastácio',
   description:
     'Conte-me sobre seu escritório em 5 minutos. Análise personalizada para advogados que buscam crescimento e organização.',
