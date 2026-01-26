@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils'
 import {
   BarChart2,
   Calendar,
+  Home,
   LogOut,
   Scale,
   Settings,
@@ -15,7 +16,8 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 const navigation = [
-  { name: 'Leads', href: '/dashboard', icon: Users },
+  { name: 'Dashboard', href: '/dashboard', icon: Home },
+  { name: 'Leads', href: '/dashboard/leads/list', icon: Users },
   { name: 'Equipe', href: '/dashboard/team/list', icon: UsersRound },
   { name: 'Agenda', href: '/dashboard/agenda', icon: Calendar },
   { name: 'Relatórios', href: '/dashboard/reports', icon: BarChart2 },

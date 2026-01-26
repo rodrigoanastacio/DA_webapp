@@ -8,7 +8,7 @@ import {
   SheetDescription,
   SheetTitle
 } from '@/components/ui/sheet'
-import { Lead } from '@/lib/mock-data'
+import { Lead } from '@/shared/entities/diagnostico/lead.types'
 import {
   AlertCircle,
   Briefcase,

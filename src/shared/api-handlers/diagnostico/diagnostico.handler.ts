@@ -1,18 +1,18 @@
 import { DiagnosticoFormData } from '@/lib/zod/diagnostico.schema'
 import { Diagnostico } from '@/shared/entities/diagnostico/diagnostico.entity'
+import {
+  DiagnosticoRow,
+  Lead,
+  LeadsListResponse
+} from '@/shared/entities/diagnostico/lead.types'
 import { SupabaseClient } from '@supabase/supabase-js'
 
 export const diagnosticoHandler = {
-  /**
-   * Insere um novo diagnóstico no banco de dados Supabase
-   * Realiza o mapeamento de campos CamelCase para SnakeCase (PT-BR)
-   */
   create: async (
     supabase: SupabaseClient,
     data: DiagnosticoFormData,
     metadata: { clientIp: string; userAgent: string }
   ) => {
-    // 1. Instancia a Entidade de Domínio para usar lógica de negócio
     const diagnostico = new Diagnostico(data)
 
     // Exemplo de uso da lógica da entidade antes de persistir
@@ -22,7 +22,6 @@ export const diagnosticoHandler = {
       )
     }
 
-    // 2. Mapeamento para o banco de dados (PT-BR snake_case)
     const { error } = await supabase.from('diagnosticos').insert([
       {
         nome_completo: diagnostico.name.trim(),
@@ -47,5 +46,76 @@ export const diagnosticoHandler = {
     }
 
     return { success: true }
+  },
+
+  list: async (
+    supabase: SupabaseClient,
+    options: {
+      page?: number
+      perPage?: number
+      orderBy?: 'created_at' | 'nome_completo'
+      orderDirection?: 'asc' | 'desc'
+    } = {}
+  ): Promise<LeadsListResponse> => {
+    const {
+      page = 1,
+      perPage = 10,
+      orderBy = 'created_at',
+      orderDirection = 'desc'
+    } = options
+
+    const from = (page - 1) * perPage
+    const to = from + perPage - 1
+
+    const { count } = await supabase
+      .from('diagnosticos')
+      .select('*', { count: 'exact', head: true })
+    const { data, error } = await supabase
+      .from('diagnosticos')
+      .select('*')
+      .order(orderBy, { ascending: orderDirection === 'asc' })
+      .range(from, to)
+
+    if (error) {
+      throw error
+    }
+
+    const leads: Lead[] = (data as DiagnosticoRow[]).map((row) => ({
+      id: row.id,
+      nome_completo: row.nome_completo,
+      email: row.email,
+      whatsapp: row.whatsapp,
+      cidade_estado: row.cidade_estado,
+      tempo: row.tempo,
+      atuacao: row.atuacao,
+      estrutura_equipe: row.estrutura_equipe,
+      nivel_gestao: row.nivel_gestao,
+      dificuldades: row.dificuldades,
+      faturamento: row.faturamento,
+      expectativas: row.expectativas,
+      investimento: row.investimento,
+      created_at: row.created_at,
+      ip_cliente: row.ip_cliente || undefined,
+      agente_usuario: row.agente_usuario || undefined,
+      // Calcular high potential usando mesma lógica da entidade
+      is_high_potential: calculateHighPotential(row)
+    }))
+
+    return {
+      leads,
+      total: count || 0,
+      page,
+      perPage
+    }
   }
+}
+
+function calculateHighPotential(row: DiagnosticoRow): boolean {
+  const highRevenueThreshold = ['50k_100k', 'more_100k']
+  const highInvestmentThreshold = ['2k_5k', 'more_5k']
+
+  return (
+    highRevenueThreshold.includes(row.faturamento) &&
+    highInvestmentThreshold.includes(row.investimento)
+  )
 }
