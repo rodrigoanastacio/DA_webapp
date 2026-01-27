@@ -125,6 +125,45 @@ export const diagnosticoHandler = {
       page,
       perPage
     }
+  },
+
+  getById: async (
+    supabase: SupabaseClient,
+    id: string
+  ): Promise<{ data: Lead | null; error: any }> => {
+    const { data, error } = await supabase
+      .from('diagnosticos')
+      .select('*')
+      .eq('id', id)
+      .single()
+
+    if (error) {
+      return { data: null, error }
+    }
+
+    const row = data as DiagnosticoRow
+    const lead: Lead = {
+      id: row.id,
+      nome_completo: row.nome_completo,
+      email: row.email,
+      whatsapp: row.whatsapp,
+      cidade_estado: row.cidade_estado,
+      tempo: row.tempo,
+      atuacao: row.atuacao,
+      estrutura_equipe: row.estrutura_equipe,
+      nivel_gestao: row.nivel_gestao,
+      dificuldades: row.dificuldades,
+      faturamento: row.faturamento,
+      expectativas: row.expectativas,
+      investimento: row.investimento,
+      created_at: row.created_at,
+      status: row.status,
+      ip_cliente: row.ip_cliente || undefined,
+      agente_usuario: row.agente_usuario || undefined,
+      is_high_potential: calculateHighPotential(row)
+    }
+
+    return { data: lead, error: null }
   }
 }
 
