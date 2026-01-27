@@ -77,6 +77,7 @@ export enum LeadStatusType {
   NOVO_LEAD = 'novo_lead',
   QUALIFICADO = 'qualificado',
   EM_CONTATO = 'em_contato',
+  EM_NEGOCIACAO = 'em_negociacao',
   AGUARDANDO_DOC = 'aguardando_doc',
   CONVERTIDO = 'convertido',
   DESCARTADO = 'descartado'
@@ -86,6 +87,7 @@ export const LEAD_STATUS_LABELS: Record<LeadStatusType, string> = {
   [LeadStatusType.NOVO_LEAD]: 'NOVO LEAD',
   [LeadStatusType.QUALIFICADO]: 'QUALIFICADO',
   [LeadStatusType.EM_CONTATO]: 'EM CONTATO',
+  [LeadStatusType.EM_NEGOCIACAO]: 'EM NEGOCIAÇÃO',
   [LeadStatusType.AGUARDANDO_DOC]: 'AGUARDANDO DOC',
   [LeadStatusType.CONVERTIDO]: 'CONVERTIDO',
   [LeadStatusType.DESCARTADO]: 'DESCARTADO'
@@ -95,6 +97,7 @@ export const LEAD_STATUS_STYLES: Record<LeadStatusType, string> = {
   [LeadStatusType.NOVO_LEAD]: 'bg-[#F3F4F6] text-[#374151]',
   [LeadStatusType.QUALIFICADO]: 'bg-[#E0F2FE] text-[#0369A1]',
   [LeadStatusType.EM_CONTATO]: 'bg-[#FEF3C7] text-[#92400E]',
+  [LeadStatusType.EM_NEGOCIACAO]: 'bg-[#F3E8FF] text-[#6B21A8]', // Purple
   [LeadStatusType.AGUARDANDO_DOC]: 'bg-[#DBEAFE] text-[#1E40AF]',
   [LeadStatusType.CONVERTIDO]: 'bg-[#D1FAE5] text-[#065F46]',
   [LeadStatusType.DESCARTADO]: 'bg-[#FEE2E2] text-[#991B1B]'

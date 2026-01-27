@@ -6,6 +6,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { Lead } from '@/shared/entities/diagnostico/lead.types'
 import { Entrevista } from '@/shared/entities/entrevistas/entrevista.types'
 import { Loader2, Save } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { toast } from 'sonner'
 import { saveInterview } from '../../actions/saveInterview'
@@ -66,6 +67,7 @@ const GERAR_STEPS = [
 ]
 
 export function MeetingRunner({ lead, initialEntrevista }: MeetingRunnerProps) {
+  const router = useRouter()
   const [activeStep, setActiveStep] = useState(0)
   const [loading, setLoading] = useState(false)
   const [interviewId, setInterviewId] = useState<string | undefined>(
@@ -76,23 +78,28 @@ export function MeetingRunner({ lead, initialEntrevista }: MeetingRunnerProps) {
   )
   const [notes, setNotes] = useState(initialEntrevista?.observacoes || '')
 
-  // Auto-save debouncer or interval could be added here
-  // For MVP, manual save button
-
   const handleAnswerChange = (question: string, value: string) => {
     setAnswers((prev) => ({ ...prev, [question]: value }))
   }
 
-  const handleSave = async () => {
+  const handleSave = async (shouldRedirect = false) => {
     setLoading(true)
     const result = await saveInterview(lead.id, interviewId, answers, notes)
     setLoading(false)
 
-    if (result.success && result.data) {
-      setInterviewId(result.data.id)
+    if (result.success) {
+      if (result.data) {
+        setInterviewId(result.data.id)
+      }
       toast.success('Entrevista salva com sucesso!')
+
+      if (shouldRedirect) {
+        toast.info('Redirecionando para o dashboard...')
+        router.push('/dashboard/leads/list/')
+      }
     } else {
-      toast.error('Erro ao salvar entrevista.')
+      toast.error(result.error || 'Erro ao salvar entrevista.')
+      console.error(result.error)
     }
   }
 
@@ -101,7 +108,7 @@ export function MeetingRunner({ lead, initialEntrevista }: MeetingRunnerProps) {
   return (
     <div className="flex h-[calc(100vh-64px)] overflow-hidden">
       {/* Sidebar / Stepper */}
-      <div className="w-64 bg-white border-r border-gray-100 flex-shrink-0 flex flex-col overflow-y-auto">
+      <div className="w-64 bg-white border-r border-gray-100 shrink-0 flex flex-col overflow-y-auto">
         <div className="p-6 border-b border-gray-50">
           <h2 className="font-bold text-gray-900 truncate">
             {lead.nome_completo}
@@ -131,7 +138,7 @@ export function MeetingRunner({ lead, initialEntrevista }: MeetingRunnerProps) {
         <div className="p-4 border-t border-gray-50">
           <Button
             className="w-full bg-blue-600 hover:bg-blue-700 text-white"
-            onClick={handleSave}
+            onClick={() => handleSave(false)}
             disabled={loading}
           >
             {loading ? (
@@ -203,7 +210,7 @@ export function MeetingRunner({ lead, initialEntrevista }: MeetingRunnerProps) {
                 if (activeStep < GERAR_STEPS.length - 1) {
                   setActiveStep((prev) => prev + 1)
                 } else {
-                  handleSave()
+                  handleSave(true)
                 }
               }}
               className={
