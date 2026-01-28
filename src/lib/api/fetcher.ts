@@ -1,6 +1,3 @@
-/**
- * Cliente API base para centralizar configurações de comunicação HTTP
- */
 export const api = {
   post: async <T = any>(url: string, data: any): Promise<T> => {
     const response = await fetch(url, {
@@ -27,6 +24,26 @@ export const api = {
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`)
     }
+    return response.json()
+  },
+
+  put: async <T = any>(url: string, data: any): Promise<T> => {
+    const response = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}))
+      throw {
+        status: response.status,
+        ...errorData
+      }
+    }
+
     return response.json()
   }
 }

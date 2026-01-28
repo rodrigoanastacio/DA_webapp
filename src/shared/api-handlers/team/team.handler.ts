@@ -20,6 +20,28 @@ export const teamHandler = {
   },
 
   /**
+   * Atualiza os dados de um membro da equipe.
+   */
+  update: async (
+    supabase: SupabaseClient,
+    id: string,
+    data: { full_name: string; role: 'admin' | 'editor' | 'viewer' }
+  ): Promise<{ success: boolean }> => {
+    const { error } = await supabase
+      .from('profiles')
+      .update({
+        full_name: data.full_name,
+        role: data.role,
+        updated_at: new Date().toISOString()
+      })
+      .eq('id', id)
+
+    if (error) throw error
+
+    return { success: true }
+  },
+
+  /**
    * Convida um novo membro utilizando a API de Admin (GoTrue).
    */
   invite: async (

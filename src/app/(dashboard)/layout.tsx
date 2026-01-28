@@ -1,23 +1,25 @@
 import { DashboardHeader } from '@/components/dashboard/DashboardHeader'
 import { DashboardSidebar } from '@/components/dashboard/DashboardSidebar'
+import { createClient } from '@/lib/supabase/server'
+import { userHandler } from '@/shared/api-handlers/user/user.handler'
 
-export default function DashboardLayout({
+export default async function DashboardLayout({
   children
 }: {
   children: React.ReactNode
 }) {
+  const supabase = await createClient()
+  const userData = (await userHandler.getMe(supabase)) || undefined
+
   return (
     <div className="h-screen flex bg-[#F9FAFB] overflow-hidden">
-      {/* Sidebar - Desktop */}
       <div className="hidden lg:flex lg:w-72 lg:flex-col lg:z-50 shrink-0">
-        <DashboardSidebar />
+        <DashboardSidebar user={userData} />
       </div>
 
-      {/* Main Container */}
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
-        <DashboardHeader />
+        <DashboardHeader user={userData} />
 
-        {/* Scrollable Content Area */}
         <main className="flex-1 overflow-y-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="max-w-7xl mx-auto">{children}</div>
         </main>

@@ -1,44 +1,44 @@
 'use client'
 
+import { getUserDisplayName } from '@/lib/utils'
+import { UserRole, UserRoleLabel } from '@/shared/enums/UserRole'
 import { Bell } from 'lucide-react'
 import { MobileNav } from './MobileNav'
 import { UserProfile } from './UserProfile'
 
-export function DashboardHeader() {
+interface DashboardHeaderProps {
+  user?: {
+    name?: string
+    email?: string
+    avatar_url?: string
+    role?: string
+  }
+}
+
+export function DashboardHeader({ user }: DashboardHeaderProps) {
+  const userRole = user?.role
+    ? UserRoleLabel[user.role as UserRole] || 'Membro'
+    : 'Membro'
+
   return (
     <header className="sticky top-0 z-40 bg-[#ffffff] px-4 sm:px-6 lg:px-8">
       <div className="flex h-16 items-center justify-between lg:justify-end gap-x-4">
-        {/* Mobile Toggle & Logo for Mobile */}
         <div className="flex items-center gap-x-4 lg:hidden">
           <MobileNav />
         </div>
 
-        {/* Search Bar */}
-        {/* <div className="flex flex-1 items-center gap-x-4">
-          <div className="relative w-full max-w-md group">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 group-focus-within:text-blue-600 transition-colors" />
-            <Input
-              type="search"
-              placeholder="Buscar leads, processos ou tarefas..."
-              className="w-full pl-10 pr-4 h-11 bg-white border-gray-100 rounded-xl focus:ring-2 focus:ring-blue-500/10 focus:border-blue-500 transition-all placeholder:text-gray-400 text-sm"
-            />
-          </div>
-        </div> */}
-
-        {/* Actions */}
         <div className="flex items-center gap-x-2 sm:gap-x-4">
           <button className="relative p-2 text-gray-400 cursor-pointer hover:text-gray-600 transition-colors rounded-xl hidden sm:block">
             <Bell className="h-5 w-5" />
             <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-[#F9FAFB]" />
           </button>
 
-          {/* Divider */}
           <div className="hidden sm:block w-px h-6 bg-gray-200 mx-2" />
 
           <UserProfile
-            name="Dayane Anastácio"
-            role="Administradora"
-            avatarUrl="/assets/avatar.jpg"
+            name={getUserDisplayName(user)}
+            role={userRole}
+            avatarUrl={user?.avatar_url || '/assets/avatar.jpg'}
           />
         </div>
       </div>

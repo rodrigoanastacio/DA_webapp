@@ -1,4 +1,5 @@
 import { TeamMemberResponse } from '@/lib/zod/team.schema'
+import { UserRole } from '@/shared/enums/UserRole'
 
 /**
  * Entidade de Domínio: TeamMember
@@ -9,7 +10,7 @@ export class TeamMember {
   readonly id: string
   readonly fullName: string
   readonly email: string
-  readonly role: 'admin' | 'editor' | 'viewer'
+  readonly role: UserRole
   readonly avatarUrl?: string
   readonly createdAt: Date
 
@@ -17,14 +18,11 @@ export class TeamMember {
     this.id = data.id
     this.fullName = data.full_name
     this.email = data.email
-    this.role = data.role
+    this.role = this.role = data.role as unknown as UserRole
     this.avatarUrl = data.avatar_url
     this.createdAt = new Date(data.created_at)
   }
 
-  /**
-   * Retorna as iniciais do nome para uso em avatares.
-   */
   get initials(): string {
     return this.fullName
       .split(' ')
@@ -34,29 +32,33 @@ export class TeamMember {
       .substring(0, 2)
   }
 
-  /**
-   * Identifica se o usuário tem privilégios de gestão.
-   */
   get canManageTeam(): boolean {
-    return this.role === 'admin'
+    return this.role === UserRole.ADMIN
   }
 
-  /**
-   * Formatação de data localizada.
-   */
   get formattedJoinDate(): string {
     return this.createdAt.toLocaleDateString('pt-BR')
   }
 
-  /**
-   * Cores semânticas baseadas na Role.
-   */
   get roleBadgeStyles(): string {
     const styles = {
-      admin: 'bg-blue-50 text-blue-500',
-      editor: 'bg-green-50 text-green-500',
-      viewer: 'bg-gray-50 text-gray-500'
+      [UserRole.ADMIN]: 'bg-blue-50 text-blue-500',
+      [UserRole.EDITOR]: 'bg-green-50 text-green-500',
+      [UserRole.VIEWER]: 'bg-gray-50 text-gray-500'
     }
     return styles[this.role]
+  }
+
+  toPlainObj() {
+    return {
+      id: this.id,
+      fullName: this.fullName,
+      email: this.email,
+      role: this.role as unknown as UserRole,
+      avatarUrl: this.avatarUrl ?? null,
+      formattedJoinDate: this.formattedJoinDate,
+      roleBadgeStyles: this.roleBadgeStyles,
+      initials: this.initials
+    }
   }
 }

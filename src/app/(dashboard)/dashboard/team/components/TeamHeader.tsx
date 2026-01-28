@@ -4,17 +4,18 @@ import { StatCard } from '@/components/dashboard/StatCard'
 import { Summary } from '@/components/dashboard/Summary'
 import { Button } from '@/components/ui/button'
 import { Mail, Plus, ShieldCheck, User } from 'lucide-react'
-import { useState } from 'react'
-import { MemberDetailsDrawer } from './MemberDetailsDrawer'
 
 interface TeamHeaderProps {
   totalMembers: number
   adminsCount: number
+  onNewMember: () => void
 }
 
-export function TeamHeader({ totalMembers, adminsCount }: TeamHeaderProps) {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
-
+export function TeamHeader({
+  totalMembers,
+  adminsCount,
+  onNewMember
+}: TeamHeaderProps) {
   return (
     <>
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -27,7 +28,7 @@ export function TeamHeader({ totalMembers, adminsCount }: TeamHeaderProps) {
           </p>
         </div>
         <Button
-          onClick={() => setIsDrawerOpen(true)}
+          onClick={onNewMember}
           className="bg-blue-400 hover:bg-blue-500 text-white font-bold h-12 px-6 rounded-xl shadow-lg shadow-blue-400/20 transition-all flex items-center gap-2 group"
         >
           <Plus className="w-5 h-5 transition-transform group-hover:rotate-90" />
@@ -58,11 +59,6 @@ export function TeamHeader({ totalMembers, adminsCount }: TeamHeaderProps) {
           iconColor="text-gray-200"
         />
       </Summary>
-
-      <MemberDetailsDrawer
-        isOpen={isDrawerOpen}
-        onClose={() => setIsDrawerOpen(false)}
-      />
     </>
   )
 }

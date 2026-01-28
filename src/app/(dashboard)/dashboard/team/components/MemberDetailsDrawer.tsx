@@ -9,60 +9,96 @@ import {
   SheetTitle
 } from '@/components/ui/sheet'
 import { teamService } from '@/services/team/team.service'
+import { UserRole, UserRoleLabel } from '@/shared/enums/UserRole'
 import {
   Eye,
   Loader2,
   Mail,
   Shield,
   ShieldCheck,
+  UserCog,
   UserPlus,
   X
 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { toast } from 'sonner'
 
 interface MemberDetailsDrawerProps {
   isOpen: boolean
   onClose: () => void
+  initialData?: {
+    id: string
+    fullName: string
+    email: string
+    role: UserRole
+  } | null
 }
 
 export function MemberDetailsDrawer({
   isOpen,
-  onClose
+  onClose,
+  initialData
 }: MemberDetailsDrawerProps) {
   const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
   const router = useRouter()
 
   const [formData, setFormData] = useState({
     full_name: '',
     email: '',
-    role: 'viewer' as 'admin' | 'editor' | 'viewer'
+    role: UserRole.VIEWER
   })
+
+  useEffect(() => {
+    if (initialData) {
+      setFormData({
+        full_name: initialData.fullName,
+        email: initialData.email,
+        role: initialData.role
+      })
+    } else {
+      setFormData({ full_name: '', email: '', role: UserRole.VIEWER })
+    }
+  }, [initialData, isOpen])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
-    setError(null)
 
     try {
-      await teamService.invite(formData)
+      if (initialData) {
+        // Update Mode
+        await teamService.update(initialData.id, {
+          full_name: formData.full_name,
+          role: formData.role
+        })
+        toast.success('Colaborador atualizado com sucesso!')
+      } else {
+        // Create Mode
+        await teamService.invite(formData)
+        toast.success('Convite enviado com sucesso!')
+      }
+
       onClose()
-      setFormData({ full_name: '', email: '', role: 'viewer' })
-      router.refresh() // Recarrega os dados do servidor
+      setFormData({ full_name: '', email: '', role: UserRole.VIEWER })
+      router.refresh()
     } catch (err: any) {
-      setError(err.error || err.message || 'Erro ao convidar membro')
+      toast.error(err.error || err.message || 'Erro ao salvar dados')
     } finally {
       setIsLoading(false)
     }
   }
 
+  const isEditing = !!initialData
+
   return (
     <Sheet open={isOpen} onOpenChange={onClose}>
       <SheetContent className="sm:max-w-[500px] p-0 overflow-y-auto bg-white border-l border-gray-100 shadow-2xl">
-        <SheetTitle className="sr-only">Adicionar Novo Colaborador</SheetTitle>
+        <SheetTitle className="sr-only">
+          {isEditing ? 'Editar Colaborador' : 'Adicionar Novo Colaborador'}
+        </SheetTitle>
         <SheetDescription className="sr-only">
-          Preencha os dados abaixo para convidar um novo membro para sua equipe.
+          Formulário para gestão de membros da equipe.
         </SheetDescription>
 
         {/* Header */}
@@ -75,26 +111,28 @@ export function MemberDetailsDrawer({
           </button>
 
           <div className="space-y-1">
-            <div className="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center text-blue-400 mb-4">
-              <UserPlus className="w-6 h-6" />
+            <div
+              className={`w-12 h-12 rounded-2xl flex items-center justify-center mb-4 ${isEditing ? 'bg-amber-50 text-amber-500' : 'bg-blue-50 text-blue-400'}`}
+            >
+              {isEditing ? (
+                <UserCog className="w-6 h-6" />
+              ) : (
+                <UserPlus className="w-6 h-6" />
+              )}
             </div>
             <h2 className="text-[24px] font-extrabold text-[#111827] tracking-tight">
-              Novo Colaborador
+              {isEditing ? 'Editar Colaborador' : 'Novo Colaborador'}
             </h2>
             <p className="text-[14px] font-medium text-gray-400">
-              Cadastre um novo especialista para gerenciar os leads.
+              {isEditing
+                ? 'Atualize as permissões ou dados do membro.'
+                : 'Cadastre um novo especialista para gerenciar os leads.'}
             </p>
           </div>
         </div>
 
         {/* Form Body */}
         <form onSubmit={handleSubmit} className="p-8 space-y-8">
-          {error && (
-            <div className="p-4 bg-red-50 border border-red-100 text-red-600 rounded-xl text-xs font-bold animate-in fade-in slide-in-from-top-2">
-              {error}
-            </div>
-          )}
-
           {/* Nome Completo */}
           <div className="space-y-2">
             <label className="text-[11px] font-black text-gray-400 uppercase tracking-[2px]">
@@ -123,8 +161,9 @@ export function MemberDetailsDrawer({
               <Input
                 required
                 type="email"
+                disabled={isEditing}
                 placeholder="email@consultoria.com.br"
-                className="h-14 bg-gray-50/50 border-none rounded-2xl focus:ring-2 focus:ring-blue-400/20 transition-all font-bold pl-14"
+                className={`h-14 border-none rounded-2xl focus:ring-2 focus:ring-blue-400/20 transition-all font-bold pl-14 ${isEditing ? 'bg-gray-100 text-gray-500 cursor-not-allowed' : 'bg-gray-50/50'}`}
                 value={formData.email}
                 onChange={(e) =>
                   setFormData({ ...formData, email: e.target.value })
@@ -142,24 +181,24 @@ export function MemberDetailsDrawer({
             <div className="grid grid-cols-1 gap-3">
               {[
                 {
-                  id: 'admin',
-                  title: 'Administrador',
+                  id: UserRole.ADMIN,
+                  title: UserRoleLabel[UserRole.ADMIN],
                   desc: 'Acesso total ao sistema e gestão de equipe.',
                   icon: ShieldCheck,
                   color: 'text-blue-500',
                   bg: 'bg-blue-50'
                 },
                 {
-                  id: 'editor',
-                  title: 'Editor',
+                  id: UserRole.EDITOR,
+                  title: UserRoleLabel[UserRole.EDITOR],
                   desc: 'Pode gerenciar leads e agenda, mas não equipe.',
                   icon: Shield,
                   color: 'text-green-500',
                   bg: 'bg-green-50'
                 },
                 {
-                  id: 'viewer',
-                  title: 'Visualizador',
+                  id: UserRole.VIEWER,
+                  title: UserRoleLabel[UserRole.VIEWER],
                   desc: 'Apenas leitura de dados e relatórios.',
                   icon: Eye,
                   color: 'text-gray-500',
@@ -169,9 +208,7 @@ export function MemberDetailsDrawer({
                 <button
                   key={role.id}
                   type="button"
-                  onClick={() =>
-                    setFormData({ ...formData, role: role.id as any })
-                  }
+                  onClick={() => setFormData({ ...formData, role: role.id })}
                   className={`flex items-start gap-4 p-5 rounded-2xl border-2 transition-all text-left group ${
                     formData.role === role.id
                       ? 'border-blue-400 bg-blue-50/30'
@@ -207,6 +244,8 @@ export function MemberDetailsDrawer({
             >
               {isLoading ? (
                 <Loader2 className="w-5 h-5 animate-spin" />
+              ) : isEditing ? (
+                'Salvar Alterações'
               ) : (
                 'Confirmar Cadastro'
               )}

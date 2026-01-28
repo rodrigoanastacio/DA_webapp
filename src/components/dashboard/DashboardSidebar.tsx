@@ -1,7 +1,7 @@
 'use client'
 
 import { useDashboard } from '@/app/(dashboard)/hooks/useDashboard'
-import { cn } from '@/lib/utils'
+import { cn, getUserDisplayName } from '@/lib/utils'
 import {
   BarChart2,
   Calendar,
@@ -24,21 +24,41 @@ const navigation = [
   { name: 'Configurações', href: '/dashboard/settings', icon: Settings }
 ]
 
-export function DashboardSidebar() {
+interface DashboardSidebarProps {
+  user?: {
+    name?: string
+    email?: string
+    avatar_url?: string
+  }
+}
+
+export function DashboardSidebar({ user }: DashboardSidebarProps) {
   const pathname = usePathname()
   const { handleLogout, isLoggingOut } = useDashboard()
 
+  const displayName = getUserDisplayName(user)
+
   return (
     <div className="flex h-full flex-col bg-white border-r border-gray-100">
-      {/* Brand Logo */}
       <div className="flex h-24 shrink-0 items-center px-4">
         <div className="flex items-center gap-4">
-          <div className="w-10 h-10 bg-blue-400 rounded-lg flex items-center justify-center text-white">
-            <Scale className="w-6 h-6" />
+          <div className="w-10 h-10 bg-blue-400 rounded-lg flex items-center justify-center text-white overflow-hidden">
+            {user?.avatar_url ? (
+              <img
+                src={user.avatar_url}
+                alt={displayName}
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <Scale className="w-6 h-6" />
+            )}
           </div>
           <div className="flex flex-col">
-            <span className="text-xl font-bold tracking-tight text-gray-900 leading-tight">
-              Dayane Anastácio
+            <span
+              className="text-sm font-bold tracking-tight text-gray-900 leading-tight truncate max-w-[160px]"
+              title="Dayane Anastacio"
+            >
+              Dayane Anastacio
             </span>
             <span className="text-[10px] font-medium text-gray-400 uppercase tracking-[2px]">
               Consultoria & Gestão
@@ -47,7 +67,6 @@ export function DashboardSidebar() {
         </div>
       </div>
 
-      {/* Navigation */}
       <nav className="flex flex-1 flex-col">
         <ul role="list" className="flex flex-1 flex-col gap-y-7 pl-4">
           <li className="flex-1">
@@ -76,7 +95,6 @@ export function DashboardSidebar() {
                       />
                       {item.name}
 
-                      {/* Active Indicator Bar */}
                       {isActive && (
                         <span className="absolute right-0 top-1/2 -translate-y-1/2 w-1 h-full bg-blue-400 transition-colors" />
                       )}
@@ -87,7 +105,6 @@ export function DashboardSidebar() {
             </ul>
           </li>
 
-          {/* Logout at Bottom */}
           <li className="mt-auto px-2 pb-8">
             <button
               onClick={handleLogout}

@@ -4,12 +4,13 @@ import InteractiveTable, {
   type Column
 } from '@/components/dashboard/InteractiveTable'
 import { cn } from '@/lib/utils'
+import { UserRole, UserRoleLabel } from '@/shared/enums/UserRole'
 
 type TeamMemberRow = {
   id: string
   fullName: string
   email: string
-  role: 'admin' | 'editor' | 'viewer'
+  role: UserRole
   avatarUrl?: string | null
   formattedJoinDate: string
   roleBadgeStyles: string
@@ -18,9 +19,10 @@ type TeamMemberRow = {
 
 interface TeamListTableProps {
   rows: TeamMemberRow[]
+  onRowClick?: (row: TeamMemberRow) => void
 }
 
-export function TeamListTable({ rows }: TeamListTableProps) {
+export function TeamListTable({ rows, onRowClick }: TeamListTableProps) {
   const columns: Column<TeamMemberRow>[] = [
     {
       key: 'fullName',
@@ -60,7 +62,7 @@ export function TeamListTable({ rows }: TeamListTableProps) {
             member.roleBadgeStyles
           )}
         >
-          {member.role}
+          {UserRoleLabel[member.role] || member.role}
         </span>
       )
     },
@@ -93,6 +95,7 @@ export function TeamListTable({ rows }: TeamListTableProps) {
       rows={rows}
       pagination
       rowsPerPageOptions={[10, 20, 50]}
+      onRowClick={onRowClick}
     />
   )
 }
