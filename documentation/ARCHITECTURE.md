@@ -46,6 +46,27 @@ Onde vive a inteligência da aplicação. Independente do framework (poderia ser
 - **Entities**: Tipos TypeScript e Classes de Domínio.
 - **Handlers**: Funções puras que executam a lógica de negócio e acessam o banco.
 
+### 4. Estratégia de Data Fetching
+
+**Padrão Adotado**: Server Components First.
+
+| Tipo               | Onde                               | Como                        | Por que?                               |
+| :----------------- | :--------------------------------- | :-------------------------- | :------------------------------------- |
+| **Initial Data**   | **Server Components** (`page.tsx`) | Chama `Handler` diretamente | SEO, Performance, Sem Loading State    |
+| **Interatividade** | **Client Components** (Hooks)      | Chama `Server Action`       | Feedback imediato, Updates sem refresh |
+| **Realtime**       | **Client Components**              | `supabase.channel()`        | Atualizações via Socket                |
+
+> 🚫 **Anti-Pattern**: Usar `useEffect` para buscar dados iniciais de uma página. Isso transfere a carga para o cliente e piora o Core Web Vitals.
+
+### 5. Padrões de Código e Boas Práticas
+
+**Serialização de Entidades (Server ➡ Client)**
+O Next.js não permite passar instâncias de Classes (Entities) diretamente para Client Components.
+
+- **Problema**: "Warning: Only plain objects can be passed to Client Components..."
+- **Solução**: Implementar método `.toPlainObj()` na Entidade.
+- **Uso**: `data={member.toPlainObj()}` ao invés de `data={member}`.
+
 ## Fluxo de Dados (Exemplo: Atualizar Status)
 
 1. **User Interaction**: Usuário clica no Dropdown (`LeadDetailsDrawer`).
