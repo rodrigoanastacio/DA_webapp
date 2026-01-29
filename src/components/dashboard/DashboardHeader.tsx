@@ -2,8 +2,8 @@
 
 import { getUserDisplayName } from '@/lib/utils'
 import { UserRole, UserRoleLabel } from '@/shared/enums/UserRole'
-import { Bell } from 'lucide-react'
 import { MobileNav } from './MobileNav'
+import { NotificationPopover } from './NotificationPopover'
 import { UserProfile } from './UserProfile'
 
 interface DashboardHeaderProps {
@@ -28,10 +28,7 @@ export function DashboardHeader({ user }: DashboardHeaderProps) {
         </div>
 
         <div className="flex items-center gap-x-2 sm:gap-x-4">
-          <button className="relative p-2 text-gray-400 cursor-pointer hover:text-gray-600 transition-colors rounded-xl hidden sm:block">
-            <Bell className="h-5 w-5" />
-            <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-[#F9FAFB]" />
-          </button>
+          <NotificationPopover />
 
           <div className="hidden sm:block w-px h-6 bg-gray-200 mx-2" />
 

@@ -1,7 +1,9 @@
 import { DashboardHeader } from '@/components/dashboard/DashboardHeader'
 import { DashboardSidebar } from '@/components/dashboard/DashboardSidebar'
+import { NotificationProvider } from '@/contexts/NotificationContext'
 import { createClient } from '@/lib/supabase/server'
 import { userHandler } from '@/shared/api-handlers/user/user.handler'
+import { Toaster } from 'sonner'
 
 export default async function DashboardLayout({
   children
@@ -18,11 +20,15 @@ export default async function DashboardLayout({
       </div>
 
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
-        <DashboardHeader user={userData} />
+        <NotificationProvider>
+          <DashboardHeader user={userData} />
 
-        <main className="flex-1 overflow-y-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="max-w-7xl mx-auto">{children}</div>
-        </main>
+          <main className="flex-1 overflow-y-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div className="max-w-7xl mx-auto">{children}</div>
+          </main>
+
+          <Toaster richColors position="top-right" />
+        </NotificationProvider>
       </div>
     </div>
   )
