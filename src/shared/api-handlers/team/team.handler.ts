@@ -1,3 +1,4 @@
+import { env } from '@/config/env'
 import { TeamMemberFormData, TeamMemberResponse } from '@/lib/zod/team.schema'
 import { TeamMember } from '@/shared/entities/team/team-member.entity'
 import { SupabaseClient } from '@supabase/supabase-js'
@@ -44,7 +45,7 @@ export const teamHandler = {
         full_name: data.full_name,
         role: data.role
       },
-      redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/auth/callback?next=/update-password`
+      redirectTo: `${env.app.url}/auth/callback?next=/update-password`
     })
 
     if (error) throw error

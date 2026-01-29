@@ -2,9 +2,10 @@
 
 import { Loader2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import { Suspense } from 'react'
 import { useAuthCallback } from './hooks/use-auth-callback'
 
-export default function AuthCallbackPage() {
+function AuthCallbackContent() {
   const router = useRouter()
   const { isLoading, error } = useAuthCallback()
 
@@ -30,5 +31,19 @@ export default function AuthCallbackPage() {
         <p className="text-sm text-gray-500">Autenticando...</p>
       </div>
     </div>
+  )
+}
+
+export default function AuthCallbackPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex h-screen w-full items-center justify-center bg-gray-50">
+          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        </div>
+      }
+    >
+      <AuthCallbackContent />
+    </Suspense>
   )
 }

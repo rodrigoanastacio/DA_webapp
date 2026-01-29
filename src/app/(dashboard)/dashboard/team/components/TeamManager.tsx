@@ -16,6 +16,7 @@ export interface TeamMemberRow {
   formattedJoinDate: string
   roleBadgeStyles: string
   initials: string
+  isActive: boolean
 }
 
 interface TeamManagerProps {
