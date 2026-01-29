@@ -31,17 +31,10 @@ export async function POST(request: Request) {
     await diagnosticoHandler.create(supabase, validation.data, metadata)
 
     return NextResponse.json({ success: true })
-  } catch (err: any) {
-    console.error('API Error:', err)
-
-    // Tratamento de erro padronizado
+  } catch (error: unknown) {
+    console.error('Error saving diagnostico:', error)
     return NextResponse.json(
-      {
-        success: false,
-        error: 'Erro ao processar diagnóstico',
-        message: err.message,
-        code: err.code
-      },
+      { error: 'Failed to save diagnostico' },
       { status: 500 }
     )
   }

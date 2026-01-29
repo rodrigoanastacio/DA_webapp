@@ -1,5 +1,6 @@
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import { toast } from 'sonner'
 
 export function useAuthCallback() {
   const router = useRouter()
@@ -58,8 +59,10 @@ export function useAuthCallback() {
 
           router.replace(redirectPath)
           return
-        } catch (err) {
-          setError('Unexpected error during authentication')
+        } catch {
+          toast.error('Erro na autenticação', {
+            description: 'Ocorreu um erro inesperado durante a autenticação.'
+          })
           setIsLoading(false)
           return
         }

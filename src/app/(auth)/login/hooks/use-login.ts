@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { toast } from 'sonner'
 import { loginAction } from '../login-actions'
 
 export function useLogin() {
@@ -18,8 +19,10 @@ export function useLogin() {
       if (result?.error) {
         setError(result.error)
       }
-    } catch (err) {
-      setError('Ocorreu um erro inesperado no login.')
+    } catch {
+      toast.error('Erro ao realizar login', {
+        description: 'Verifique suas credenciais e tente novamente.'
+      })
     } finally {
       setIsLoading(false)
     }

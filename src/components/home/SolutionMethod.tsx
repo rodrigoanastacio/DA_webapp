@@ -19,7 +19,10 @@ export const SolutionMethod = () => {
             </span>
           </h2>
           <p className="text-lg text-gray-600">
-            Não é apenas "secretariado". É um sistema de gestão completo para
+            Você está cansado de passar o dia{' '}
+            <span className="font-bold">&quot;apagando incêndios&quot;</span>,
+            sem tempo para planejar o crescimento? Não é apenas
+            &quot;secretariado&quot;. É um sistema de gestão completo para
             transformar seu escritório.
           </p>
         </div>

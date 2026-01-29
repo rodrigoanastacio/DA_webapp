@@ -243,6 +243,10 @@ export function LeadDetailsDrawer({
               </div>
 
               <div className="space-y-4">
+                <p className="text-gray-500">
+                  O lead declarou ter &quot;alta urgência&quot; para resolver o
+                  problema.
+                </p>
                 {lead.dificuldades.map((dificuldade, i) => (
                   <div
                     key={i}

@@ -82,8 +82,9 @@ export function MemberDetailsDrawer({
       onClose()
       setFormData({ full_name: '', email: '', role: UserRole.VIEWER })
       router.refresh()
-    } catch (err: any) {
-      toast.error(err.error || err.message || 'Erro ao salvar dados')
+    } catch (error: unknown) {
+      console.error('Erro ao atualizar membro:', error)
+      toast.error('Erro ao salvar alterações')
     } finally {
       setIsLoading(false)
     }

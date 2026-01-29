@@ -7,9 +7,9 @@ export async function POST() {
     const supabase = await createClient()
     await authHandler.signOut(supabase)
     return NextResponse.json({ success: true })
-  } catch (err: any) {
+  } catch (error: unknown) {
     return NextResponse.json(
-      { error: 'Erro ao deslogar', message: err.message },
+      { error: 'Internal Server Error' },
       { status: 500 }
     )
   }

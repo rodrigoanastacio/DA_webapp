@@ -27,10 +27,10 @@ export async function PUT(
     await teamHandler.update(supabase, id, validation.data)
 
     return NextResponse.json({ success: true })
-  } catch (err: any) {
-    console.error('Team API Error:', err)
+  } catch (error: unknown) {
+    console.error('Error deleting team member:', error)
     return NextResponse.json(
-      { error: 'Erro ao atualizar colaborador', message: err.message },
+      { error: 'Failed to delete team member' },
       { status: 500 }
     )
   }

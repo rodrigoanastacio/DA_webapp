@@ -35,10 +35,13 @@ export function useUpdatePassword() {
       if (error) throw error
 
       toast.success('Senha atualizada com sucesso!')
-      router.push('/dashboard')
-      router.refresh()
-    } catch (error: any) {
-      toast.error(error.message || 'Erro ao atualizar senha')
+      router.push('/login')
+    } catch (error: unknown) {
+      const message =
+        error instanceof Error ? error.message : 'Erro ao atualizar senha'
+      toast.error('Erro ao atualizar senha', {
+        description: message
+      })
     } finally {
       setIsLoading(false)
     }

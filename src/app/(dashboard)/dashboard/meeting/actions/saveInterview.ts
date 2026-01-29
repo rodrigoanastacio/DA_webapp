@@ -6,12 +6,15 @@ import { revalidatePath } from 'next/cache'
 
 import { diagnosticoHandler } from '@/shared/api-handlers/diagnostico/diagnostico.handler'
 
-export async function saveInterview(
-  leadId: string,
-  interviewId: string | undefined,
-  respostas: Record<string, any>,
-  observacoes: string
-) {
+export async function saveInterview(prevState: unknown, formData: FormData) {
+  const leadId = formData.get('leadId') as string
+  const interviewId = formData.get('interviewId') as string | undefined
+  const respostas = JSON.parse(formData.get('respostas') as string) as Record<
+    string,
+    unknown
+  >
+  const observacoes = formData.get('observacoes') as string
+
   const supabase = await createClient()
 
   try {

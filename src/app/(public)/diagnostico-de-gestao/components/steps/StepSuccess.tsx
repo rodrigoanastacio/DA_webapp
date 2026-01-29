@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 export function StepSuccess() {
   return (
     <div className="flex flex-col gap-8 items-center text-center py-8">
@@ -30,13 +32,12 @@ export function StepSuccess() {
       </div>
 
       <div className="mt-4">
-        <a
+        <Link
           href="/"
-          className="inline-flex min-w-[200px] h-12 items-center justify-center rounded-lg px-6 bg-blue-700 hover:bg-blue-600 transition-colors text-white text-base font-bold shadow-lg shadow-blue-700/20 gap-2"
+          className="text-gray-500 hover:text-gray-700 font-medium transition-colors"
         >
-          <span className="material-symbols-outlined">home</span>
-          Voltar ao Início
-        </a>
+          Voltar para a Home
+        </Link>
       </div>
     </div>
   )

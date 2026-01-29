@@ -1,5 +1,8 @@
 export const api = {
-  post: async <T = any>(url: string, data: any): Promise<T> => {
+  post: async <T = any>(
+    url: string,
+    data: Record<string, unknown>
+  ): Promise<T> => {
     const response = await fetch(url, {
       method: 'POST',
       headers: {
@@ -27,7 +30,10 @@ export const api = {
     return response.json()
   },
 
-  put: async <T = any>(url: string, data: any): Promise<T> => {
+  put: async <T = any>(
+    url: string,
+    data: Record<string, unknown>
+  ): Promise<T> => {
     const response = await fetch(url, {
       method: 'PUT',
       headers: {

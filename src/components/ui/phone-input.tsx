@@ -3,28 +3,23 @@
 import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
 import * as React from 'react'
-import * as RPNI from 'react-phone-number-input/input'
 
 interface PhoneInputProps extends Omit<
   React.ComponentProps<'input'>,
   'onChange' | 'value'
 > {
-  value?: string
-  onChange?: (value: string) => void
-  error?: boolean
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
-  ({ className, onChange, value, error, ...props }, ref) => {
+  ({ className, onChange, ...props }, ref) => {
     return (
-      <RPNI.default
-        ref={ref as any}
-        value={value}
-        onChange={(val) => onChange?.(val || '')}
-        country="BR"
-        international={false}
-        inputComponent={InputComponent}
-        className={cn(className)}
+      <Input
+        ref={ref}
+        className={cn('flex-1', className)}
+        onChange={(e) => {
+          onChange?.(e)
+        }}
         {...props}
       />
     )

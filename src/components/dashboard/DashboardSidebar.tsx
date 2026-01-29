@@ -52,6 +52,7 @@ export function DashboardSidebar({ user }: DashboardSidebarProps) {
         <div className="flex items-center gap-4">
           <div className="w-10 h-10 bg-blue-400 rounded-lg flex items-center justify-center text-white overflow-hidden">
             {user?.avatar_url ? (
+              /* eslint-disable-next-line @next/next/no-img-element */
               <img
                 src={user.avatar_url}
                 alt={displayName}

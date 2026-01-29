@@ -5,10 +5,7 @@ interface LeadsHeaderProps {
   highPotentialCount: number
 }
 
-export function LeadsHeader({
-  totalLeads,
-  highPotentialCount
-}: LeadsHeaderProps) {
+export function LeadsHeader({}: LeadsHeaderProps) {
   return (
     <>
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
