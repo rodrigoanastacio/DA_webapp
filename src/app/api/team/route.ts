@@ -1,6 +1,8 @@
 import { teamHandler } from '@/shared/api-handlers/team/team.handler'
+import { revalidatePath } from 'next/cache'
 import { NextResponse } from 'next/server'
 
+import { env } from '@/config/env'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { createClient } from '@/lib/supabase/server'
 
@@ -23,15 +25,13 @@ export async function POST(request: Request) {
     const supabase = createAdminClient()
     const body = await request.json()
 
-    // Create auth user
+    // Invite auth user (sends email, no password needed)
     const { data: authData, error: authError } =
-      await supabase.auth.admin.createUser({
-        email: body.email,
-        password: body.password || 'Mudar123!',
-        email_confirm: true,
-        user_metadata: {
+      await supabase.auth.admin.inviteUserByEmail(body.email, {
+        data: {
           full_name: body.full_name
-        }
+        },
+        redirectTo: `${env.app.url}/auth/callback?next=/update-password`
       })
 
     if (authError) throw authError
@@ -46,11 +46,12 @@ export async function POST(request: Request) {
     })
 
     if (profileError) {
-      // Cleanup auth user if profile fails
       await supabase.auth.admin.deleteUser(authData.user.id)
       throw profileError
     }
 
+    revalidatePath('/dashboard/team')
+    revalidatePath('/dashboard/team/list')
     return NextResponse.json({ success: true, user: authData.user })
   } catch (error: unknown) {
     console.error('Error creating team member:', error)
