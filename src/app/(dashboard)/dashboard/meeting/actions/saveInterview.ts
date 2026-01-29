@@ -1,26 +1,21 @@
 'use server'
 
 import { createClient } from '@/lib/supabase/server'
+import { diagnosticoHandler } from '@/shared/api-handlers/diagnostico/diagnostico.handler'
 import { entrevistasHandler } from '@/shared/api-handlers/entrevistas/entrevistas.handler'
 import { revalidatePath } from 'next/cache'
 
-import { diagnosticoHandler } from '@/shared/api-handlers/diagnostico/diagnostico.handler'
-
-export async function saveInterview(prevState: unknown, formData: FormData) {
-  const leadId = formData.get('leadId') as string
-  const interviewId = formData.get('interviewId') as string | undefined
-  const respostas = JSON.parse(formData.get('respostas') as string) as Record<
-    string,
-    unknown
-  >
-  const observacoes = formData.get('observacoes') as string
-
+export async function saveInterview(
+  leadId: string,
+  interviewId: string | undefined,
+  respostas: Record<string, unknown>,
+  observacoes: string
+) {
   const supabase = await createClient()
 
   try {
     let result
     if (interviewId) {
-      // Update existing
       result = await entrevistasHandler.update(supabase, interviewId, {
         respostas_json: respostas,
         observacoes,
@@ -34,7 +29,6 @@ export async function saveInterview(prevState: unknown, formData: FormData) {
         observacoes
       })
 
-      // Auto-update status to 'em_negociacao' on first interview creation
       await diagnosticoHandler.updateStatus(supabase, leadId, 'em_negociacao')
     }
 
