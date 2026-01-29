@@ -38,8 +38,7 @@ export async function POST(request: Request) {
 
     if (!authData.user) throw new Error('Failed to create user')
 
-    // Create profile
-    const { error: profileError } = await supabase.from('profiles').insert({
+    const { error: profileError } = await supabase.from('profiles').upsert({
       id: authData.user.id,
       full_name: body.full_name,
       email: body.email,
