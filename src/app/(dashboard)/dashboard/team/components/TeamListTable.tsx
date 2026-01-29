@@ -15,6 +15,7 @@ type TeamMemberRow = {
   formattedJoinDate: string
   roleBadgeStyles: string
   initials: string
+  isActive: boolean
 }
 
 interface TeamListTableProps {
@@ -78,11 +79,17 @@ export function TeamListTable({ rows, onRowClick }: TeamListTableProps) {
     {
       key: 'status',
       label: 'Status',
-      render: () => (
+      render: (member) => (
         <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-green-400 shadow-[0_0_8px_rgba(74,222,128,0.4)]" />
+          <div
+            className={`w-2 h-2 rounded-full ${
+              member.isActive
+                ? 'bg-green-400 shadow-[0_0_8px_rgba(74,222,128,0.4)]'
+                : 'bg-yellow-400 shadow-[0_0_8px_rgba(250,204,21,0.4)]'
+            }`}
+          />
           <span className="text-[11px] font-extrabold text-gray-700 uppercase tracking-wider">
-            Ativo
+            {member.isActive ? 'Ativo' : 'Pendente'}
           </span>
         </div>
       )

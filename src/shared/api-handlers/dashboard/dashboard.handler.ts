@@ -15,22 +15,20 @@ export interface ChartDataPoint {
 
 export const dashboardHandler = {
   getStats: async (supabase: SupabaseClient): Promise<DashboardStats> => {
-    // 1. Total de Leads
     const { count: totalLeads } = await supabase
       .from('diagnosticos')
       .select('*', { count: 'exact', head: true })
 
-    // 2. Leads Ativos (Não perdidos nem ganhos)
     const { count: activeLeads } = await supabase
       .from('diagnosticos')
       .select('*', { count: 'exact', head: true })
-      .not('status', 'in', '("lost","won")')
+      .not('status', 'in', '("lost","won","descartado","convertido")')
 
     // 3. Oportunidades (Ganhos)
     const { count: wonLeads } = await supabase
       .from('diagnosticos')
       .select('*', { count: 'exact', head: true })
-      .eq('status', 'won')
+      .in('status', ['won', 'convertido'])
 
     // Cálculo de Conversão
     const total = totalLeads || 0
@@ -66,7 +64,7 @@ export const dashboardHandler = {
         }
 
         acc[key].leads += 1
-        if (curr.status === 'won') {
+        if (['won', 'convertido'].includes(curr.status)) {
           acc[key].sales += 1
         }
 

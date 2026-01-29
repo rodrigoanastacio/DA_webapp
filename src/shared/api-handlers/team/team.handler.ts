@@ -3,9 +3,6 @@ import { TeamMember } from '@/shared/entities/team/team-member.entity'
 import { SupabaseClient } from '@supabase/supabase-js'
 
 export const teamHandler = {
-  /**
-   * Lista todos os membros da equipe cadastrados em profiles.
-   */
   list: async (supabase: SupabaseClient): Promise<TeamMember[]> => {
     const { data, error } = await supabase
       .from('profiles')
@@ -19,9 +16,6 @@ export const teamHandler = {
     )
   },
 
-  /**
-   * Atualiza os dados de um membro da equipe.
-   */
   update: async (
     supabase: SupabaseClient,
     id: string,
@@ -41,9 +35,6 @@ export const teamHandler = {
     return { success: true }
   },
 
-  /**
-   * Convida um novo membro utilizando a API de Admin (GoTrue).
-   */
   invite: async (
     supabase: SupabaseClient,
     data: TeamMemberFormData
@@ -52,7 +43,8 @@ export const teamHandler = {
       data: {
         full_name: data.full_name,
         role: data.role
-      }
+      },
+      redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/auth/callback?next=/update-password`
     })
 
     if (error) throw error

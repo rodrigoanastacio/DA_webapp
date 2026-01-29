@@ -1,11 +1,6 @@
 import { TeamMemberResponse } from '@/lib/zod/team.schema'
 import { UserRole } from '@/shared/enums/UserRole'
 
-/**
- * Entidade de Domínio: TeamMember
- *
- * Representa um colaborador do time com lógica de negócio e formatação.
- */
 export class TeamMember {
   readonly id: string
   readonly fullName: string
@@ -13,6 +8,7 @@ export class TeamMember {
   readonly role: UserRole
   readonly avatarUrl?: string
   readonly createdAt: Date
+  readonly emailConfirmedAt?: Date | null
 
   constructor(data: TeamMemberResponse) {
     this.id = data.id
@@ -21,6 +17,9 @@ export class TeamMember {
     this.role = this.role = data.role as unknown as UserRole
     this.avatarUrl = data.avatar_url
     this.createdAt = new Date(data.created_at)
+    this.emailConfirmedAt = data.email_confirmed_at
+      ? new Date(data.email_confirmed_at)
+      : null
   }
 
   get initials(): string {
@@ -30,6 +29,10 @@ export class TeamMember {
       .join('')
       .toUpperCase()
       .substring(0, 2)
+  }
+
+  get isActive(): boolean {
+    return this.emailConfirmedAt !== null
   }
 
   get canManageTeam(): boolean {
@@ -58,7 +61,8 @@ export class TeamMember {
       avatarUrl: this.avatarUrl ?? null,
       formattedJoinDate: this.formattedJoinDate,
       roleBadgeStyles: this.roleBadgeStyles,
-      initials: this.initials
+      initials: this.initials,
+      isActive: this.isActive
     }
   }
 }

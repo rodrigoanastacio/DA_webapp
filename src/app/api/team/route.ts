@@ -2,6 +2,7 @@ import { teamMemberSchema } from '@/lib/zod/team.schema'
 import { teamHandler } from '@/shared/api-handlers/team/team.handler'
 import { NextResponse } from 'next/server'
 
+import { createAdminClient } from '@/lib/supabase/admin'
 import { createClient } from '@/lib/supabase/server'
 
 export async function GET() {
@@ -21,7 +22,6 @@ export async function POST(request: Request) {
   try {
     const body = await request.json()
 
-    // Validação de Schema
     const validation = teamMemberSchema.safeParse(body)
     if (!validation.success) {
       return NextResponse.json(
@@ -31,7 +31,30 @@ export async function POST(request: Request) {
     }
 
     const supabase = await createClient()
-    await teamHandler.invite(supabase, validation.data)
+    const {
+      data: { user },
+      error: authError
+    } = await supabase.auth.getUser()
+
+    if (authError || !user) {
+      return NextResponse.json({ error: 'Não autorizado' }, { status: 401 })
+    }
+
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('role')
+      .eq('id', user.id)
+      .single()
+
+    if (!profile || profile.role !== 'admin') {
+      return NextResponse.json(
+        { error: 'Apenas administradores podem enviar convites.' },
+        { status: 403 }
+      )
+    }
+
+    const supabaseAdmin = createAdminClient()
+    await teamHandler.invite(supabaseAdmin, validation.data)
 
     return NextResponse.json({ success: true })
   } catch (err: any) {

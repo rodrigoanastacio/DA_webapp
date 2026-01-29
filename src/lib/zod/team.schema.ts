@@ -18,4 +18,5 @@ export interface TeamMemberResponse {
   avatar_url?: string
   created_at: string
   updated_at: string
+  email_confirmed_at?: string | null
 }

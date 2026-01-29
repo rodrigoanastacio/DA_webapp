@@ -1,13 +1,24 @@
+import { createAdminClient } from '@/lib/supabase/admin'
 import { teamHandler } from '@/shared/api-handlers/team/team.handler'
+import { teamService } from '@/shared/services/team/team.service'
 import { TeamManager } from '../components/TeamManager'
 
-import { createClient } from '@/lib/supabase/server'
-
 export default async function TeamPage() {
-  const supabase = await createClient()
-  // Chamada via API Handler (Camada de Integração)
-  const members = await teamHandler.list(supabase)
+  const supabase = createAdminClient()
 
+  const profiles = await teamHandler.list(supabase)
+
+  const profilesData = profiles.map((p) => ({
+    id: p.id,
+    full_name: p.fullName,
+    email: p.email,
+    role: p.role as 'admin' | 'editor' | 'viewer',
+    avatar_url: p.avatarUrl,
+    created_at: p.createdAt.toISOString(),
+    updated_at: p.createdAt.toISOString()
+  }))
+
+  const members = await teamService.getMembersWithStatus(supabase, profilesData)
   const rows = members.map((m) => m.toPlainObj())
 
   return (
