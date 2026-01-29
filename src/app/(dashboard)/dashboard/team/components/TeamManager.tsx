@@ -1,6 +1,9 @@
 'use client'
 
-import { useState } from 'react'
+import { env } from '@/config/env'
+import { createBrowserClient } from '@supabase/ssr'
+import { useEffect, useState } from 'react'
+import { refreshTeamList } from '../actions'
 import { MemberDetailsDrawer } from './MemberDetailsDrawer'
 import { TeamHeader } from './TeamHeader'
 import { TeamListTable } from './TeamListTable'
@@ -23,11 +26,36 @@ interface TeamManagerProps {
   rows: TeamMemberRow[]
 }
 
-export function TeamManager({ rows }: TeamManagerProps) {
+export function TeamManager({ rows: initialRows }: TeamManagerProps) {
+  const [rows, setRows] = useState(initialRows)
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
   const [selectedMember, setSelectedMember] = useState<TeamMemberRow | null>(
     null
   )
+
+  const supabase = createBrowserClient(env.supabase.url, env.supabase.anonKey)
+
+  useEffect(() => {
+    const channel = supabase
+      .channel('team-list-updates')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'profiles'
+        },
+        async () => {
+          const updatedRows = await refreshTeamList()
+          setRows(updatedRows)
+        }
+      )
+      .subscribe()
+
+    return () => {
+      supabase.removeChannel(channel)
+    }
+  }, [supabase])
 
   const handleOpenNew = () => {
     setSelectedMember(null)
