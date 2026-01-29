@@ -41,7 +41,8 @@ export function useDiagnosticoForm() {
       return
     }
 
-    const isValid = await trigger(fieldsToValidate as any)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const isValid = await trigger(fieldsToValidate as unknown as any)
     if (isValid) {
       if (currentStep === 5) {
         await handleSubmit()

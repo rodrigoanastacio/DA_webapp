@@ -277,7 +277,7 @@ export function LeadDetailsDrawer({
                       Expectativas do Lead
                     </p>
                     <p className="text-[13px] text-[#9a3412]/70 font-medium italic">
-                      "{lead.expectativas}"
+                      &quot;{lead.expectativas}&quot;
                     </p>
                   </div>
                 </div>

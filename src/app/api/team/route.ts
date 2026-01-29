@@ -23,9 +23,28 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const supabase = createAdminClient()
+
+    const supabaseServer = await createClient()
+    const {
+      data: { user }
+    } = await supabaseServer.auth.getUser()
+
+    if (!user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+
+    const { data: requesterProfile } = await supabase
+      .from('profiles')
+      .select('role')
+      .eq('id', user.id)
+      .single()
+
+    if (!requesterProfile || requesterProfile.role !== 'admin') {
+      return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+    }
+
     const body = await request.json()
 
-    // Invite auth user (sends email, no password needed)
     const { data: authData, error: authError } =
       await supabase.auth.admin.inviteUserByEmail(body.email, {
         data: {
@@ -62,6 +81,60 @@ export async function POST(request: Request) {
             ? error.message
             : 'Failed to create team member'
       },
+      { status: 500 }
+    )
+  }
+}
+
+export async function DELETE(request: Request) {
+  try {
+    const supabase = createAdminClient()
+
+    const supabaseServer = await createClient()
+    const {
+      data: { user }
+    } = await supabaseServer.auth.getUser()
+
+    if (!user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+
+    const { data: requesterProfile } = await supabase
+      .from('profiles')
+      .select('role')
+      .eq('id', user.id)
+      .single()
+
+    if (!requesterProfile || requesterProfile.role !== 'admin') {
+      return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+    }
+
+    const { searchParams } = new URL(request.url)
+    const id = searchParams.get('id')
+
+    if (!id) {
+      return NextResponse.json(
+        { error: 'User ID is required' },
+        { status: 400 }
+      )
+    }
+
+    await teamHandler.delete(supabase, id)
+
+    const { error: banError } = await supabase.auth.admin.updateUserById(id, {
+      ban_duration: '876000h' // ~100 years
+    })
+
+    if (banError) throw banError
+
+    revalidatePath('/dashboard/team')
+    revalidatePath('/dashboard/team/list')
+
+    return NextResponse.json({ success: true })
+  } catch (error: unknown) {
+    console.error('Error deleting team member:', error)
+    return NextResponse.json(
+      { error: 'Failed to delete team member' },
       { status: 500 }
     )
   }

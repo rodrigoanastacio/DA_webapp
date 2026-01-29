@@ -1,10 +1,22 @@
-'use client'
-
 import InteractiveTable, {
   type Column
 } from '@/components/dashboard/InteractiveTable'
+import { ActionTooltip } from '@/components/ui/action-tooltip'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle
+} from '@/components/ui/alert-dialog'
+import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { UserRole, UserRoleLabel } from '@/shared/enums/UserRole'
+import { Loader2, Trash2 } from 'lucide-react'
+import { useState } from 'react'
 
 type TeamMemberRow = {
   id: string
@@ -20,10 +32,27 @@ type TeamMemberRow = {
 
 interface TeamListTableProps {
   rows: TeamMemberRow[]
-  onRowClick?: (row: TeamMemberRow) => void
+  onDelete: (id: string) => Promise<void>
 }
 
-export function TeamListTable({ rows, onRowClick }: TeamListTableProps) {
+export function TeamListTable({ rows, onDelete }: TeamListTableProps) {
+  const [memberToDelete, setMemberToDelete] = useState<TeamMemberRow | null>(
+    null
+  )
+  const [isDeleting, setIsDeleting] = useState(false)
+
+  const confirmDelete = async () => {
+    if (!memberToDelete) return
+
+    setIsDeleting(true)
+    try {
+      await onDelete(memberToDelete.id)
+    } finally {
+      setIsDeleting(false)
+      setMemberToDelete(null)
+    }
+  }
+
   const columns: Column<TeamMemberRow>[] = [
     {
       key: 'fullName',
@@ -43,7 +72,7 @@ export function TeamListTable({ rows, onRowClick }: TeamListTableProps) {
             )}
           </div>
           <div>
-            <p className="text-sm font-bold text-gray-900 group-hover:text-blue-400 transition-colors">
+            <p className="text-sm font-bold text-gray-900 transition-colors">
               {member.fullName}
             </p>
             <p className="text-xs font-medium text-gray-400 italic lowercase">
@@ -93,16 +122,74 @@ export function TeamListTable({ rows, onRowClick }: TeamListTableProps) {
           </span>
         </div>
       )
+    },
+    {
+      key: 'actions',
+      label: 'Ação',
+      align: 'center',
+      render: (member) => (
+        <ActionTooltip label="Excluir Usuário">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={(e) => {
+              e.stopPropagation()
+              setMemberToDelete(member)
+            }}
+            className="w-8 h-8 rounded-lg text-gray-400 hover:text-red-500 hover:bg-red-50 transition-colors"
+          >
+            <Trash2 className="w-4 h-4" />
+          </Button>
+        </ActionTooltip>
+      )
     }
   ]
 
   return (
-    <InteractiveTable<TeamMemberRow>
-      columns={columns}
-      rows={rows}
-      pagination
-      rowsPerPageOptions={[10, 20, 50]}
-      onRowClick={onRowClick}
-    />
+    <>
+      <InteractiveTable<TeamMemberRow>
+        columns={columns}
+        rows={rows}
+        pagination
+        rowsPerPageOptions={[10, 20, 50]}
+      />
+
+      <AlertDialog
+        open={!!memberToDelete}
+        onOpenChange={(open) => !open && setMemberToDelete(null)}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Tem certeza absoluta?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Você está prestes a excluir{' '}
+              <strong className="text-gray-900">
+                {memberToDelete?.fullName}
+              </strong>
+              . Essa ação removerá o acesso ao sistema imediatamente.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={isDeleting}>
+              Cancelar
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onClick={(e) => {
+                e.preventDefault()
+                confirmDelete()
+              }}
+              disabled={isDeleting}
+              className="bg-red-500 hover:bg-red-600 font-bold"
+            >
+              {isDeleting ? (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              ) : (
+                'Sim, excluir usuário'
+              )}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
   )
 }

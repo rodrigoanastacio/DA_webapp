@@ -74,7 +74,7 @@ export function MeetingRunner({ lead, initialEntrevista }: MeetingRunnerProps) {
     initialEntrevista?.id
   )
   const [answers, setAnswers] = useState<Record<string, string>>(
-    initialEntrevista?.respostas_json || {}
+    (initialEntrevista?.respostas_json as Record<string, string>) || {}
   )
   const [notes, setNotes] = useState(initialEntrevista?.observacoes || '')
 

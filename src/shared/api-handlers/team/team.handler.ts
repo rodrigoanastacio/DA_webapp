@@ -8,6 +8,7 @@ export const teamHandler = {
     const { data, error } = await supabase
       .from('profiles')
       .select('*')
+      .is('deleted_at', null)
       .order('full_name', { ascending: true })
 
     if (error) throw error
@@ -27,6 +28,23 @@ export const teamHandler = {
       .update({
         full_name: data.full_name,
         role: data.role,
+        updated_at: new Date().toISOString()
+      })
+      .eq('id', id)
+
+    if (error) throw error
+
+    return { success: true }
+  },
+
+  delete: async (
+    supabase: SupabaseClient,
+    id: string
+  ): Promise<{ success: boolean }> => {
+    const { error } = await supabase
+      .from('profiles')
+      .update({
+        deleted_at: new Date().toISOString(),
         updated_at: new Date().toISOString()
       })
       .eq('id', id)

@@ -1,4 +1,4 @@
-import { SupabaseClient } from '@supabase/supabase-js'
+import { PostgrestError, SupabaseClient } from '@supabase/supabase-js'
 import {
   CreateEntrevistaDTO,
   Entrevista,
@@ -9,7 +9,7 @@ export const entrevistasHandler = {
   create: async (
     supabase: SupabaseClient,
     data: CreateEntrevistaDTO
-  ): Promise<{ data: Entrevista | null; error: any }> => {
+  ): Promise<{ data: Entrevista | null; error: PostgrestError | null }> => {
     const { data: entrevista, error } = await supabase
       .from('entrevistas')
       .insert(data)
@@ -22,7 +22,7 @@ export const entrevistasHandler = {
   listByLeadId: async (
     supabase: SupabaseClient,
     leadId: string
-  ): Promise<{ data: Entrevista[] | null; error: any }> => {
+  ): Promise<{ data: Entrevista[] | null; error: PostgrestError | null }> => {
     const { data, error } = await supabase
       .from('entrevistas')
       .select('*')
@@ -35,7 +35,7 @@ export const entrevistasHandler = {
   getById: async (
     supabase: SupabaseClient,
     id: string
-  ): Promise<{ data: Entrevista | null; error: any }> => {
+  ): Promise<{ data: Entrevista | null; error: PostgrestError | null }> => {
     const { data, error } = await supabase
       .from('entrevistas')
       .select('*')
@@ -49,7 +49,7 @@ export const entrevistasHandler = {
     supabase: SupabaseClient,
     id: string,
     data: UpdateEntrevistaDTO
-  ): Promise<{ data: Entrevista | null; error: any }> => {
+  ): Promise<{ data: Entrevista | null; error: PostgrestError | null }> => {
     const { data: entrevista, error } = await supabase
       .from('entrevistas')
       .update(data)
@@ -63,7 +63,7 @@ export const entrevistasHandler = {
   delete: async (
     supabase: SupabaseClient,
     id: string
-  ): Promise<{ error: any }> => {
+  ): Promise<{ error: PostgrestError | null }> => {
     const { error } = await supabase.from('entrevistas').delete().eq('id', id)
     return { error }
   }

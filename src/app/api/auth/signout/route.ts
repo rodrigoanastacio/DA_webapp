@@ -7,7 +7,7 @@ export async function POST() {
     const supabase = await createClient()
     await authHandler.signOut(supabase)
     return NextResponse.json({ success: true })
-  } catch (error: unknown) {
+  } catch {
     return NextResponse.json(
       { error: 'Internal Server Error' },
       { status: 500 }

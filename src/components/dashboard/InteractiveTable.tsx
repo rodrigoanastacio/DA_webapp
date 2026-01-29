@@ -171,9 +171,6 @@ export default function InteractiveTable<T extends WithId>({
                   </TableHead>
                 )
               })}
-              <TableHead className="px-8 py-5 text-center text-[10px] font-extrabold text-gray-400 uppercase tracking-widest">
-                Ação
-              </TableHead>
             </TableRow>
           </TableHeader>
 
@@ -235,11 +232,6 @@ export default function InteractiveTable<T extends WithId>({
                         )}
                   </TableCell>
                 ))}
-                <TableCell className="px-8 py-6 text-center">
-                  <button className="p-2 hover:bg-white rounded-xl transition-colors inline-block hover:shadow-sm text-gray-300 group-hover:text-gray-600">
-                    •••
-                  </button>
-                </TableCell>
               </TableRow>
             ))}
 
@@ -249,8 +241,7 @@ export default function InteractiveTable<T extends WithId>({
                   colSpan={
                     (showCheckbox ? 1 : 0) +
                     (showInitials ? 1 : 0) +
-                    columns.length +
-                    1
+                    columns.length
                   }
                   className="px-8 py-10 text-center text-sm text-gray-500"
                 >

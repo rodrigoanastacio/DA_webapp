@@ -17,5 +17,9 @@ export const teamService = {
     data: { full_name: string; role: 'admin' | 'editor' | 'viewer' }
   ): Promise<{ success: boolean }> => {
     return api.put<{ success: boolean }>(`/api/team/${id}`, data)
+  },
+
+  delete: async (id: string): Promise<{ success: boolean }> => {
+    return api.delete<{ success: boolean }>(`/api/team?id=${id}`)
   }
 }

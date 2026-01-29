@@ -7,7 +7,7 @@ import { useAuthCallback } from './hooks/use-auth-callback'
 
 function AuthCallbackContent() {
   const router = useRouter()
-  const { isLoading, error } = useAuthCallback()
+  const { error } = useAuthCallback()
 
   if (error) {
     return (

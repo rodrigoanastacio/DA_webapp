@@ -3,6 +3,7 @@
 import { env } from '@/config/env'
 import { createBrowserClient } from '@supabase/ssr'
 import { useEffect, useState } from 'react'
+import { toast } from 'sonner'
 import { refreshTeamList } from '../actions'
 import { MemberDetailsDrawer } from './MemberDetailsDrawer'
 import { TeamHeader } from './TeamHeader'
@@ -62,14 +63,26 @@ export function TeamManager({ rows: initialRows }: TeamManagerProps) {
     setIsDrawerOpen(true)
   }
 
-  const handleEdit = (member: TeamMemberRow) => {
-    setSelectedMember(member)
-    setIsDrawerOpen(true)
-  }
+  // const handleEdit = (member: TeamMemberRow) => {
+  //   setSelectedMember(member)
+  //   setIsDrawerOpen(true)
+  // }
 
   const handleClose = () => {
     setIsDrawerOpen(false)
     setSelectedMember(null)
+  }
+
+  const handleDelete = async (id: string) => {
+    try {
+      await fetch(`/api/team?id=${id}`, { method: 'DELETE' })
+      const updatedRows = await refreshTeamList()
+      setRows(updatedRows)
+      toast.success('Membro excluído com sucesso')
+    } catch (error) {
+      toast.error('Erro ao excluir membro')
+      console.error(error)
+    }
   }
 
   return (
@@ -82,7 +95,7 @@ export function TeamManager({ rows: initialRows }: TeamManagerProps) {
         onNewMember={handleOpenNew}
       />
 
-      <TeamListTable rows={rows} onRowClick={handleEdit} />
+      <TeamListTable rows={rows} onDelete={handleDelete} />
 
       <MemberDetailsDrawer
         isOpen={isDrawerOpen}

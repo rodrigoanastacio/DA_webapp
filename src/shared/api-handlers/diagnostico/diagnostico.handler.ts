@@ -5,7 +5,7 @@ import {
   Lead,
   LeadsListResponse
 } from '@/shared/entities/diagnostico/lead.types'
-import { SupabaseClient } from '@supabase/supabase-js'
+import { PostgrestError, SupabaseClient } from '@supabase/supabase-js'
 
 export const diagnosticoHandler = {
   create: async (
@@ -130,7 +130,7 @@ export const diagnosticoHandler = {
   getById: async (
     supabase: SupabaseClient,
     id: string
-  ): Promise<{ data: Lead | null; error: any }> => {
+  ): Promise<{ data: Lead | null; error: PostgrestError | null }> => {
     const { data, error } = await supabase
       .from('diagnosticos')
       .select('*')
