@@ -1,7 +1,12 @@
-function getEnvVar(key: string, required: boolean = true): string {
-  const value = process.env[key]?.trim()
+// Helper function to validate variables
+function validate(
+  key: string,
+  value: string | undefined,
+  required: boolean = true
+): string {
+  const trimmed = value?.trim()
 
-  if (!value && required) {
+  if (!trimmed && required) {
     throw new Error(
       `Missing required environment variable: ${key}\n\n` +
         `This variable is required for the application to work correctly.\n` +
@@ -10,7 +15,7 @@ function getEnvVar(key: string, required: boolean = true): string {
     )
   }
 
-  return value || ''
+  return trimmed || ''
 }
 
 function detectEnvironment(): 'development' | 'production' | 'test' {
@@ -23,13 +28,24 @@ const environment = detectEnvironment()
 
 export const env = {
   supabase: {
-    url: getEnvVar('NEXT_PUBLIC_SUPABASE_URL'),
-    anonKey: getEnvVar('NEXT_PUBLIC_SUPABASE_ANON_KEY'),
-    serviceRoleKey: getEnvVar('SUPABASE_SERVICE_ROLE_KEY')
+    // Explicit access is required for Next.js to inline variables at build time
+    url: validate(
+      'NEXT_PUBLIC_SUPABASE_URL',
+      process.env.NEXT_PUBLIC_SUPABASE_URL
+    ),
+    anonKey: validate(
+      'NEXT_PUBLIC_SUPABASE_ANON_KEY',
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    ),
+    serviceRoleKey: validate(
+      'SUPABASE_SERVICE_ROLE_KEY',
+      process.env.SUPABASE_SERVICE_ROLE_KEY,
+      false
+    ) // Optional on client, required on server (checked where used)
   },
 
   app: {
-    url: getEnvVar('NEXT_PUBLIC_SITE_URL'),
+    url: validate('NEXT_PUBLIC_SITE_URL', process.env.NEXT_PUBLIC_SITE_URL),
     environment,
     isDevelopment: environment === 'development',
     isProduction: environment === 'production',
