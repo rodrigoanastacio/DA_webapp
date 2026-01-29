@@ -1,11 +1,22 @@
 import { createAdminClient } from '@/lib/supabase/admin'
+import { createClient } from '@/lib/supabase/server'
 import { teamHandler } from '@/shared/api-handlers/team/team.handler'
+import { userHandler } from '@/shared/api-handlers/user/user.handler'
 import { teamService } from '@/shared/services/team/team.service'
+import { redirect } from 'next/navigation'
 import { TeamManager } from '../components/TeamManager'
 
 export default async function TeamPage() {
-  const supabase = createAdminClient()
+  // 1. Verify Access (RBAC)
+  const supabaseAuth = await createClient()
+  const currentUser = await userHandler.getMe(supabaseAuth)
 
+  if (currentUser?.role !== 'admin') {
+    redirect('/dashboard')
+  }
+
+  // 2. Fetch Data (Admin Privileges)
+  const supabase = createAdminClient()
   const profiles = await teamHandler.list(supabase)
 
   const profilesData = profiles.map((p) => ({

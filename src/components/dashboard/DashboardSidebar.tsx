@@ -29,6 +29,7 @@ interface DashboardSidebarProps {
     name?: string
     email?: string
     avatar_url?: string
+    role?: string
   }
 }
 
@@ -37,6 +38,13 @@ export function DashboardSidebar({ user }: DashboardSidebarProps) {
   const { handleLogout, isLoggingOut } = useDashboard()
 
   const displayName = getUserDisplayName(user)
+
+  const filteredNavigation = navigation.filter((item) => {
+    if (item.href === '/dashboard/team/list') {
+      return user?.role === 'admin'
+    }
+    return true
+  })
 
   return (
     <div className="flex h-full flex-col bg-white border-r border-gray-100">
@@ -71,7 +79,7 @@ export function DashboardSidebar({ user }: DashboardSidebarProps) {
         <ul role="list" className="flex flex-1 flex-col gap-y-7 pl-4">
           <li className="flex-1">
             <ul role="list" className="space-y-2">
-              {navigation.map((item) => {
+              {filteredNavigation.map((item) => {
                 const isActive = pathname === item.href
                 return (
                   <li key={item.name} className="relative">
