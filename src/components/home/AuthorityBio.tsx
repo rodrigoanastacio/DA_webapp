@@ -1,3 +1,11 @@
+'use client'
+
+import {
+  FadeInRight,
+  StaggerContainer,
+  staggerItem
+} from '@/components/ui/motion-container'
+import { motion } from 'framer-motion'
 import { TrendingUp, User } from 'lucide-react'
 import Image from 'next/image'
 
@@ -29,31 +37,33 @@ export const AuthorityBio = () => {
               />
             </div>
           </div>
-
           <div className="w-full md:w-7/12">
-            <span className="text-sm font-bold text-blue-600 uppercase tracking-widest mb-4 block">
-              Especialista em Gestão para escritórios de advocacia
-            </span>
+            <FadeInRight delay={0.2}>
+              <span className="text-sm font-bold text-blue-600 uppercase tracking-widest mb-4 block">
+                Especialista em Gestão para escritórios de advocacia
+              </span>
 
-            <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6 leading-tight">
-              Quem vai organizar seu escritório
-            </h2>
+              <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6 leading-tight">
+                Quem vai organizar seu escritório
+              </h2>
 
-            <p className="text-lg text-gray-600 mb-10 leading-relaxed">
-              Dayane Anastácio é consultora especializada em gestão de alta
-              performance para escritórios de advocacia. Com uma visão analítica
-              e sistêmica, ela transforma estruturas operacionais complexas em
-              processos fluidos e lucrativos.
-            </p>
+              <p className="text-lg text-gray-600 mb-10 leading-relaxed">
+                Dayane Anastácio é consultora especializada em gestão de alta
+                performance para escritórios de advocacia. Com uma visão
+                analítica e sistêmica, ela transforma estruturas operacionais
+                complexas em processos fluidos e lucrativos.
+              </p>
+            </FadeInRight>
 
             {/* Credentials Cards */}
-            <div className="space-y-4 mb-10">
+            <StaggerContainer className="space-y-4 mb-10">
               {credentials.map((item, idx) => {
                 const Icon = item.icon
                 return (
-                  <div
+                  <motion.div
                     key={idx}
-                    className="flex items-start gap-4 p-4 bg-white rounded-xl border border-gray-100"
+                    variants={staggerItem}
+                    className="flex items-start gap-4 p-4 bg-white rounded-xl border border-gray-100 hover:border-blue-100 hover:shadow-lg transition-all duration-300"
                   >
                     <div className="shrink-0 w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center">
                       <Icon className="w-6 h-6 text-blue-600" />
@@ -66,10 +76,10 @@ export const AuthorityBio = () => {
                         {item.subtitle}
                       </p>
                     </div>
-                  </div>
+                  </motion.div>
                 )
               })}
-            </div>
+            </StaggerContainer>
           </div>
         </div>
       </div>

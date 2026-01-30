@@ -1,3 +1,12 @@
+'use client'
+
+import {
+  FadeIn,
+  StaggerContainer,
+  staggerItem
+} from '@/components/ui/motion-container'
+import { motion } from 'framer-motion'
+
 export const MethodGerar = () => {
   const letters = [
     {
@@ -31,23 +40,30 @@ export const MethodGerar = () => {
     <section className="py-24 bg-gray-50 border-t border-gray-100">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <span className="text-blue-600 font-bold tracking-widest text-sm uppercase mb-3 block">
-            Metodologia Exclusiva
-          </span>
-          <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6">
-            O Método GERAR
-          </h2>
-          <p className="text-lg text-gray-500 max-w-3xl mx-auto leading-relaxed">
-            Nossa metodologia exclusiva para transformar a gestão do seu
-            escritório de advocacia em uma máquina de eficiência.
-          </p>
+          <FadeIn>
+            <span className="text-blue-600 font-bold tracking-widest text-sm uppercase mb-3 block">
+              Metodologia Exclusiva
+            </span>
+          </FadeIn>
+          <FadeIn delay={0.1}>
+            <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6">
+              O Método GERAR
+            </h2>
+          </FadeIn>
+          <FadeIn delay={0.2}>
+            <p className="text-lg text-gray-500 max-w-3xl mx-auto leading-relaxed">
+              Nossa metodologia exclusiva para transformar a gestão do seu
+              escritório de advocacia em uma máquina de eficiência.
+            </p>
+          </FadeIn>
         </div>
 
         {/* Section: GERAR Grid (5 columns ultra-clean) */}
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-0 mb-24 border border-gray-200 rounded-xl overflow-hidden bg-white">
+        <StaggerContainer className="grid grid-cols-1 md:grid-cols-5 gap-0 mb-24 border border-gray-200 rounded-xl overflow-hidden bg-white">
           {letters.map((item, idx) => (
-            <div
+            <motion.div
               key={idx}
+              variants={staggerItem}
               className={`flex flex-col gap-6 p-8 border-b md:border-b-0 ${
                 idx !== letters.length - 1 ? 'md:border-r' : ''
               } border-gray-200 hover:bg-gray-50 transition-colors group`}
@@ -63,9 +79,9 @@ export const MethodGerar = () => {
                   {item.d}
                 </p>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </StaggerContainer>
       </div>
     </section>
   )
