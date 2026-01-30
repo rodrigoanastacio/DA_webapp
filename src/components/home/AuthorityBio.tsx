@@ -1,4 +1,4 @@
-import { Target, TrendingUp, User } from 'lucide-react'
+import { TrendingUp, User } from 'lucide-react'
 import Image from 'next/image'
 
 export const AuthorityBio = () => {
@@ -12,11 +12,6 @@ export const AuthorityBio = () => {
       icon: TrendingUp,
       title: 'Expert em Fluxos e Processos',
       subtitle: 'OTIMIZAÇÃO OPERACIONAL'
-    },
-    {
-      icon: Target,
-      title: 'Foco em Escala e Lucro',
-      subtitle: 'VISÃO DE NEGÓCIO'
     }
   ]
 
