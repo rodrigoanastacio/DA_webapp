@@ -28,16 +28,36 @@ const SocialProof = () => {
 
   const reviewSchema = {
     '@context': 'https://schema.org',
-    '@type': 'ItemList',
-    itemListElement: testimonials.map((testimonial, index) => ({
+    '@type': 'LocalBusiness',
+    name: 'Mentoria e Gestão Estratégica para Escritórios de Advocacia - Dayane Anastacio',
+    description:
+      'Consultoria especializada em gestão estratégica, otimização de processos e escalabilidade para escritórios de advocacia.',
+    url: 'https://dayaneanastacio.com.br/p/mentoria-e-gestao-estrategica',
+    telephone: '+55-11-98765-4321',
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'São Paulo',
+      addressRegion: 'SP',
+      addressCountry: 'BR'
+    },
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '5.0',
+      bestRating: '5',
+      worstRating: '1',
+      reviewCount: testimonials.length.toString()
+    },
+    review: testimonials.map((testimonial) => ({
       '@type': 'Review',
-      position: index + 1,
       itemReviewed: {
         '@type': 'Service',
         name: 'Mentoria e Gestão Estratégica para Escritórios de Advocacia',
+        description:
+          'Programa de mentoria estratégica focado em otimização de processos, implementação de sistemas de gestão e escalabilidade para escritórios de advocacia.',
         provider: {
           '@type': 'Person',
-          name: 'Dayane Anastacio'
+          name: 'Dayane Anastacio',
+          jobTitle: 'Consultora de Gestão Estratégica'
         }
       },
       author: {
@@ -48,7 +68,8 @@ const SocialProof = () => {
       reviewRating: {
         '@type': 'Rating',
         ratingValue: '5',
-        bestRating: '5'
+        bestRating: '5',
+        worstRating: '1'
       },
       reviewBody: testimonial.quote
     }))
