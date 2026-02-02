@@ -1,47 +1,28 @@
-import { Footer } from '@/components/Footer'
-import { Agitation } from '@/components/home/Agitation'
-import { AuthorityBio } from '@/components/home/AuthorityBio'
-import { FAQ } from '@/components/home/FAQ'
-import { FinalCTA } from '@/components/home/FinalCTA'
-import { HowItWorks } from '@/components/home/HowItWorks'
-import { MethodGerar } from '@/components/home/MethodGerar'
-import { SolutionPresentation } from '@/components/home/SolutionPresentation'
-import { Hero } from '@/components/layout/Hero'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Tenha um Escritório que Funciona Sem Você | Dayane Anastacio',
+  title: 'Dayane Anastacio - Consultoria em Gestão Jurídica',
   description:
-    'Consultoria de gestão para escritórios de advocacia. Otimização de processos, fluxos de trabalho e organização financeira para advogados que buscam crescimento.',
-  openGraph: {
-    title: 'Tenha um Escritório que Funciona Sem Você | Dayane Anastacio',
-    description:
-      'Consultoria de gestão para escritórios de advocacia. Otimização de processos, fluxos de trabalho e organização financeira para advogados que buscam crescimento.',
-    url: 'https://dayaneanastacio.com.br/',
-    siteName: 'Dayane Anastacio',
-    locale: 'pt_BR',
-    type: 'website'
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Tenha um Escritório que Funciona Sem Você | Dayane Anastacio',
-    description:
-      'Consultoria de gestão para escritórios de advocacia. Otimização de processos, fluxos de trabalho e organização financeira para advogados que buscam crescimento.'
-  }
+    'Página institucional - Em breve. Consultoria especializada em gestão de escritórios de advocacia.'
 }
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-white">
-      <Hero />
-      <Agitation />
-      <SolutionPresentation />
-      <MethodGerar />
-      <AuthorityBio />
-      <HowItWorks />
-      <FinalCTA />
-      <FAQ />
-      <Footer />
+    <main className="min-h-screen bg-white flex items-center justify-center">
+      <div className="text-center px-6">
+        <h1 className="text-4xl md:text-6xl font-bold text-deep-navy mb-4">
+          Em breve
+        </h1>
+        <p className="text-xl text-gray-600 mb-8">
+          Página institucional em construção
+        </p>
+        <a
+          href="/lp/mentoria-e-gestao-estrategica"
+          className="inline-block bg-lp-primary text-white px-8 py-4 rounded-xl font-bold hover:bg-blue-600 transition-colors"
+        >
+          Acessar Landing Page de Mentoria
+        </a>
+      </div>
     </main>
   )
 }

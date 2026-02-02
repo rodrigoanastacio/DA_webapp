@@ -5,7 +5,7 @@ interface TestimonialCardProps {
   authorName: string
   authorRole: string
   authorInitials: string
-  authorImage?: string // Optional image URL
+  authorImage?: string
 }
 
 export const TestimonialCard = ({
@@ -17,19 +17,13 @@ export const TestimonialCard = ({
 }: TestimonialCardProps) => {
   return (
     <article className="bg-lp-bg-light p-10 rounded-2xl border border-gray-200 relative hover:shadow-lg transition-shadow flex flex-col justify-between">
-      {/* Quote Icon */}
       <div className="absolute -top-4 -left-4 size-12 rounded-full bg-lp-primary flex items-center justify-center text-white text-2xl font-bold shadow-lg">
         &ldquo;
       </div>
-
-      {/* Quote Text */}
       <p className="text-gray-700 text-lg leading-relaxed mb-6 italic">
         {quote}
       </p>
-
-      {/* Author Info */}
       <div className="flex items-center gap-4">
-        {/* Avatar - Image or Initials */}
         {authorImage ? (
           <div className="relative size-12 rounded-full overflow-hidden bg-gray-200 shrink-0">
             <Image
@@ -44,7 +38,6 @@ export const TestimonialCard = ({
             {authorInitials}
           </div>
         )}
-
         <div>
           <strong className="text-deep-navy block">{authorName}</strong>
           <span className="text-gray-500 text-sm">{authorRole}</span>

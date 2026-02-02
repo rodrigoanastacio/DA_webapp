@@ -1,21 +1,12 @@
 import type { Metadata } from 'next'
-import { Geist, Geist_Mono, Outfit } from 'next/font/google'
+import { Manrope } from 'next/font/google'
 import './globals.css'
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin']
-})
-
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin']
-})
-
-const outfit = Outfit({
-  variable: '--font-outfit',
+const manrope = Manrope({
+  variable: '--font-manrope',
   subsets: ['latin'],
-  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900']
+  weight: ['300', '400', '500', '600', '700', '800'],
+  display: 'swap'
 })
 
 export const metadata: Metadata = {
@@ -41,7 +32,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${outfit.variable} font-sans`}
+        className={`${manrope.variable} font-manrope antialiased bg-white text-gray-900 min-h-screen selection:bg-lp-primary selection:text-white`}
       >
         {children}
       </body>

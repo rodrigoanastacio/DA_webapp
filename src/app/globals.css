@@ -14,6 +14,13 @@
   --color-green-700: #047857;
 
   --color-rose-50: #eae0df;
+
+  /* LP Mentoria Colors */
+  --color-lp-primary: #0b3fda;
+  --color-lp-bg-light: #f5f6f8;
+  --color-lp-bg-dark: #101422;
+  --color-deep-navy: #08298a;
+  --color-graphite: #333333;
 }
 
 @layer utilities {
@@ -177,5 +184,23 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .pain-section-bg {
+    background-color: #121212;
+    background-image: radial-gradient(
+      circle at 2px 2px,
+      rgba(255, 255, 255, 0.05) 1px,
+      transparent 0
+    );
+    background-size: 40px 40px;
+  }
+  .gradient-bg {
+    background: radial-gradient(
+      circle at top right,
+      rgba(11, 63, 218, 0.03),
+      transparent
+    );
   }
 }
