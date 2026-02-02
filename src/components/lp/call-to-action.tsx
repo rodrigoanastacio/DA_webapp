@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 export const CallToAction = () => {
   return (
-    <section className="py-32 bg-deep-navy text-white text-center px-6 relative overflow-hidden">
+    <section className="py-32 bg-linear-to-b from-deep-navy to-deep-navy/80 text-white text-center px-6 relative overflow-hidden">
       <div
         className="absolute top-0 left-0 w-full h-full opacity-30 pointer-events-none bg-dots"
         aria-hidden="true"
