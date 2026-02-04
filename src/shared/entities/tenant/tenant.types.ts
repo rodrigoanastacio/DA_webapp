@@ -10,7 +10,7 @@ export interface TenantSettings {
   }
   features?: Record<string, boolean>
   niche?: string
-  [key: string]: any
+  [key: string]: unknown
 }
 
 export interface TenantRow {

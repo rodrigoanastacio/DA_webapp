@@ -212,12 +212,12 @@ export const PainSection = () => {
             <div ref={quoteRef} className="pt-8">
               <div className="p-8 border-l-2 border-primary bg-white/2 rounded-r-2xl backdrop-blur-sm">
                 <p className="text-xl italic font-light text-gray-300 leading-relaxed">
-                  "Trabalhar aos fins de semana não é um sinal de dedicação, é
-                  um{' '}
+                  &quot;Trabalhar aos fins de semana não é um sinal de
+                  dedicação, é um{' '}
                   <span className="text-white font-semibold underline decoration-primary/30 underline-offset-4">
                     sintoma de falta de processos.
                   </span>
-                  "
+                  &quot;
                 </p>
               </div>
             </div>

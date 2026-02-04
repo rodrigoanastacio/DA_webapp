@@ -31,7 +31,7 @@ export const tenantHandler = {
       row.id,
       row.slug,
       row.name,
-      row.status as any,
+      row.status as 'active' | 'trialing' | 'past_due' | 'canceled',
       row.settings,
       row.created_at,
       row.updated_at
@@ -66,7 +66,7 @@ export const tenantHandler = {
       row.id,
       row.slug,
       row.name,
-      row.status as any,
+      row.status as 'active' | 'trialing' | 'past_due' | 'canceled',
       row.settings,
       row.created_at,
       row.updated_at
@@ -95,7 +95,7 @@ export const tenantHandler = {
           row.id,
           row.slug,
           row.name,
-          row.status as any,
+          row.status as 'active' | 'trialing' | 'past_due' | 'canceled',
           row.settings,
           row.created_at,
           row.updated_at
