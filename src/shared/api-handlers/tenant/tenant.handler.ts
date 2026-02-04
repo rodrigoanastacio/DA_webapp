@@ -1,0 +1,105 @@
+import { Tenant } from '@/shared/entities/tenant/tenant.entity'
+import { TenantRow } from '@/shared/entities/tenant/tenant.types'
+import { SupabaseClient } from '@supabase/supabase-js'
+
+export const tenantHandler = {
+  getBySlug: async (
+    supabase: SupabaseClient,
+    slug: string
+  ): Promise<Tenant | null> => {
+    const { data, error } = await supabase
+      .from('tenants')
+      .select('*')
+      .eq('slug', slug)
+      .is('deleted_at', null)
+      .single()
+
+    if (error) {
+      if (error.code === 'PGRST116') {
+        return null
+      }
+      console.error('[tenantHandler.getBySlug] Error:', error)
+      throw error
+    }
+
+    if (!data) {
+      return null
+    }
+
+    const row = data as TenantRow
+    return new Tenant(
+      row.id,
+      row.slug,
+      row.name,
+      row.status as any,
+      row.settings,
+      row.created_at,
+      row.updated_at
+    )
+  },
+
+  getById: async (
+    supabase: SupabaseClient,
+    id: string
+  ): Promise<Tenant | null> => {
+    const { data, error } = await supabase
+      .from('tenants')
+      .select('*')
+      .eq('id', id)
+      .is('deleted_at', null)
+      .single()
+
+    if (error) {
+      if (error.code === 'PGRST116') {
+        return null
+      }
+      console.error('[tenantHandler.getById] Error:', error)
+      throw error
+    }
+
+    if (!data) {
+      return null
+    }
+
+    const row = data as TenantRow
+    return new Tenant(
+      row.id,
+      row.slug,
+      row.name,
+      row.status as any,
+      row.settings,
+      row.created_at,
+      row.updated_at
+    )
+  },
+
+  list: async (supabase: SupabaseClient): Promise<Tenant[]> => {
+    const { data, error } = await supabase
+      .from('tenants')
+      .select('*')
+      .is('deleted_at', null)
+      .order('created_at', { ascending: false })
+
+    if (error) {
+      console.error('[tenantHandler.list] Error:', error)
+      throw error
+    }
+
+    if (!data || data.length === 0) {
+      return []
+    }
+
+    return data.map(
+      (row: TenantRow) =>
+        new Tenant(
+          row.id,
+          row.slug,
+          row.name,
+          row.status as any,
+          row.settings,
+          row.created_at,
+          row.updated_at
+        )
+    )
+  }
+}
