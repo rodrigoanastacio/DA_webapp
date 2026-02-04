@@ -30,21 +30,6 @@ export async function middleware(request: NextRequest) {
     data: { user }
   } = await supabase.auth.getUser()
 
-  if (user) {
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('id')
-      .eq('id', user.id)
-      .single()
-
-    if (!profile) {
-      await supabase.auth.signOut()
-      const url = request.nextUrl.clone()
-      url.pathname = '/login'
-      return NextResponse.redirect(url)
-    }
-  }
-
   if (request.nextUrl.pathname.startsWith('/dashboard')) {
     if (!user) {
       const url = request.nextUrl.clone()

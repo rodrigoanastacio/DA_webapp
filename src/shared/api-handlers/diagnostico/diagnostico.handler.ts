@@ -1,3 +1,4 @@
+import { getTenantIdFromJWT } from '@/lib/auth/get-tenant-id'
 import { DiagnosticoFormData } from '@/lib/zod/diagnostico.schema'
 import { Diagnostico } from '@/shared/entities/diagnostico/diagnostico.entity'
 import {
@@ -15,7 +16,12 @@ export const diagnosticoHandler = {
   ) => {
     const diagnostico = new Diagnostico(data)
 
-    // Exemplo de uso da lógica da entidade antes de persistir
+    const tenantId = await getTenantIdFromJWT()
+
+    if (!tenantId) {
+      throw new Error('User has no tenant_id in JWT. Please re-login.')
+    }
+
     if (diagnostico.isHighPotential) {
       console.log(
         `[ALERTA] Lead de alto potencial identificado: ${diagnostico.name}`
@@ -24,6 +30,7 @@ export const diagnosticoHandler = {
 
     const { error } = await supabase.from('diagnosticos').insert([
       {
+        tenant_id: tenantId,
         nome_completo: diagnostico.name.trim(),
         email: diagnostico.email.trim().toLowerCase(),
         whatsapp: diagnostico.whatsapp.replace(/\D/g, ''),
