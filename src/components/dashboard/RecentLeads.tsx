@@ -3,6 +3,13 @@
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger
+} from '@/components/ui/dropdown-menu'
+import {
   Table,
   TableBody,
   TableCell,
@@ -10,14 +17,24 @@ import {
   TableHeader,
   TableRow
 } from '@/components/ui/table'
+import { useLeadActions } from '@/hooks/useLeadActions'
 import { cn } from '@/lib/utils'
 import {
   LeadStatus,
   LeadStatusColor,
   LeadStatusLabel
 } from '@/shared/enums/LeadStatus'
-import { ArrowRight, Calendar, User } from 'lucide-react'
+import {
+  Archive,
+  ArrowRight,
+  Calendar,
+  MoreVertical,
+  Trash2,
+  User
+} from 'lucide-react'
 import Link from 'next/link'
+import { useState } from 'react'
+import { DeleteLeadModal } from './DeleteLeadModal'
 
 interface RecentLeadsProps {
   leads: {
@@ -52,6 +69,29 @@ function StatusBadge({ status }: { status: string }) {
 }
 
 export function RecentLeads({ leads }: RecentLeadsProps) {
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false)
+  const [selectedLead, setSelectedLead] = useState<{
+    id: string
+    name: string
+  } | null>(null)
+  const { archiveLead, deleteLead, isLoading } = useLeadActions()
+
+  const handleArchive = async (leadId: string) => {
+    await archiveLead(leadId)
+  }
+
+  const handleDeleteClick = (lead: { id: string; name: string }) => {
+    setSelectedLead(lead)
+    setDeleteModalOpen(true)
+  }
+
+  const handleDeleteConfirm = async () => {
+    if (!selectedLead) return
+    await deleteLead(selectedLead.id)
+    setDeleteModalOpen(false)
+    setSelectedLead(null)
+  }
+
   return (
     <div className="bg-white border border-gray-100 p-6 flex flex-col h-full shadow-[0_4px_20px_rgba(0,0,0,0.01)]">
       <div className="flex items-center justify-between mb-6">
@@ -69,6 +109,7 @@ export function RecentLeads({ leads }: RecentLeadsProps) {
             <TableRow>
               <TableHead>Lead</TableHead>
               <TableHead>Status</TableHead>
+              <TableHead>Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -96,13 +137,44 @@ export function RecentLeads({ leads }: RecentLeadsProps) {
                 <TableCell className="text-right py-3 pr-0">
                   <StatusBadge status={lead.status} />
                 </TableCell>
+                <TableCell className="text-right py-3 pr-0 w-8">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-8 w-8 text-gray-400 hover:text-gray-600"
+                      >
+                        <MoreVertical className="w-4 h-4" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuItem
+                        onClick={() => handleArchive(lead.id)}
+                        disabled={isLoading}
+                      >
+                        <Archive className="w-4 h-4 mr-2" />
+                        Arquivar
+                      </DropdownMenuItem>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem
+                        onClick={() => handleDeleteClick(lead)}
+                        disabled={isLoading}
+                        className="text-red-600 focus:text-red-600"
+                      >
+                        <Trash2 className="w-4 h-4 mr-2" />
+                        Deletar
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </TableCell>
               </TableRow>
             ))}
 
             {leads.length === 0 && (
               <TableRow>
                 <TableCell
-                  colSpan={2}
+                  colSpan={3}
                   className="text-center py-8 text-gray-400 text-sm"
                 >
                   Nenhum lead encontrado recente.
@@ -112,6 +184,14 @@ export function RecentLeads({ leads }: RecentLeadsProps) {
           </TableBody>
         </Table>
       </div>
+
+      <DeleteLeadModal
+        open={deleteModalOpen}
+        onOpenChange={setDeleteModalOpen}
+        onConfirm={handleDeleteConfirm}
+        leadName={selectedLead?.name || ''}
+        isLoading={isLoading}
+      />
     </div>
   )
 }

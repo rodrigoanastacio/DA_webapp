@@ -1,4 +1,5 @@
 import { dateHelpers } from '@/lib/utils/date-helpers'
+import { LeadStatus } from '@/shared/enums/LeadStatus'
 import { SupabaseClient } from '@supabase/supabase-js'
 
 export interface DashboardStats {
@@ -148,5 +149,25 @@ export const dashboardHandler = {
         const dateB = new Date(b.date.split('/').reverse().join('-'))
         return dateA.getTime() - dateB.getTime()
       })
+  },
+
+  archiveLead: async (supabase: SupabaseClient, leadId: string) => {
+    const { error } = await supabase
+      .from('diagnosticos')
+      .update({ status: LeadStatus.ARCHIVED })
+      .eq('id', leadId)
+
+    if (error) throw error
+    return { success: true }
+  },
+
+  deleteLead: async (supabase: SupabaseClient, leadId: string) => {
+    const { error } = await supabase
+      .from('diagnosticos')
+      .delete()
+      .eq('id', leadId)
+
+    if (error) throw error
+    return { success: true }
   }
 }

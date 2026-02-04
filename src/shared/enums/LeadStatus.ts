@@ -7,7 +7,8 @@ export enum LeadStatus {
   NEGOCIACAO = 'em_negociacao',
   PROPOSTA = 'proposta_enviada',
   WON = 'won',
-  LOST = 'lost'
+  LOST = 'lost',
+  ARCHIVED = 'archived'
 }
 
 export const LeadStatusLabel: Record<LeadStatus, string> = {
@@ -19,7 +20,8 @@ export const LeadStatusLabel: Record<LeadStatus, string> = {
   [LeadStatus.NEGOCIACAO]: 'Em Negociação',
   [LeadStatus.PROPOSTA]: 'Proposta',
   [LeadStatus.WON]: 'Ganho',
-  [LeadStatus.LOST]: 'Perdido'
+  [LeadStatus.LOST]: 'Perdido',
+  [LeadStatus.ARCHIVED]: 'Arquivado'
 }
 
 export const LeadStatusColor: Record<LeadStatus, string> = {
@@ -31,5 +33,6 @@ export const LeadStatusColor: Record<LeadStatus, string> = {
   [LeadStatus.NEGOCIACAO]: 'bg-yellow-100 text-yellow-600',
   [LeadStatus.PROPOSTA]: 'bg-cyan-100 text-cyan-600',
   [LeadStatus.WON]: 'bg-emerald-100 text-emerald-600',
-  [LeadStatus.LOST]: 'bg-red-100 text-red-600'
+  [LeadStatus.LOST]: 'bg-red-100 text-red-600',
+  [LeadStatus.ARCHIVED]: 'bg-gray-100 text-gray-600'
 }

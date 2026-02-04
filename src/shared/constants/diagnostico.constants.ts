@@ -73,53 +73,57 @@ export function formatRevenue(revenue: string): string {
   return REVENUE_LABELS[revenue as RevenueType] || revenue
 }
 
-export enum LeadStatusType {
-  NOVO_LEAD = 'novo_lead',
-  ANALISAR_LEAD = 'analisar_lead',
-  QUALIFICADO = 'qualificado',
-  EM_CONTATO = 'em_contato',
-  EM_REUNIAO = 'reuniao_agendada',
-  EM_NEGOCIACAO = 'em_negociacao',
-  CONVERTIDO = 'convertido',
-  DESCARTADO = 'descartado'
+import { LeadStatus } from '@/shared/enums/LeadStatus'
+export { LeadStatus as LeadStatusType }
+
+export const LEAD_STATUS_LABELS: Record<LeadStatus, string> = {
+  [LeadStatus.NOVO_LEAD]: 'NOVO LEAD',
+  [LeadStatus.ANALISAR_LEAD]: 'ANALISAR LEAD',
+  [LeadStatus.EM_CONTATO]: 'EM CONTATO',
+  [LeadStatus.QUALIFICADO]: 'QUALIFICADO',
+  [LeadStatus.AGENDADO]: 'EM REUNIÃO',
+  [LeadStatus.NEGOCIACAO]: 'EM NEGOCIAÇÃO',
+  [LeadStatus.PROPOSTA]: 'PROPOSTA',
+  [LeadStatus.WON]: 'GANHO',
+  [LeadStatus.LOST]: 'PERDIDO',
+  [LeadStatus.ARCHIVED]: 'ARQUIVADO'
 }
 
-export const LEAD_STATUS_LABELS: Record<LeadStatusType, string> = {
-  [LeadStatusType.NOVO_LEAD]: 'NOVO LEAD',
-  [LeadStatusType.ANALISAR_LEAD]: 'ANALISAR LEAD',
-  [LeadStatusType.QUALIFICADO]: 'QUALIFICADO',
-  [LeadStatusType.EM_CONTATO]: 'EM CONTATO',
-  [LeadStatusType.EM_REUNIAO]: 'EM REUNIÃO',
-  [LeadStatusType.EM_NEGOCIACAO]: 'EM NEGOCIAÇÃO',
-  [LeadStatusType.CONVERTIDO]: 'CONVERTIDO',
-  [LeadStatusType.DESCARTADO]: 'DESCARTADO'
-}
-
-export const LEAD_STATUS_STYLES: Record<LeadStatusType, string> = {
-  [LeadStatusType.NOVO_LEAD]: 'bg-[#F3F4F6] text-[#374151]',
-  [LeadStatusType.ANALISAR_LEAD]: 'bg-[#FEF3C7] text-[#92400E]', // Amber/Orange
-  [LeadStatusType.QUALIFICADO]: 'bg-[#E0F2FE] text-[#0369A1]',
-  [LeadStatusType.EM_CONTATO]: 'bg-[#FEF3C7] text-[#92400E]',
-  [LeadStatusType.EM_REUNIAO]: 'bg-[#FFEDD5] text-[#C2410C]', // Orange
-  [LeadStatusType.EM_NEGOCIACAO]: 'bg-[#F3E8FF] text-[#6B21A8]', // Purple
-  [LeadStatusType.CONVERTIDO]: 'bg-[#D1FAE5] text-[#065F46]',
-  [LeadStatusType.DESCARTADO]: 'bg-[#FEE2E2] text-[#991B1B]'
+export const LEAD_STATUS_STYLES: Record<LeadStatus, string> = {
+  [LeadStatus.NOVO_LEAD]: 'bg-cyan-100 text-cyan-600',
+  [LeadStatus.ANALISAR_LEAD]: 'bg-amber-100 text-amber-700',
+  [LeadStatus.EM_CONTATO]: 'bg-indigo-100 text-indigo-600',
+  [LeadStatus.QUALIFICADO]: 'bg-purple-100 text-purple-600',
+  [LeadStatus.AGENDADO]: 'bg-orange-100 text-orange-600',
+  [LeadStatus.NEGOCIACAO]: 'bg-yellow-100 text-yellow-600',
+  [LeadStatus.PROPOSTA]: 'bg-cyan-100 text-cyan-600',
+  [LeadStatus.WON]: 'bg-emerald-100 text-emerald-600',
+  [LeadStatus.LOST]: 'bg-red-100 text-red-600',
+  [LeadStatus.ARCHIVED]: 'bg-gray-100 text-gray-600'
 }
 
 export function formatLeadStatus(status: string): string {
-  return (
-    LEAD_STATUS_LABELS[status as LeadStatusType] ||
-    (status ? status.toUpperCase() : 'SEM STATUS')
-  )
+  const statusEnum = Object.values(LeadStatus).includes(status as LeadStatus)
+    ? (status as LeadStatus)
+    : undefined
+
+  return statusEnum
+    ? LEAD_STATUS_LABELS[statusEnum]
+    : status
+      ? status.toUpperCase()
+      : 'SEM STATUS'
 }
 
 export function getLeadStatusStyle(status: string): string {
-  return (
-    LEAD_STATUS_STYLES[status as LeadStatusType] || 'bg-gray-100 text-gray-700'
-  )
+  const statusEnum = Object.values(LeadStatus).includes(status as LeadStatus)
+    ? (status as LeadStatus)
+    : undefined
+
+  return statusEnum
+    ? LEAD_STATUS_STYLES[statusEnum]
+    : 'bg-gray-100 text-gray-700'
 }
 
-// Experience Time
 export const EXPERIENCE_OPTIONS = [
   { value: 'less_1', label: 'Menos de 1 ano' },
   { value: '1_3', label: '1 a 3 anos' },
@@ -132,7 +136,6 @@ export function formatExperience(experience: string): string {
   return option ? option.label : experience
 }
 
-// Team Structure
 export const TEAM_STRUCTURE_OPTIONS = [
   {
     value: 'clt_associados',
@@ -156,7 +159,6 @@ export function formatTeamStructure(structure: string): string {
   return option ? option.label : structure
 }
 
-// Management Level
 export const MANAGEMENT_LEVEL_OPTIONS = [
   {
     value: 'precaria',
