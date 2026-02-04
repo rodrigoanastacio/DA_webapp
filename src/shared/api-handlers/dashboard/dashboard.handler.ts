@@ -109,5 +109,44 @@ export const dashboardHandler = {
       date: lead.created_at,
       status: lead.status
     }))
+  },
+
+  getLeadsTimeline: async (
+    supabase: SupabaseClient,
+    days = 30
+  ): Promise<{ date: string; count: number }[]> => {
+    const startDate = new Date()
+    startDate.setDate(startDate.getDate() - days)
+
+    const { data } = await supabase
+      .from('diagnosticos')
+      .select('created_at')
+      .gte('created_at', startDate.toISOString())
+      .order('created_at')
+
+    if (!data) return []
+
+    const grouped = data.reduce(
+      (acc, curr) => {
+        const date = new Date(curr.created_at).toISOString().split('T')[0]
+        acc[date] = (acc[date] || 0) + 1
+        return acc
+      },
+      {} as Record<string, number>
+    )
+
+    return Object.entries(grouped)
+      .map(([date, count]) => ({
+        date: new Date(date).toLocaleDateString('pt-BR', {
+          day: '2-digit',
+          month: 'short'
+        }),
+        count
+      }))
+      .sort((a, b) => {
+        const dateA = new Date(a.date.split('/').reverse().join('-'))
+        const dateB = new Date(b.date.split('/').reverse().join('-'))
+        return dateA.getTime() - dateB.getTime()
+      })
   }
 }

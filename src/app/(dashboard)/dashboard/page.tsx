@@ -1,3 +1,4 @@
+import { LeadsTimelineChart } from '@/components/dashboard/LeadsTimelineChart'
 import { RecentLeads } from '@/components/dashboard/RecentLeads'
 import { RevenueChart } from '@/components/dashboard/RevenueChart'
 import { StatCard } from '@/components/dashboard/StatCard'
@@ -10,15 +11,15 @@ export const dynamic = 'force-dynamic'
 
 export default async function DashboardPage() {
   const supabase = await createClient()
-  const [stats, chartData, recentLeads] = await Promise.all([
+  const [stats, chartData, recentLeads, timelineData] = await Promise.all([
     dashboardHandler.getStats(supabase),
     dashboardHandler.getChartData(supabase),
-    dashboardHandler.getRecentLeads(supabase)
+    dashboardHandler.getRecentLeads(supabase),
+    dashboardHandler.getLeadsTimeline(supabase, 30)
   ])
 
   return (
     <div className="space-y-8 pb-12 animate-in fade-in duration-700">
-      {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-[28px] font-bold text-gray-900 tracking-tight">
@@ -68,7 +69,6 @@ export default async function DashboardPage() {
         />
       </Summary>
 
-      {/* Gráficos e Atividades */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
           <RevenueChart data={chartData} />
@@ -77,6 +77,10 @@ export default async function DashboardPage() {
         <div className="h-full min-h-[300px]">
           <RecentLeads leads={recentLeads} />
         </div>
+      </div>
+
+      <div className="w-full">
+        <LeadsTimelineChart data={timelineData} />
       </div>
     </div>
   )
