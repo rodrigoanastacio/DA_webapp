@@ -58,6 +58,14 @@ export default async function DashboardPage() {
           iconBg="bg-emerald-50"
           trend={{ value: `${stats.conversionRate} conv.`, direction: 'up' }}
         />
+        <StatCard
+          label="Leads Este Mês"
+          value={stats.leadsThisMonth}
+          icon={Users}
+          iconColor="text-purple-500"
+          iconBg="bg-purple-50"
+          trend={{ value: `${stats.leadsToday} hoje`, direction: 'neutral' }}
+        />
       </Summary>
 
       {/* Gráficos e Atividades */}
