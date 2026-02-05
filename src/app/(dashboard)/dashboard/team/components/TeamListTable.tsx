@@ -14,21 +14,11 @@ import {
 } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
-import { UserRole, UserRoleLabel } from '@/shared/enums/UserRole'
+import { UserRoleLabel } from '@/shared/enums/UserRole'
 import { Loader2, Trash2 } from 'lucide-react'
 import { useState } from 'react'
 
-type TeamMemberRow = {
-  id: string
-  fullName: string
-  email: string
-  role: UserRole
-  avatarUrl?: string | null
-  formattedJoinDate: string
-  roleBadgeStyles: string
-  initials: string
-  isActive: boolean
-}
+import { TeamMemberRow } from '../types'
 
 interface TeamListTableProps {
   rows: TeamMemberRow[]

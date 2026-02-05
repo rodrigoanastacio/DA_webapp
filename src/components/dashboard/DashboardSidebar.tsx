@@ -1,17 +1,9 @@
 'use client'
 
 import { useDashboard } from '@/app/(dashboard)/hooks/useDashboard'
+import { TenantLogo } from '@/components/TenantLogo'
 import { cn, getUserDisplayName } from '@/lib/utils'
-import {
-  BarChart2,
-  Calendar,
-  Home,
-  LogOut,
-  Scale,
-  Settings,
-  Users,
-  UsersRound
-} from 'lucide-react'
+import { Home, LogOut, Settings, Users, UsersRound } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
@@ -19,8 +11,7 @@ const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: Home },
   { name: 'Leads', href: '/dashboard/leads/list', icon: Users },
   { name: 'Equipe', href: '/dashboard/team/list', icon: UsersRound },
-  { name: 'Agenda', href: '/dashboard/agenda', icon: Calendar },
-  { name: 'Relatórios', href: '/dashboard/reports', icon: BarChart2 },
+  // { name: 'Relatórios', href: '/dashboard/reports', icon: BarChart2 },
   { name: 'Configurações', href: '/dashboard/settings', icon: Settings }
 ]
 
@@ -48,32 +39,8 @@ export function DashboardSidebar({ user }: DashboardSidebarProps) {
 
   return (
     <div className="flex h-full flex-col bg-white border-r border-gray-100">
-      <div className="flex h-24 shrink-0 items-center px-4">
-        <div className="flex items-center gap-4">
-          <div className="w-10 h-10 bg-blue-400 rounded-lg flex items-center justify-center text-white overflow-hidden">
-            {user?.avatar_url ? (
-              /* eslint-disable-next-line @next/next/no-img-element */
-              <img
-                src={user.avatar_url}
-                alt={displayName}
-                className="w-full h-full object-cover"
-              />
-            ) : (
-              <Scale className="w-6 h-6" />
-            )}
-          </div>
-          <div className="flex flex-col">
-            <span
-              className="text-sm font-bold tracking-tight text-gray-900 leading-tight truncate max-w-[160px]"
-              title="Dayane Anastacio"
-            >
-              Dayane Anastacio
-            </span>
-            <span className="text-[10px] font-medium text-gray-400 uppercase tracking-[2px]">
-              Consultoria & Gestão
-            </span>
-          </div>
-        </div>
+      <div className="flex h-[88px] shrink-0 items-center px-6">
+        <TenantLogo className="w-full" />
       </div>
 
       <nav className="flex flex-1 flex-col">

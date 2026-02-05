@@ -5,6 +5,7 @@ export interface UserProfileResponse {
   email: string
   avatar_url?: string
   role?: string
+  tenant_id?: string
 }
 
 export const userHandler = {
@@ -19,7 +20,7 @@ export const userHandler = {
 
     const { data: profile } = await supabase
       .from('profiles')
-      .select('full_name, role, avatar_url')
+      .select('full_name, role, avatar_url, tenant_id')
       .eq('id', user.id)
       .single()
 
@@ -30,7 +31,8 @@ export const userHandler = {
         user.user_metadata?.name,
       email: user.email || '',
       avatar_url: profile?.avatar_url || user.user_metadata?.avatar_url,
-      role: profile?.role
+      role: profile?.role,
+      tenant_id: profile?.tenant_id || user.user_metadata?.tenant_id
     }
   }
 }

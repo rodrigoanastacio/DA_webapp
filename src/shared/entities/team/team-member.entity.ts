@@ -65,4 +65,19 @@ export class TeamMember {
       isActive: this.isActive
     }
   }
+
+  toResponse(): TeamMemberResponse {
+    return {
+      id: this.id,
+      full_name: this.fullName,
+      email: this.email,
+      role: this.role as unknown as 'admin' | 'editor' | 'viewer',
+      avatar_url: this.avatarUrl,
+      created_at: this.createdAt.toISOString(),
+      updated_at: this.createdAt.toISOString(),
+      email_confirmed_at: this.emailConfirmedAt
+        ? this.emailConfirmedAt.toISOString()
+        : null
+    }
+  }
 }

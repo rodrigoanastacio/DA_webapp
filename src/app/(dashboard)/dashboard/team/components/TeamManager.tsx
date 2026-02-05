@@ -1,105 +1,38 @@
 'use client'
 
-import { env } from '@/config/env'
-import { createBrowserClient } from '@supabase/ssr'
-import { useEffect, useState } from 'react'
-import { toast } from 'sonner'
-import { refreshTeamList } from '../actions'
+import { UserRole } from '@/shared/enums/UserRole'
+import { useTeamManager } from '../hooks/useTeamManager'
+import { TeamMemberRow } from '../types'
 import { MemberDetailsDrawer } from './MemberDetailsDrawer'
 import { TeamHeader } from './TeamHeader'
 import { TeamListTable } from './TeamListTable'
 
-import { UserRole } from '@/shared/enums/UserRole'
-
-export interface TeamMemberRow {
-  id: string
-  fullName: string
-  email: string
-  role: UserRole
-  avatarUrl?: string | null
-  formattedJoinDate: string
-  roleBadgeStyles: string
-  initials: string
-  isActive: boolean
-}
-
 interface TeamManagerProps {
   rows: TeamMemberRow[]
+  tenantId: string
 }
 
-export function TeamManager({ rows: initialRows }: TeamManagerProps) {
-  const [rows, setRows] = useState(initialRows)
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
-  const [selectedMember, setSelectedMember] = useState<TeamMemberRow | null>(
-    null
+export function TeamManager({ rows: initialRows, tenantId }: TeamManagerProps) {
+  const { teamMembers, isDrawerOpen, selectedMember, actions } = useTeamManager(
+    initialRows,
+    tenantId
   )
-
-  const supabase = createBrowserClient(env.supabase.url, env.supabase.anonKey)
-
-  useEffect(() => {
-    const channel = supabase
-      .channel('team-list-updates')
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'profiles'
-        },
-        async () => {
-          const updatedRows = await refreshTeamList()
-          setRows(updatedRows)
-        }
-      )
-      .subscribe()
-
-    return () => {
-      supabase.removeChannel(channel)
-    }
-  }, [supabase])
-
-  const handleOpenNew = () => {
-    setSelectedMember(null)
-    setIsDrawerOpen(true)
-  }
-
-  // const handleEdit = (member: TeamMemberRow) => {
-  //   setSelectedMember(member)
-  //   setIsDrawerOpen(true)
-  // }
-
-  const handleClose = () => {
-    setIsDrawerOpen(false)
-    setSelectedMember(null)
-  }
-
-  const handleDelete = async (id: string) => {
-    try {
-      await fetch(`/api/team?id=${id}`, { method: 'DELETE' })
-      const updatedRows = await refreshTeamList()
-      setRows(updatedRows)
-      toast.success('Membro excluído com sucesso')
-    } catch (error) {
-      toast.error('Erro ao excluir membro')
-      console.error(error)
-    }
-  }
 
   return (
     <>
       <TeamHeader
-        totalMembers={rows.length}
+        totalMembers={teamMembers.length}
         adminsCount={
-          rows.filter((member) => member.role === UserRole.ADMIN).length
+          teamMembers.filter((member) => member.role === UserRole.ADMIN).length
         }
-        onNewMember={handleOpenNew}
+        onNewMember={actions.openNewMember}
       />
 
-      <TeamListTable rows={rows} onDelete={handleDelete} />
+      <TeamListTable rows={teamMembers} onDelete={actions.deleteMember} />
 
       <MemberDetailsDrawer
         isOpen={isDrawerOpen}
-        onClose={handleClose}
+        onClose={actions.closeDrawer}
         initialData={selectedMember}
       />
     </>

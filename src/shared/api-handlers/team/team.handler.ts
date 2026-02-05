@@ -4,12 +4,21 @@ import { TeamMember } from '@/shared/entities/team/team-member.entity'
 import { SupabaseClient } from '@supabase/supabase-js'
 
 export const teamHandler = {
-  list: async (supabase: SupabaseClient): Promise<TeamMember[]> => {
-    const { data, error } = await supabase
+  list: async (
+    supabase: SupabaseClient,
+    tenantId?: string
+  ): Promise<TeamMember[]> => {
+    let query = supabase
       .from('profiles')
       .select('*')
       .is('deleted_at', null)
       .order('full_name', { ascending: true })
+
+    if (tenantId) {
+      query = query.eq('tenant_id', tenantId)
+    }
+
+    const { data, error } = await query
 
     if (error) throw error
 

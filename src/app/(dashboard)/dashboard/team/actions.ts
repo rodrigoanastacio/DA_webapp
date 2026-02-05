@@ -3,22 +3,27 @@
 import { createAdminClient } from '@/lib/supabase/admin'
 import { teamHandler } from '@/shared/api-handlers/team/team.handler'
 import { teamService } from '@/shared/services/team/team.service'
-import { TeamMemberRow } from './components/TeamManager'
+import { TeamMemberRow } from './types'
+
+import { createClient } from '@/lib/supabase/server'
 
 export async function refreshTeamList(): Promise<TeamMemberRow[]> {
-  const supabase = createAdminClient()
+  const supabaseAdmin = createAdminClient()
+  const supabase = await createClient()
 
-  const profiles = await teamHandler.list(supabase)
+  const {
+    data: { user }
+  } = await supabase.auth.getUser()
+  const tenantId = user?.user_metadata?.tenant_id
 
-  const profilesData = profiles.map((p) => ({
-    id: p.id,
-    full_name: p.fullName,
-    email: p.email,
-    role: p.role as 'admin' | 'editor' | 'viewer',
-    avatar_url: p.avatarUrl,
-    created_at: p.createdAt.toISOString(),
-    updated_at: p.createdAt.toISOString()
-  }))
+  if (!tenantId) {
+    console.error('refreshTeamList: No tenant_id found for user')
+    return []
+  }
+
+  const profiles = await teamHandler.list(supabaseAdmin, tenantId)
+
+  const profilesData = profiles.map((p) => p.toResponse())
 
   const members = await teamService.getMembersWithStatus(supabase, profilesData)
 
