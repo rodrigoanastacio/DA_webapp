@@ -1,5 +1,6 @@
 'use client'
 
+import { Box } from '@/components/ui/box'
 import { Save, User } from 'lucide-react'
 
 interface ProfileSectionProps {
@@ -20,7 +21,7 @@ export function ProfileSection({
   onSave
 }: ProfileSectionProps) {
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+    <Box>
       <h2 className="text-lg font-semibold text-gray-900 mb-6 flex items-center gap-2">
         Informações do Perfil
       </h2>
@@ -84,6 +85,6 @@ export function ProfileSection({
           </div>
         </div>
       )}
-    </div>
+    </Box>
   )
 }

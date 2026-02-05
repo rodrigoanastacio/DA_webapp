@@ -1,9 +1,10 @@
 'use client'
 
-import { BrandingSection } from '@/app/(dashboard)/dashboard/settings/components/BrandingSection'
-import { ProfileSection } from '@/app/(dashboard)/dashboard/settings/components/ProfileSection'
-import { useBrandSettings } from '@/app/(dashboard)/dashboard/settings/hooks/useBrandSettings'
-import { useProfileSettings } from '@/app/(dashboard)/dashboard/settings/hooks/useProfileSettings'
+import { PageHeader } from '@/components/dashboard/PageHeader'
+import { BrandingSection } from './components/BrandingSection'
+import { ProfileSection } from './components/ProfileSection'
+import { useBrandSettings } from './hooks/useBrandSettings'
+import { useProfileSettings } from './hooks/useProfileSettings'
 
 export default function ConfiguracoesPage() {
   const {
@@ -26,16 +27,10 @@ export default function ConfiguracoesPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-[28px] font-bold text-gray-900 tracking-tight">
-            Configurações
-          </h1>
-          <p className="text-gray-400 font-medium text-sm mt-1">
-            Personalize seu perfil e a identidade visual do painel
-          </p>
-        </div>
-      </div>
+      <PageHeader
+        title="Configurações"
+        description="Personalize seu perfil e a identidade visual do painel"
+      />
 
       <ProfileSection
         fullName={fullName}

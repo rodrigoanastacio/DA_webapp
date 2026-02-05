@@ -1,4 +1,5 @@
 import { LeadsTimelineChart } from '@/components/dashboard/LeadsTimelineChart'
+import { PageHeader } from '@/components/dashboard/PageHeader'
 import { RecentLeads } from '@/components/dashboard/RecentLeads'
 import { RevenueChart } from '@/components/dashboard/RevenueChart'
 import { StatCard } from '@/components/dashboard/StatCard'
@@ -18,23 +19,17 @@ export default async function DashboardPage() {
     dashboardHandler.getLeadsTimeline(supabase, 30)
   ])
 
+  const dateString = new Date().toLocaleDateString('pt-BR', {
+    day: 'numeric',
+    month: 'long'
+  })
+
   return (
     <div className="space-y-8 pb-12 animate-in fade-in duration-700">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-[28px] font-bold text-gray-900 tracking-tight">
-            Visão Geral
-          </h1>
-          <p className="text-gray-400 font-medium text-sm mt-1">
-            Acompanhe os principais indicadores de hoje,{' '}
-            {new Date().toLocaleDateString('pt-BR', {
-              day: 'numeric',
-              month: 'long'
-            })}
-            .
-          </p>
-        </div>
-      </div>
+      <PageHeader
+        title="Visão Geral"
+        description={`Acompanhe os principais indicadores de hoje, ${dateString}.`}
+      />
 
       <Summary>
         <StatCard

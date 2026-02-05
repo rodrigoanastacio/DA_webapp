@@ -1,5 +1,6 @@
 'use client'
 
+import { Box } from '@/components/ui/box'
 import { Save, Upload, X } from 'lucide-react'
 import Image from 'next/image'
 
@@ -21,20 +22,18 @@ export function BrandingSection({
   onCancel
 }: BrandingSectionProps) {
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+    <Box>
       <h2 className="text-lg font-semibold text-gray-900 mb-6 flex items-center gap-2">
         Identidade Visual
       </h2>
 
       <div className="space-y-6">
-        {/* Logo Upload */}
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-3">
             Logo da Empresa
           </label>
 
           {logoPreview ? (
-            // Preview
             <div className="space-y-4">
               <div className="relative w-48 h-48 border-2 border-dashed border-gray-200 rounded-xl overflow-hidden bg-gray-50 flex items-center justify-center">
                 <Image
@@ -52,7 +51,6 @@ export function BrandingSection({
                 </button>
               </div>
 
-              {/* Action Buttons */}
               <div className="flex gap-3">
                 <button
                   onClick={onUpload}
@@ -73,7 +71,6 @@ export function BrandingSection({
               </div>
             </div>
           ) : (
-            // Upload Zone
             <label className="flex flex-col items-center justify-center w-full max-w-lg h-48 border-2 border-dashed border-gray-200 rounded-xl cursor-pointer hover:border-blue-400 hover:bg-blue-50/30 transition-all group bg-gray-50/50">
               <div className="flex flex-col items-center justify-center pt-5 pb-6">
                 <div className="w-10 h-10 bg-white rounded-lg shadow-sm border border-gray-100 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
@@ -95,7 +92,6 @@ export function BrandingSection({
             </label>
           )}
 
-          {/* Error Message */}
           {error && (
             <div className="mt-3 p-3 bg-red-50 border border-red-100 rounded-lg flex items-center gap-2">
               <div className="w-1.5 h-1.5 rounded-full bg-red-500" />
@@ -103,7 +99,6 @@ export function BrandingSection({
             </div>
           )}
 
-          {/* Help Text */}
           <p className="text-xs text-gray-400 mt-3 flex items-center gap-1.5">
             <span className="w-4 h-4 rounded-full bg-blue-50 text-blue-500 flex items-center justify-center font-bold text-[10px]">
               i
@@ -113,7 +108,6 @@ export function BrandingSection({
           </p>
         </div>
 
-        {/* Future: Company Name & Tagline */}
         <div className="pt-4 border-t border-gray-100">
           <p className="text-sm text-gray-400 italic">
             📝 Em breve: Edição de nome da empresa, slogan e cores
@@ -121,6 +115,6 @@ export function BrandingSection({
           </p>
         </div>
       </div>
-    </div>
+    </Box>
   )
 }

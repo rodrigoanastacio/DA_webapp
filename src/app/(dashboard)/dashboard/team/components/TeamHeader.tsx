@@ -1,5 +1,6 @@
 'use client'
 
+import { PageHeader } from '@/components/dashboard/PageHeader'
 import { StatCard } from '@/components/dashboard/StatCard'
 import { Summary } from '@/components/dashboard/Summary'
 import { Button } from '@/components/ui/button'
@@ -18,15 +19,10 @@ export function TeamHeader({
 }: TeamHeaderProps) {
   return (
     <>
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">
-            Gestão de Equipe
-          </h1>
-          <p className="text-gray-500 mt-1 font-medium italic">
-            Gerencie as permissões e acessos do seu time de especialistas.
-          </p>
-        </div>
+      <PageHeader
+        title="Gestão de Equipe"
+        description="Gerencie as permissões e acessos do seu time de especialistas."
+      >
         <Button
           onClick={onNewMember}
           className="bg-blue-400 hover:bg-blue-500 text-white font-bold h-12 px-6 rounded-xl shadow-lg shadow-blue-400/20 transition-all flex items-center gap-2 group"
@@ -34,7 +30,7 @@ export function TeamHeader({
           <Plus className="w-5 h-5 transition-transform group-hover:rotate-90" />
           Novo Colaborador
         </Button>
-      </div>
+      </PageHeader>
 
       <Summary>
         <StatCard
