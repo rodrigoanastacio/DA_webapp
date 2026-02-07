@@ -2,7 +2,7 @@
 
 import { useDashboard } from '@/app/(dashboard)/hooks/useDashboard'
 import { TenantLogo } from '@/components/TenantLogo'
-import { cn, getUserDisplayName } from '@/lib/utils'
+import { cn } from '@/lib/utils'
 import {
   Home,
   LayoutTemplate,
@@ -38,8 +38,6 @@ interface DashboardSidebarProps {
 export function DashboardSidebar({ user }: DashboardSidebarProps) {
   const pathname = usePathname()
   const { handleLogout, isLoggingOut } = useDashboard()
-
-  const displayName = getUserDisplayName(user)
 
   const filteredNavigation = navigation.filter((item) => {
     if (item.href === '/dashboard/team/list') {

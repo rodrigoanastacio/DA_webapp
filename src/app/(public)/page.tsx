@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Dayane Anastacio - Consultoria em Gestão Jurídica',
@@ -16,12 +17,12 @@ export default function Home() {
         <p className="text-xl text-gray-600 mb-8">
           Página institucional em construção
         </p>
-        <a
+        <Link
           href="/lp/mentoria-e-gestao-estrategica"
           className="inline-block bg-lp-primary text-white px-8 py-4 rounded-xl font-bold hover:bg-blue-600 transition-colors"
         >
           Acessar Landing Page de Mentoria
-        </a>
+        </Link>
       </div>
     </main>
   )

@@ -8,6 +8,7 @@ import {
   LucideFileWarning,
   LucideUsers
 } from 'lucide-react'
+import Image from 'next/image'
 import { useEffect, useRef } from 'react'
 
 if (typeof window !== 'undefined') {
@@ -107,10 +108,11 @@ export const PainSection = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div ref={imageRef} className="relative group">
             <div className="absolute inset-0 bg-linear-to-t from-[#121212] via-[#121212]/30 to-transparent z-20 rounded-3xl"></div>
-            <img
+            <Image
               alt="Pilhas de documentos e processos jurídicos sob uma luz fraca"
-              className="w-full h-[800px] object-cover rounded-3xl opacity-60 border border-white/5"
+              className="object-cover rounded-3xl opacity-60 border border-white/5"
               src="/assets/bg-pilhas-documentos.png"
+              fill
             />
             <div className="absolute inset-0 flex items-center justify-center z-10">
               <div className="w-px h-64 bg-linear-to-b from-transparent via-white/20 to-transparent"></div>

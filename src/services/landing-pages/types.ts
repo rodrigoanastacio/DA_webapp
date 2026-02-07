@@ -19,4 +19,5 @@ export interface LandingPage {
   seo_description?: string
   created_at: string
   updated_at: string
+  views?: number
 }

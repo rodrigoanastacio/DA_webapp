@@ -2,8 +2,9 @@
 
 import { env } from '@/config/env'
 import { createServerClient } from '@supabase/ssr'
+import { User } from '@supabase/supabase-js'
 import { cookies } from 'next/headers'
-import { LandingPageContent, SaveLandingPageResult } from './types'
+import { LandingPage, LandingPageContent, SaveLandingPageResult } from './types'
 
 export async function saveLandingPage(
   sections: LandingPageContent
@@ -21,8 +22,8 @@ export async function saveLandingPage(
           },
           setAll(cookiesToSet) {
             try {
-              cookiesToSet.forEach(({ name, value, options }) => {
-                cookieStore.set(name, value, options)
+              cookiesToSet.forEach(({ name, value }) => {
+                cookieStore.set(name, value)
               })
             } catch {
               // The `setAll` method was called from a Server Component.
@@ -66,7 +67,7 @@ export async function saveLandingPage(
             },
             aud: 'authenticated',
             created_at: new Date().toISOString()
-          } as any
+          } as unknown as User
         } else {
           console.error('❌ Falha total de autenticação')
           return {
@@ -77,7 +78,7 @@ export async function saveLandingPage(
       }
     }
 
-    // @ts-ignore - tenant_id is in app_metadata
+    // tenant_id is in app_metadata
     let tenantId = user.app_metadata?.tenant_id
 
     if (!tenantId) {
@@ -121,7 +122,6 @@ export async function updateLandingPage(
   id: string,
   sections: LandingPageContent
 ) {
-  'use server'
   const cookieStore = await cookies()
   const supabase = createServerClient(env.supabase.url, env.supabase.anonKey, {
     cookies: { getAll: () => cookieStore.getAll(), setAll: () => {} }
@@ -133,7 +133,6 @@ export async function updateLandingPage(
     } = await supabase.auth.getUser()
     if (!user) return { success: false, message: 'Não autenticado' }
 
-    // @ts-ignore
     const tenantId = user.app_metadata?.tenant_id
 
     const { error } = await supabase
@@ -171,12 +170,11 @@ export async function getLandingPages() {
           published: true,
           created_at: new Date().toISOString()
         }
-      ] as any
+      ] as unknown as LandingPage[]
     }
 
     if (!user) return []
 
-    // @ts-ignore
     const tenantId = user.app_metadata?.tenant_id
 
     const { data, error } = await supabase
@@ -192,7 +190,7 @@ export async function getLandingPages() {
       )
       throw error
     }
-    return data || []
+    return (data as LandingPage[]) || []
   } catch (error) {
     console.warn('Falha ao buscar LPs (retornando lista vazia):', error)
     return []
@@ -216,12 +214,11 @@ export async function getLandingPage(id: string) {
         title: 'LP Demo Mock',
         slug: 'lp-demo',
         content: []
-      } as any
+      } as unknown as LandingPage
     }
 
     if (!user) return null
 
-    // @ts-ignore
     const tenantId = user.app_metadata?.tenant_id
 
     const { data, error } = await supabase
@@ -232,7 +229,7 @@ export async function getLandingPage(id: string) {
       .single()
 
     if (error) return null
-    return data
+    return data as LandingPage
   } catch (error) {
     console.warn('Erro ao buscar LP:', error)
     return null

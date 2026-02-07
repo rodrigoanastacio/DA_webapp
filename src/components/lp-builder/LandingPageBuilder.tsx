@@ -207,7 +207,7 @@ export function LandingPageBuilder({
 
   const selectedSection = sections.find((s) => s.id === selectedId)
 
-  function updateSectionData(key: string, value: any) {
+  function updateSectionData(key: string, value: string) {
     if (!selectedId) return
 
     setSections((prev) =>
@@ -379,7 +379,7 @@ export function LandingPageBuilder({
                     <Label htmlFor="headline">Headline</Label>
                     <Textarea
                       id="headline"
-                      value={selectedSection.data.headline || ''}
+                      value={(selectedSection.data.headline as string) || ''}
                       onChange={(e) =>
                         updateSectionData('headline', e.target.value)
                       }
@@ -392,7 +392,7 @@ export function LandingPageBuilder({
                     <Label htmlFor="subheadline">Subheadline</Label>
                     <Textarea
                       id="subheadline"
-                      value={selectedSection.data.subheadline || ''}
+                      value={(selectedSection.data.subheadline as string) || ''}
                       onChange={(e) =>
                         updateSectionData('subheadline', e.target.value)
                       }
@@ -406,7 +406,7 @@ export function LandingPageBuilder({
                       <Label htmlFor="ctaLabel">Texto do Botão</Label>
                       <Input
                         id="ctaLabel"
-                        value={selectedSection.data.ctaLabel || ''}
+                        value={(selectedSection.data.ctaLabel as string) || ''}
                         onChange={(e) =>
                           updateSectionData('ctaLabel', e.target.value)
                         }
@@ -417,7 +417,7 @@ export function LandingPageBuilder({
                       <Label htmlFor="ctaLink">Link de Destino</Label>
                       <Input
                         id="ctaLink"
-                        value={selectedSection.data.ctaLink || ''}
+                        value={(selectedSection.data.ctaLink as string) || ''}
                         onChange={(e) =>
                           updateSectionData('ctaLink', e.target.value)
                         }
@@ -429,7 +429,7 @@ export function LandingPageBuilder({
                   <div className="space-y-2 pt-2">
                     <Label>Tema Visual</Label>
                     <Select
-                      value={selectedSection.data.theme || 'light'}
+                      value={(selectedSection.data.theme as string) || 'light'}
                       onValueChange={(value) =>
                         updateSectionData('theme', value)
                       }

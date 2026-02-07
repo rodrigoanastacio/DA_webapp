@@ -93,7 +93,7 @@ export async function POST(req: NextRequest) {
     const fileExt = file.type.split('/')[1]
     const fileName = `${tenant_id}/logo.${fileExt}`
 
-    const { data: uploadData, error: uploadError } = await supabase.storage
+    const { error: uploadError } = await supabase.storage
       .from('tenant-assets')
       .upload(fileName, file, {
         upsert: true, // Replace if exists

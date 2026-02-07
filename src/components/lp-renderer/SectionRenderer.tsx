@@ -9,8 +9,8 @@ export type SectionType = keyof typeof SECTION_COMPONENTS
 export interface LPSection {
   id: string
   type: SectionType
-  data: Record<string, any>
-  style?: Record<string, any>
+  data: Record<string, unknown>
+  style?: Record<string, unknown>
 }
 
 interface SectionRendererProps {

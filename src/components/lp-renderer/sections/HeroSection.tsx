@@ -1,4 +1,5 @@
 import { cn } from '@/lib/utils'
+import Image from 'next/image'
 import Link from 'next/link'
 
 export interface HeroSectionProps {
@@ -30,10 +31,12 @@ export function HeroSection({
     >
       {backgroundImage && (
         <div className="absolute inset-0 z-0">
-          <img
+          <Image
             src={backgroundImage}
             alt="Hero background"
-            className="w-full h-full object-cover opacity-10"
+            fill
+            className="object-cover opacity-10"
+            unoptimized={true}
           />
         </div>
       )}
