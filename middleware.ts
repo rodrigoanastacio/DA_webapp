@@ -7,13 +7,18 @@ export async function middleware(request: NextRequest) {
     request
   })
 
+  // Debug: Log requests to server actions
+  if (request.method === 'POST') {
+    console.log('Middleware Processing POST:', request.nextUrl.pathname)
+  }
+
   const supabase = createServerClient(env.supabase.url, env.supabase.anonKey, {
     cookies: {
       getAll() {
         return request.cookies.getAll()
       },
       setAll(cookiesToSet) {
-        cookiesToSet.forEach(({ name, value }) => {
+        cookiesToSet.forEach(({ name, value, options }) => {
           request.cookies.set(name, value)
         })
         response = NextResponse.next({
@@ -26,6 +31,7 @@ export async function middleware(request: NextRequest) {
     }
   })
 
+  // IMPORTANT: DO NOT REMOVE auth.getUser() - it refreshes the auth token
   const {
     data: { user }
   } = await supabase.auth.getUser()

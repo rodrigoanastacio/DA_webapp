@@ -3,7 +3,14 @@
 import { useDashboard } from '@/app/(dashboard)/hooks/useDashboard'
 import { TenantLogo } from '@/components/TenantLogo'
 import { cn, getUserDisplayName } from '@/lib/utils'
-import { Home, LogOut, Settings, Users, UsersRound } from 'lucide-react'
+import {
+  Home,
+  LayoutTemplate,
+  LogOut,
+  Settings,
+  Users,
+  UsersRound
+} from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
@@ -11,7 +18,11 @@ const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: Home },
   { name: 'Leads', href: '/dashboard/leads/list', icon: Users },
   { name: 'Equipe', href: '/dashboard/team/list', icon: UsersRound },
-  // { name: 'Relatórios', href: '/dashboard/reports', icon: BarChart2 },
+  {
+    name: 'Landing Pages',
+    href: '/dashboard/landing-pages',
+    icon: LayoutTemplate
+  },
   { name: 'Configurações', href: '/dashboard/settings', icon: Settings }
 ]
 
