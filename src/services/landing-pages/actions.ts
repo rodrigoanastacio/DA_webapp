@@ -143,7 +143,7 @@ export async function updateLandingPage(
       user.app_metadata?.tenant_id || user.user_metadata?.tenant_id
 
     // Prepare update data
-    const updateData: any = {
+    const updateData = {
       ...updates,
       updated_at: new Date().toISOString()
     }

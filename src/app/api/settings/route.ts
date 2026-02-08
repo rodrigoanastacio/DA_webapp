@@ -16,7 +16,7 @@ export async function GET() {
       )
     }
 
-    let tenant_id =
+    const tenant_id =
       user.app_metadata?.tenant_id || user.user_metadata?.tenant_id
 
     if (!tenant_id) {
