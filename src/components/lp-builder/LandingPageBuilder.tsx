@@ -49,12 +49,24 @@ import {
 
 interface LandingPageBuilderProps {
   initialSections?: LPSection[]
+  initialPublished?: boolean
+  initialTitle?: string
+  initialSlug?: string
+  initialMetaTitle?: string
+  initialMetaDescription?: string
   onSave: (
-    sections: LPSection[]
+    sections: LPSection[],
+    pageSettings: {
+      title: string
+      slug: string
+      metaTitle?: string
+      metaDescription?: string
+    }
   ) => Promise<{ success: boolean; slug?: string; message?: string }>
+  onTogglePublish?: (published: boolean) => Promise<{ success: boolean }>
+  isSaving?: boolean
 }
 
-// Draggable wrapper component
 function SortableSection({
   section,
   isSelected,
@@ -96,7 +108,6 @@ function SortableSection({
         onClick()
       }}
     >
-      {/* Drag Handle & Tools - Visible on Hover/Selected */}
       <div
         className={cn(
           'absolute -top-3 left-1/2 -translate-x-1/2 flex items-center gap-1 bg-blue-600 text-white rounded-full px-3 py-1 shadow-lg z-50 transition-opacity duration-200',
@@ -124,7 +135,6 @@ function SortableSection({
         </button>
       </div>
 
-      {/* Render the actual component with pointer-events disabled to allow drag */}
       <div
         className={cn(
           'pointer-events-none select-none border border-border/50 bg-white shadow-sm rounded-lg overflow-hidden',
@@ -139,11 +149,28 @@ function SortableSection({
 
 export function LandingPageBuilder({
   initialSections = [],
-  onSave
+  initialPublished = false,
+  initialTitle = '',
+  initialSlug = '',
+  initialMetaTitle = '',
+  initialMetaDescription = '',
+  onSave,
+  onTogglePublish,
+  isSaving: isExternalSaving = false
 }: LandingPageBuilderProps) {
   const [sections, setSections] = useState<LPSection[]>(initialSections)
   const [selectedId, setSelectedId] = useState<string | null>(null)
-  const [isSaving, setIsSaving] = useState(false)
+  const [isPublished, setIsPublished] = useState(initialPublished)
+  const [isInternalSaving, setIsInternalSaving] = useState(false)
+
+  const [pageSettings, setPageSettings] = useState({
+    title: initialTitle,
+    slug: initialSlug,
+    metaTitle: initialMetaTitle,
+    metaDescription: initialMetaDescription
+  })
+
+  const isSaving = isExternalSaving || isInternalSaving
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -179,9 +206,9 @@ export function LandingPageBuilder({
   }
 
   async function handleSave() {
-    setIsSaving(true)
+    setIsInternalSaving(true)
     try {
-      const result = await onSave(sections)
+      const result = await onSave(sections, pageSettings)
       if (result.success) {
         toast.success('Página salva com sucesso!', {
           description: result.slug ? `Slug: ${result.slug}` : undefined,
@@ -199,7 +226,34 @@ export function LandingPageBuilder({
       console.error(err)
       toast.error('Erro ao processar salvamento.')
     } finally {
-      setIsSaving(false)
+      setIsInternalSaving(false)
+    }
+  }
+
+  async function handleTogglePublish() {
+    if (!onTogglePublish) return
+    setIsInternalSaving(true)
+    const newStatus = !isPublished
+    try {
+      const result = await onTogglePublish(newStatus)
+      if (result.success) {
+        setIsPublished(newStatus)
+        toast.success(
+          newStatus ? 'Página publicada!' : 'Página despublicada.',
+          {
+            description: newStatus
+              ? 'A página agora está visível publicamente.'
+              : 'A página não está mais acessível publicamente.'
+          }
+        )
+      } else {
+        toast.error('Erro ao mudar status de publicação.')
+      }
+    } catch (err) {
+      console.error(err)
+      toast.error('Erro ao processar alteração.')
+    } finally {
+      setIsInternalSaving(false)
     }
   }
 
@@ -260,7 +314,6 @@ export function LandingPageBuilder({
               </div>
             </Card>
 
-            {/* Placeholder for more components */}
             <Card className="p-3 opacity-60 bg-gray-50 border-dashed cursor-not-allowed">
               <div className="flex items-center gap-3">
                 <div className="p-2 bg-gray-100 text-gray-400 rounded-md">
@@ -278,12 +331,10 @@ export function LandingPageBuilder({
         </div>
       </div>
 
-      {/* CENTER: CANVAS */}
       <div
         className="flex-1 overflow-y-auto bg-[#F8F9FA] relative flex flex-col"
         onClick={() => setSelectedId(null)}
       >
-        {/* Dot Pattern Background */}
         <div
           className="absolute inset-0 opacity-[0.03] pointer-events-none"
           style={{
@@ -349,18 +400,47 @@ export function LandingPageBuilder({
         </div>
       </div>
 
-      {/* RIGHT SIDEBAR: PROPERTIES */}
       <div className="w-80 bg-white border-l border-gray-200 flex flex-col shadow-[-4px_0_24px_-12px_rgba(0,0,0,0.1)] z-20">
-        <div className="p-5 border-b border-gray-100 flex justify-between items-center bg-white/50 backdrop-blur-sm">
-          <h2 className="font-semibold text-gray-900">Propriedades</h2>
-          <Button
-            size="sm"
-            onClick={handleSave}
-            disabled={isSaving}
-            className="bg-blue-600 hover:bg-blue-700 text-white shadow-sm disabled:opacity-50"
-          >
-            {isSaving ? 'Salvando...' : 'Salvar'}
-          </Button>
+        <div className="p-5 border-b border-gray-100 flex flex-col gap-4 bg-white/50 backdrop-blur-sm">
+          <div className="flex justify-between items-center">
+            <h2 className="font-semibold text-gray-900">Propriedades</h2>
+            <Button
+              size="sm"
+              onClick={handleSave}
+              disabled={isSaving}
+              className="bg-blue-600 hover:bg-blue-700 text-white shadow-sm disabled:opacity-50"
+            >
+              {isSaving ? 'Salvando...' : 'Salvar'}
+            </Button>
+          </div>
+
+          <div className="flex items-center justify-between p-2 bg-gray-50 rounded-lg border border-gray-100">
+            <div className="flex flex-col">
+              <span className="text-xs font-medium text-gray-700">Status</span>
+              <span
+                className={cn(
+                  'text-[10px] font-bold uppercase tracking-wider',
+                  isPublished ? 'text-green-600' : 'text-amber-600'
+                )}
+              >
+                {isPublished ? 'Publicada' : 'Rascunho'}
+              </span>
+            </div>
+            <Button
+              size="sm"
+              variant={isPublished ? 'outline' : 'default'}
+              onClick={handleTogglePublish}
+              disabled={isSaving}
+              className={cn(
+                'h-8 text-xs font-semibold px-4 transition-all duration-300',
+                isPublished
+                  ? 'border-red-200 text-red-600 hover:bg-red-50 hover:border-red-300'
+                  : 'bg-green-600 hover:bg-green-700 text-white'
+              )}
+            >
+              {isPublished ? 'Despublicar' : 'Publicar'}
+            </Button>
+          </div>
         </div>
 
         <div className="flex-1 overflow-y-auto custom-scrollbar">
@@ -375,7 +455,6 @@ export function LandingPageBuilder({
                 </span>
               </div>
 
-              {/* Dynamic Form based on Section Type */}
               {selectedSection.type === 'hero' && (
                 <div className="space-y-5 animate-in slide-in-from-right-4 duration-300">
                   <div className="space-y-2">
@@ -450,16 +529,90 @@ export function LandingPageBuilder({
               )}
             </div>
           ) : (
-            <div className="h-full flex flex-col items-center justify-center p-8 text-center text-gray-400">
-              <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mb-4">
-                <MousePointer2 size={24} className="text-gray-300" />
+            <div className="p-6 space-y-6">
+              <div className="flex items-center gap-2 mb-2">
+                <div className="px-2 py-1 bg-gray-100 text-gray-700 text-[10px] font-bold rounded uppercase tracking-widest">
+                  Configurações Gerais
+                </div>
               </div>
-              <h4 className="font-medium text-gray-900 mb-1">
-                Nada selecionado
-              </h4>
-              <p className="text-sm">
-                Clique em um bloco na área central para editar seus detalhes.
-              </p>
+
+              <div className="space-y-5 animate-in slide-in-from-right-4 duration-300">
+                <div className="space-y-2">
+                  <Label htmlFor="pageTitle">Título da Página</Label>
+                  <Input
+                    id="pageTitle"
+                    value={pageSettings.title}
+                    onChange={(e) =>
+                      setPageSettings((prev) => ({
+                        ...prev,
+                        title: e.target.value
+                      }))
+                    }
+                    placeholder="Ex: Minha Nova Landing Page"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="pageSlug">URL (Slug)</Label>
+                  <div className="flex items-center gap-2">
+                    <span className="text-gray-400 text-sm">/lp/</span>
+                    <Input
+                      id="pageSlug"
+                      value={pageSettings.slug}
+                      onChange={(e) =>
+                        setPageSettings((prev) => ({
+                          ...prev,
+                          slug: e.target.value
+                        }))
+                      }
+                      placeholder="exemplo-de-slug"
+                    />
+                  </div>
+                  <p className="text-[10px] text-gray-400">
+                    Apenas letras minúsculas, números e hífens.
+                  </p>
+                </div>
+
+                <div className="pt-4 border-t border-gray-100">
+                  <p className="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-4">
+                    SEO & Metadados
+                  </p>
+
+                  <div className="space-y-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="metaTitle">Título SEO</Label>
+                      <Input
+                        id="metaTitle"
+                        value={pageSettings.metaTitle}
+                        onChange={(e) =>
+                          setPageSettings((prev) => ({
+                            ...prev,
+                            metaTitle: e.target.value
+                          }))
+                        }
+                        placeholder="Título que aparece no Google"
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="metaDescription">Descrição SEO</Label>
+                      <Textarea
+                        id="metaDescription"
+                        value={pageSettings.metaDescription}
+                        onChange={(e) =>
+                          setPageSettings((prev) => ({
+                            ...prev,
+                            metaDescription: e.target.value
+                          }))
+                        }
+                        rows={3}
+                        placeholder="Breve resumo para buscadores..."
+                        className="resize-none"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           )}
         </div>

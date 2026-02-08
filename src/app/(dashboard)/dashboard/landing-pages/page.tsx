@@ -1,10 +1,8 @@
+import { LandingPageCard } from '@/components/dashboard/landing-pages/LandingPageCard'
 import { PageHeader } from '@/components/dashboard/PageHeader'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { getLandingPages } from '@/services/landing-pages/actions'
-import { format } from 'date-fns'
-import { ptBR } from 'date-fns/locale'
-import { Edit, Eye, Plus } from 'lucide-react'
+import { Plus } from 'lucide-react'
 import Link from 'next/link'
 
 export default async function LandingPagesList() {
@@ -18,7 +16,7 @@ export default async function LandingPagesList() {
           description="Gerencie suas páginas de captura e vendas."
         />
         <Link href="/dashboard/landing-pages/registration">
-          <Button>
+          <Button className="bg-[#4F46E5] hover:bg-[#4338CA] text-white rounded-xl h-11 px-6 font-bold shadow-sm transition-all active:scale-95">
             <Plus className="w-4 h-4 mr-2" />
             Nova Página
           </Button>
@@ -27,67 +25,24 @@ export default async function LandingPagesList() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {landingPages.length === 0 ? (
-          <div className="col-span-full text-center py-12 text-gray-500 border-2 border-dashed rounded-lg">
-            <p>Nenhuma página criada ainda.</p>
-            <Link
-              href="/dashboard/landing-pages/registration"
-              className="text-primary hover:underline mt-2 inline-block"
-            >
-              Criar a primeira página
+          <div className="col-span-full text-center py-16 text-gray-400 bg-white border border-gray-100 rounded-[24px]">
+            <p className="text-lg font-bold text-gray-900 mb-1">
+              Nenhuma página criada ainda
+            </p>
+            <p className="text-sm mb-8">
+              Comece criando sua primeira landing page de alta conversão.
+            </p>
+            <Link href="/dashboard/landing-pages/registration">
+              <Button
+                variant="outline"
+                className="rounded-xl border-gray-200 text-gray-600 hover:text-blue-600 hover:border-blue-200"
+              >
+                Criar a primeira página
+              </Button>
             </Link>
           </div>
         ) : (
-          landingPages.map((lp) => (
-            <Card key={lp.id} className="hover:shadow-md transition-shadow">
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium truncate pr-4">
-                  {lp.title}
-                </CardTitle>
-                <div className="flex gap-2">
-                  <Link
-                    href={`/lp/${lp.slug}`}
-                    target="_blank"
-                    title="Visualizar"
-                  >
-                    <Button variant="ghost" size="icon" className="h-8 w-8">
-                      <Eye className="h-4 w-4" />
-                    </Button>
-                  </Link>
-                  <Link
-                    href={`/dashboard/landing-pages/${lp.id}/edition`}
-                    title="Editar"
-                  >
-                    <Button variant="ghost" size="icon" className="h-8 w-8">
-                      <Edit className="h-4 w-4" />
-                    </Button>
-                  </Link>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">
-                  {lp.published ? (
-                    <span className="text-green-500 text-xs border border-green-200 bg-green-50 px-2 py-1 rounded-full">
-                      Publicada
-                    </span>
-                  ) : (
-                    <span className="text-gray-500 text-xs border border-gray-200 bg-gray-50 px-2 py-1 rounded-full">
-                      Rascunho
-                    </span>
-                  )}
-                </div>
-                <p className="text-xs text-muted-foreground mt-4">
-                  Criada em{' '}
-                  {format(new Date(lp.created_at), "d 'de' MMMM, yyyy", {
-                    locale: ptBR
-                  })}
-                </p>
-                <div className="mt-4 pt-4 border-t flex justify-between items-center text-xs text-muted-foreground">
-                  <span>/{lp.slug}</span>
-                  <span>{lp.views || 0} visualizações</span>
-                </div>
-              </CardContent>
-            </Card>
-          ))
+          landingPages.map((lp) => <LandingPageCard key={lp.id} lp={lp} />)
         )}
       </div>
     </div>

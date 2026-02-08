@@ -22,6 +22,7 @@ export async function generateMetadata({
     .from('landing_pages')
     .select('title, meta_title, meta_description')
     .eq('slug', slug)
+    .eq('is_published', true)
     .single()
 
   if (!page) {
@@ -40,13 +41,12 @@ export default async function LandingPage({ params }: LandingPageProps) {
   const { slug } = await params
   const supabase = await createClient()
 
-  console.log('🔍 [Public LP] Buscando slug:', slug)
-
   // Buscar a página pelo slug
   const { data: page, error } = await supabase
     .from('landing_pages')
     .select('*')
     .eq('slug', slug)
+    .eq('is_published', true)
     .single()
 
   if (error) {
@@ -54,11 +54,8 @@ export default async function LandingPage({ params }: LandingPageProps) {
   }
 
   if (!page) {
-    console.warn('⚠️ [Public LP] Página não encontrada para slug:', slug)
     notFound()
   }
-
-  console.log('✅ [Public LP] Página encontrada:', page.title)
 
   const sections = page.content as LPSection[]
 

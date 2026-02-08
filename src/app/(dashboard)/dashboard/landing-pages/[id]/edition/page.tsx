@@ -28,6 +28,11 @@ export default async function EditionPage({ params }: PageProps) {
         <LandingPageEditor
           initialSections={landingPage.content}
           id={landingPage.id}
+          initialPublished={landingPage.is_published}
+          initialTitle={landingPage.title}
+          initialSlug={landingPage.slug}
+          initialMetaTitle={landingPage.meta_title}
+          initialMetaDescription={landingPage.meta_description}
         />
       </div>
     </div>

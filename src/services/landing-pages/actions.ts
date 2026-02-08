@@ -3,6 +3,7 @@
 import { env } from '@/config/env'
 import { createServerClient } from '@supabase/ssr'
 import { User } from '@supabase/supabase-js'
+import { revalidatePath } from 'next/cache'
 import { cookies } from 'next/headers'
 import { LandingPage, LandingPageContent, SaveLandingPageResult } from './types'
 
@@ -119,8 +120,66 @@ export async function createLandingPage(input: {
 
 export async function updateLandingPage(
   id: string,
-  sections: LandingPageContent
+  updates: {
+    content?: LandingPageContent
+    title?: string
+    slug?: string
+    meta_title?: string
+    meta_description?: string
+  }
 ) {
+  const cookieStore = await cookies()
+  const supabase = createServerClient(env.supabase.url, env.supabase.anonKey, {
+    cookies: { getAll: () => cookieStore.getAll(), setAll: () => {} }
+  })
+
+  try {
+    const {
+      data: { user }
+    } = await supabase.auth.getUser()
+    if (!user) return { success: false, message: 'Não autenticado' }
+
+    const tenantId =
+      user.app_metadata?.tenant_id || user.user_metadata?.tenant_id
+
+    // Prepare update data
+    const updateData: any = {
+      ...updates,
+      updated_at: new Date().toISOString()
+    }
+
+    if (updates.slug) {
+      updateData.slug = updates.slug.toLowerCase().replace(/[^a-z0-9-]/g, '-')
+    }
+
+    const { data, error } = await supabase
+      .from('landing_pages')
+      .update(updateData)
+      .eq('id', id)
+      .eq('tenant_id', tenantId)
+      .select('slug, id')
+      .single()
+
+    if (error) {
+      if (error.code === '23505') {
+        return { success: false, message: 'Este slug já está em uso.' }
+      }
+      throw error
+    }
+
+    // Revalidar cache da página pública
+    if (data.slug) {
+      revalidatePath(`/lp/${data.slug}`)
+    }
+
+    return { success: true, slug: data.slug, id: data.id }
+  } catch (error) {
+    console.error('Erro ao atualizar LP:', error)
+    return { success: false, message: 'Erro ao atualizar.' }
+  }
+}
+
+export async function togglePublish(id: string, isPublished: boolean) {
   const cookieStore = await cookies()
   const supabase = createServerClient(env.supabase.url, env.supabase.anonKey, {
     cookies: { getAll: () => cookieStore.getAll(), setAll: () => {} }
@@ -137,17 +196,26 @@ export async function updateLandingPage(
 
     const { data, error } = await supabase
       .from('landing_pages')
-      .update({ content: sections, updated_at: new Date().toISOString() })
+      .update({
+        is_published: isPublished,
+        updated_at: new Date().toISOString()
+      })
       .eq('id', id)
       .eq('tenant_id', tenantId)
-      .select('slug, id')
+      .select('slug')
       .single()
 
     if (error) throw error
-    return { success: true, slug: data.slug, id: data.id }
+
+    // Revalidar cache da página pública
+    if (data.slug) {
+      revalidatePath(`/lp/${data.slug}`)
+    }
+
+    return { success: true, is_published: isPublished }
   } catch (error) {
-    console.error('Erro ao atualizar LP:', error)
-    return { success: false, message: 'Erro ao atualizar.' }
+    console.error('Erro ao alternar publicação:', error)
+    return { success: false, message: 'Erro ao alterar status de publicação.' }
   }
 }
 
@@ -244,5 +312,47 @@ export async function getLandingPage(id: string) {
   } catch (error) {
     console.warn('Erro ao buscar LP:', error)
     return null
+  }
+}
+
+export async function deleteLandingPage(id: string) {
+  const cookieStore = await cookies()
+  const supabase = createServerClient(env.supabase.url, env.supabase.anonKey, {
+    cookies: { getAll: () => cookieStore.getAll(), setAll: () => {} }
+  })
+
+  try {
+    const {
+      data: { user }
+    } = await supabase.auth.getUser()
+    if (!user) return { success: false, message: 'Não autenticado' }
+
+    const tenantId =
+      user.app_metadata?.tenant_id || user.user_metadata?.tenant_id
+
+    const { data: lp } = await supabase
+      .from('landing_pages')
+      .select('slug')
+      .eq('id', id)
+      .eq('tenant_id', tenantId)
+      .single()
+
+    const { error } = await supabase
+      .from('landing_pages')
+      .delete()
+      .eq('id', id)
+      .eq('tenant_id', tenantId)
+
+    if (error) throw error
+
+    if (lp?.slug) {
+      revalidatePath(`/lp/${lp.slug}`)
+    }
+    revalidatePath('/dashboard/landing-pages')
+
+    return { success: true }
+  } catch (error) {
+    console.error('Erro ao deletar LP:', error)
+    return { success: false, message: 'Erro ao deletar página.' }
   }
 }

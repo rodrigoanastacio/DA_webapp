@@ -1,5 +1,6 @@
 import {
   createLandingPage,
+  togglePublish as togglePublishAction,
   updateLandingPage
 } from '@/services/landing-pages/actions'
 import {
@@ -13,8 +14,18 @@ export interface UseLandingPageReturn {
   create: (input: CreateLandingPageInput) => Promise<SaveLandingPageResult>
   update: (
     id: string,
-    sections: LandingPageContent
+    updates: {
+      content?: LandingPageContent
+      title?: string
+      slug?: string
+      meta_title?: string
+      meta_description?: string
+    }
   ) => Promise<SaveLandingPageResult>
+  togglePublish: (
+    id: string,
+    isPublished: boolean
+  ) => Promise<{ success: boolean }>
   isSaving: boolean
 }
 
@@ -41,11 +52,17 @@ export function useLandingPage(): UseLandingPageReturn {
 
   const update = async (
     id: string,
-    sections: LandingPageContent
+    updates: {
+      content?: LandingPageContent
+      title?: string
+      slug?: string
+      meta_title?: string
+      meta_description?: string
+    }
   ): Promise<SaveLandingPageResult> => {
     setIsSaving(true)
     try {
-      const result = await updateLandingPage(id, sections)
+      const result = await updateLandingPage(id, updates)
       return result
     } catch (error) {
       console.error(error)
@@ -55,9 +72,22 @@ export function useLandingPage(): UseLandingPageReturn {
     }
   }
 
+  const togglePublish = async (id: string, isPublished: boolean) => {
+    setIsSaving(true)
+    try {
+      return await togglePublishAction(id, isPublished)
+    } catch (error) {
+      console.error(error)
+      return { success: false, message: 'Erro ao alterar status.' }
+    } finally {
+      setIsSaving(false)
+    }
+  }
+
   return {
     create,
     update,
+    togglePublish,
     isSaving
   }
 }

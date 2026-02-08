@@ -15,9 +15,9 @@ export interface LandingPage {
   title: string
   slug: string
   content: LandingPageContent
-  published: boolean
-  seo_title?: string
-  seo_description?: string
+  is_published: boolean
+  meta_title?: string
+  meta_description?: string
   created_at: string
   updated_at: string
   views?: number
