@@ -1,15 +1,16 @@
 import {
-  saveLandingPage,
+  createLandingPage,
   updateLandingPage
 } from '@/services/landing-pages/actions'
 import {
+  CreateLandingPageInput,
   LandingPageContent,
   SaveLandingPageResult
 } from '@/services/landing-pages/types'
 import { useState } from 'react'
 
 export interface UseLandingPageReturn {
-  save: (sections: LandingPageContent) => Promise<SaveLandingPageResult>
+  create: (input: CreateLandingPageInput) => Promise<SaveLandingPageResult>
   update: (
     id: string,
     sections: LandingPageContent
@@ -20,16 +21,19 @@ export interface UseLandingPageReturn {
 export function useLandingPage(): UseLandingPageReturn {
   const [isSaving, setIsSaving] = useState(false)
 
-  const save = async (
-    sections: LandingPageContent
+  const create = async (
+    input: CreateLandingPageInput
   ): Promise<SaveLandingPageResult> => {
     setIsSaving(true)
     try {
-      const result = await saveLandingPage(sections)
+      const result = await createLandingPage(input)
+      if (!result.success) {
+        // Optionally trigger toast here or let component handle it
+      }
       return result
     } catch (err) {
       console.error(err)
-      return { success: false, message: 'Erro inesperado ao salvar.' }
+      return { success: false, message: 'Erro inesperado ao criar.' }
     } finally {
       setIsSaving(false)
     }
@@ -52,7 +56,7 @@ export function useLandingPage(): UseLandingPageReturn {
   }
 
   return {
-    save,
+    create,
     update,
     isSaving
   }

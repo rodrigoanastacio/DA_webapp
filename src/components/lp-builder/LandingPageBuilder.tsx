@@ -23,6 +23,7 @@ import {
 } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { useState } from 'react'
+import { toast } from 'sonner'
 
 // UI Components
 import { Button } from '@/components/ui/button'
@@ -181,20 +182,22 @@ export function LandingPageBuilder({
     setIsSaving(true)
     try {
       const result = await onSave(sections)
-      if (result.success && result.slug) {
-        if (
-          confirm(
-            `Página salva com sucesso! Deseja visualizar agora?\n\nSlug: ${result.slug}`
-          )
-        ) {
-          window.open(`/lp/${result.slug}`, '_blank')
-        }
+      if (result.success) {
+        toast.success('Página salva com sucesso!', {
+          description: result.slug ? `Slug: ${result.slug}` : undefined,
+          action: result.slug
+            ? {
+                label: 'Visualizar',
+                onClick: () => window.open(`/lp/${result.slug}`, '_blank')
+              }
+            : undefined
+        })
       } else {
-        alert(result.message || 'Erro ao salvar página.')
+        toast.error(result.message || 'Erro ao salvar página.')
       }
     } catch (err) {
       console.error(err)
-      alert('Erro ao processar salvamento.')
+      toast.error('Erro ao processar salvamento.')
     } finally {
       setIsSaving(false)
     }

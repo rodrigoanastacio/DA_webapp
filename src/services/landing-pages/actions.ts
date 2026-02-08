@@ -6,9 +6,12 @@ import { User } from '@supabase/supabase-js'
 import { cookies } from 'next/headers'
 import { LandingPage, LandingPageContent, SaveLandingPageResult } from './types'
 
-export async function saveLandingPage(
-  sections: LandingPageContent
-): Promise<SaveLandingPageResult> {
+export async function createLandingPage(input: {
+  title: string
+  slug: string
+  description?: string
+  content?: LandingPageContent
+}): Promise<SaveLandingPageResult> {
   try {
     const cookieStore = await cookies()
 
@@ -27,8 +30,6 @@ export async function saveLandingPage(
               })
             } catch {
               // The `setAll` method was called from a Server Component.
-              // This can be ignored if you have middleware refreshing
-              // user sessions.
             }
           }
         }
@@ -43,23 +44,20 @@ export async function saveLandingPage(
     if (userError || !user) {
       console.warn('⚠️ getUser() falhou:', userError?.message || 'null')
 
-      // TENTATIVA DE FALLBACK: Usar getSession()
       const { data: sessionData } = await supabase.auth.getSession()
 
       if (sessionData.session?.user) {
         console.log('✅ Recuperado via getSession()')
         user = sessionData.session.user
       } else {
-        // BYPASS DE DESENVOLVIMENTO
-        // Se estivermos em desenvolvimento e a auth falhar, permitimos salvar com usuário mock
         if (env.app.isDevelopment) {
           console.warn(
-            '🚧 DEV MODE: Bypass de autenticação ativado para salvar Landing Page'
+            '🚧 DEV MODE: Bypass de autenticação ativado para criar Landing Page'
           )
           user = {
             id: 'bypass-dev-user',
             app_metadata: {
-              tenant_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', // Tenant da Dayane
+              tenant_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
               provider: 'email'
             },
             user_metadata: {
@@ -78,7 +76,6 @@ export async function saveLandingPage(
       }
     }
 
-    // tenant_id is in app_metadata
     let tenantId = user.app_metadata?.tenant_id
 
     if (!tenantId) {
@@ -86,35 +83,37 @@ export async function saveLandingPage(
       tenantId = 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11'
     }
 
-    // 2. Preparar dados
-    const title = `Landing Page ${new Date().toLocaleDateString('pt-BR')} ${new Date().toLocaleTimeString('pt-BR')}`
-    const slug = `lp-${Date.now()}` // Slug único temporário
+    // 2. Validar Slug (básico)
+    const finalSlug = input.slug.toLowerCase().replace(/[^a-z0-9-]/g, '-')
 
     // 3. Salvar no banco
     const { data, error } = await supabase
       .from('landing_pages')
       .insert({
         tenant_id: tenantId,
-        title,
-        slug,
-        content: sections,
-        published: true,
-        seo_title: title,
-        seo_description: 'Página criada com o Construtor de Landing Pages.'
+        title: input.title,
+        slug: finalSlug,
+        content: input.content || [],
+        is_published: false,
+        meta_title: input.title,
+        meta_description: input.description || 'Página criada com o Construtor.'
       })
       .select()
       .single()
 
     if (error) {
-      console.error('Erro ao salvar LP:', error)
-      return { success: false, message: 'Erro ao salvar no banco de dados.' }
+      console.error('Erro ao criar LP:', error)
+      return {
+        success: false,
+        message: 'Erro ao criar página no banco de dados.'
+      }
     }
 
-    console.log('✅ LP salva com sucesso:', data.slug)
-    return { success: true, slug: data.slug }
+    console.log('✅ LP criada com sucesso:', data.slug)
+    return { success: true, slug: data.slug, id: data.id }
   } catch (error) {
-    console.error('Erro geral ao salvar:', error)
-    return { success: false, message: 'Ocorreu um erro inesperado ao salvar.' }
+    console.error('Erro geral ao criar:', error)
+    return { success: false, message: 'Ocorreu um erro inesperado ao criar.' }
   }
 }
 
@@ -133,16 +132,19 @@ export async function updateLandingPage(
     } = await supabase.auth.getUser()
     if (!user) return { success: false, message: 'Não autenticado' }
 
-    const tenantId = user.app_metadata?.tenant_id
+    const tenantId =
+      user.app_metadata?.tenant_id || user.user_metadata?.tenant_id
 
-    const { error } = await supabase
+    const { data, error } = await supabase
       .from('landing_pages')
       .update({ content: sections, updated_at: new Date().toISOString() })
       .eq('id', id)
       .eq('tenant_id', tenantId)
+      .select('slug, id')
+      .single()
 
     if (error) throw error
-    return { success: true }
+    return { success: true, slug: data.slug, id: data.id }
   } catch (error) {
     console.error('Erro ao atualizar LP:', error)
     return { success: false, message: 'Erro ao atualizar.' }
@@ -176,6 +178,11 @@ export async function getLandingPages() {
     if (!user) return []
 
     const tenantId = user.app_metadata?.tenant_id
+
+    if (!tenantId) {
+      console.warn('⚠️ User without tenant_id in getLandingPages')
+      return []
+    }
 
     const { data, error } = await supabase
       .from('landing_pages')
@@ -220,6 +227,10 @@ export async function getLandingPage(id: string) {
     if (!user) return null
 
     const tenantId = user.app_metadata?.tenant_id
+
+    if (!tenantId) {
+      return null
+    }
 
     const { data, error } = await supabase
       .from('landing_pages')

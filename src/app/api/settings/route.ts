@@ -16,8 +16,11 @@ export async function GET() {
       )
     }
 
-    const tenant_id = user.user_metadata?.tenant_id
+    let tenant_id =
+      user.app_metadata?.tenant_id || user.user_metadata?.tenant_id
+
     if (!tenant_id) {
+      console.warn('Tenant ID missing in settings API')
       return NextResponse.json(
         { error: 'No tenant_id found in user metadata' },
         { status: 400 }

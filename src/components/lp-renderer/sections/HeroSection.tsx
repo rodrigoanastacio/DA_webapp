@@ -36,7 +36,6 @@ export function HeroSection({
             alt="Hero background"
             fill
             className="object-cover opacity-10"
-            unoptimized={true}
           />
         </div>
       )}

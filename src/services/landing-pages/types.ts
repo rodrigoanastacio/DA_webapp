@@ -3,6 +3,7 @@ import { LPSection } from '@/components/lp-renderer/SectionRenderer'
 export interface SaveLandingPageResult {
   success: boolean
   slug?: string
+  id?: string
   message?: string
 }
 
@@ -20,4 +21,11 @@ export interface LandingPage {
   created_at: string
   updated_at: string
   views?: number
+}
+
+export interface CreateLandingPageInput {
+  title: string
+  slug: string
+  description?: string
+  content?: LandingPageContent
 }
