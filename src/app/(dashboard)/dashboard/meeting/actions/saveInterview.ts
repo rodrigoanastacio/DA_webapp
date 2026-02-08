@@ -1,8 +1,8 @@
 'use server'
 
 import { createClient } from '@/lib/supabase/server'
-import { diagnosticoHandler } from '@/shared/api-handlers/diagnostico/diagnostico.handler'
 import { entrevistasHandler } from '@/shared/api-handlers/entrevistas/entrevistas.handler'
+import { leadsHandler } from '@/shared/api-handlers/leads/leads.handler'
 import { revalidatePath } from 'next/cache'
 
 export async function saveInterview(
@@ -29,7 +29,7 @@ export async function saveInterview(
         observacoes
       })
 
-      await diagnosticoHandler.updateStatus(supabase, leadId, 'em_negociacao')
+      await leadsHandler.updateStatus(supabase, leadId, 'em_negociacao')
     }
 
     if (result.error) {

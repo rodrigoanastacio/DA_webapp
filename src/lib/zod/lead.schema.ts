@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-export const diagnosticoSchema = z.object({
+export const leadSchema = z.object({
   // Step 1: Contato
   name: z.string().min(2, 'Nome é obrigatório'),
   email: z.string().email('E-mail inválido'),
@@ -42,4 +42,4 @@ export const diagnosticoSchema = z.object({
     .min(1, 'Selecione uma opção de investimento')
 })
 
-export type DiagnosticoFormData = z.infer<typeof diagnosticoSchema>
+export type LeadFormData = z.infer<typeof leadSchema>

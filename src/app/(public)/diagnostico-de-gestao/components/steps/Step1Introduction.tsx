@@ -1,14 +1,15 @@
 import { PhoneInput } from '@/components/ui/phone-input'
 import { cn } from '@/lib/utils'
-import { DiagnosticoFormData } from '@/lib/zod/diagnostico.schema'
+import { LeadFormData } from '@/lib/zod/lead.schema'
 import { Controller, useFormContext } from 'react-hook-form'
+import 'react-phone-number-input/style.css'
 
 export function Step1Introduction() {
   const {
     register,
     control,
     formState: { errors }
-  } = useFormContext<DiagnosticoFormData>()
+  } = useFormContext<LeadFormData>()
 
   return (
     <div className="flex flex-col gap-8">

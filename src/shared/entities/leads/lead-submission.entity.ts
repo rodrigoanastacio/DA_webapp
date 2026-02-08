@@ -1,12 +1,12 @@
-import { DiagnosticoFormData } from '@/lib/zod/diagnostico.schema'
+import { LeadFormData } from '@/lib/zod/lead.schema'
 
 /**
- * Entidade de Domínio: Diagnostico
+ * Entidade de Domínio: LeadSubmission
  *
- * Representa um diagnóstico de gestão completo com lógica de negócio encapsulada.
+ * Representa uma submissão de lead completa com lógica de negócio encapsulada.
  * Esta camada é independente de banco de dados ou frameworks.
  */
-export class Diagnostico {
+export class LeadSubmission {
   readonly name: string
   readonly email: string
   readonly whatsapp: string
@@ -20,7 +20,7 @@ export class Diagnostico {
   readonly expectativas: string
   readonly investment: string
 
-  constructor(data: DiagnosticoFormData) {
+  constructor(data: LeadFormData) {
     this.name = data.name
     this.email = data.email
     this.whatsapp = data.whatsapp
@@ -36,7 +36,7 @@ export class Diagnostico {
   }
 
   /**
-   * Identifica se este diagnóstico representa um potencial cliente de alto valor
+   * Identifica se este lead representa um potencial cliente de alto valor
    * baseado em faturamento e disposição para investimento.
    */
   get isHighPotential(): boolean {

@@ -23,8 +23,8 @@ import {
   formatTeamStructure,
   getLeadStatusStyle,
   LeadStatusType
-} from '@/shared/constants/diagnostico.constants'
-import { Lead } from '@/shared/entities/diagnostico/lead.types'
+} from '@/shared/constants/lead.constants'
+import { Lead } from '@/shared/entities/leads/lead.types'
 import {
   AlertCircle,
   Briefcase,

@@ -1,7 +1,7 @@
 'use client'
 
 import { FormProvider } from 'react-hook-form'
-import { useDiagnosticoForm } from '../hooks/use-diagnostico-form'
+import { useLeadForm } from '../hooks/use-lead-form'
 import { Step1Introduction } from './steps/Step1Introduction'
 import { Step2ProfessionalProfile } from './steps/Step2ProfessionalProfile'
 import { Step3Structure } from './steps/Step3Structure'
@@ -27,7 +27,7 @@ const STEPS_DATA = [
   { id: 5, label: 'Etapa 6 de 6', nextLabel: 'Finalização' }
 ]
 
-export default function DiagnosticWizard() {
+export default function LeadCaptureWizard() {
   const {
     currentStep,
     isSubmitted,
@@ -35,7 +35,7 @@ export default function DiagnosticWizard() {
     methods,
     nextStep,
     prevStep
-  } = useDiagnosticoForm()
+  } = useLeadForm()
 
   const progressPercentage = ((currentStep + 1) / 6) * 100
 

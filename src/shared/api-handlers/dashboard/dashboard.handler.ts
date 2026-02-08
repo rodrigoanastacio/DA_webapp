@@ -25,30 +25,30 @@ export const dashboardHandler = {
     const monthStart = dateHelpers.getMonthStart().toISOString()
 
     const { count: totalLeads } = await supabase
-      .from('diagnosticos')
+      .from('leads')
       .select('*', { count: 'exact', head: true })
     const { count: leadsToday } = await supabase
-      .from('diagnosticos')
+      .from('leads')
       .select('*', { count: 'exact', head: true })
       .gte('created_at', todayStart)
 
     const { count: leadsThisWeek } = await supabase
-      .from('diagnosticos')
+      .from('leads')
       .select('*', { count: 'exact', head: true })
       .gte('created_at', weekStart)
 
     const { count: leadsThisMonth } = await supabase
-      .from('diagnosticos')
+      .from('leads')
       .select('*', { count: 'exact', head: true })
       .gte('created_at', monthStart)
 
     const { count: activeLeads } = await supabase
-      .from('diagnosticos')
+      .from('leads')
       .select('*', { count: 'exact', head: true })
       .not('status', 'in', '("lost","won","descartado","convertido")')
 
     const { count: wonLeads } = await supabase
-      .from('diagnosticos')
+      .from('leads')
       .select('*', { count: 'exact', head: true })
       .in('status', ['won', 'convertido'])
 
@@ -69,7 +69,7 @@ export const dashboardHandler = {
 
   getChartData: async (supabase: SupabaseClient): Promise<ChartDataPoint[]> => {
     const { data } = await supabase
-      .from('diagnosticos')
+      .from('leads')
       .select('created_at, status')
       .order('created_at', { ascending: true })
 
@@ -99,7 +99,7 @@ export const dashboardHandler = {
 
   getRecentLeads: async (supabase: SupabaseClient, limit = 5) => {
     const { data } = await supabase
-      .from('diagnosticos')
+      .from('leads')
       .select('id, nome_completo, created_at, status')
       .order('created_at', { ascending: false })
       .limit(limit)
@@ -120,7 +120,7 @@ export const dashboardHandler = {
     startDate.setDate(startDate.getDate() - days)
 
     const { data } = await supabase
-      .from('diagnosticos')
+      .from('leads')
       .select('created_at')
       .gte('created_at', startDate.toISOString())
       .order('created_at')
@@ -153,7 +153,7 @@ export const dashboardHandler = {
 
   archiveLead: async (supabase: SupabaseClient, leadId: string) => {
     const { error } = await supabase
-      .from('diagnosticos')
+      .from('leads')
       .update({ status: LeadStatus.ARCHIVED })
       .eq('id', leadId)
 
@@ -162,10 +162,7 @@ export const dashboardHandler = {
   },
 
   deleteLead: async (supabase: SupabaseClient, leadId: string) => {
-    const { error } = await supabase
-      .from('diagnosticos')
-      .delete()
-      .eq('id', leadId)
+    const { error } = await supabase.from('leads').delete().eq('id', leadId)
 
     if (error) throw error
     return { success: true }

@@ -5,7 +5,7 @@ import InteractiveTable, {
 } from '@/components/dashboard/InteractiveTable'
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'
-import { Lead } from '@/shared/entities/diagnostico/lead.types'
+import { Lead } from '@/shared/entities/leads/lead.types'
 import { useLeads } from '../hooks/useLeads'
 import { LeadDetailsDrawer } from './LeadDetailsDrawer'
 

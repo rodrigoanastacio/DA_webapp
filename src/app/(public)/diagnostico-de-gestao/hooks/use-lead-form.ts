@@ -1,21 +1,18 @@
 import { useUTM } from '@/hooks/useUTM'
-import {
-  DiagnosticoFormData,
-  diagnosticoSchema
-} from '@/lib/zod/diagnostico.schema'
-import { diagnosticoService } from '@/services/diagnostico/diagnostico.service'
+import { LeadFormData, leadSchema } from '@/lib/zod/lead.schema'
+import { leadsService } from '@/services/leads/leads.service'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-export function useDiagnosticoForm() {
+export function useLeadForm() {
   const [currentStep, setCurrentStep] = useState(0)
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const utmParams = useUTM()
 
-  const methods = useForm<DiagnosticoFormData>({
-    resolver: zodResolver(diagnosticoSchema),
+  const methods = useForm<LeadFormData>({
+    resolver: zodResolver(leadSchema),
     mode: 'onChange',
     defaultValues: {
       dificuldades: []
@@ -24,7 +21,7 @@ export function useDiagnosticoForm() {
 
   const { trigger, getValues } = methods
 
-  const STEPS_FIELDS: (keyof DiagnosticoFormData)[][] = [
+  const STEPS_FIELDS: (keyof LeadFormData)[][] = [
     ['name', 'email', 'whatsapp', 'cityState'], // Passo 0: Introdução (com dados de contato)
     ['experienceTime', 'currentRole'], // Passo 1: Perfil Profissional
     ['teamStructure', 'managementLevel'], // Passo 2: Estrutura
@@ -64,7 +61,7 @@ export function useDiagnosticoForm() {
     try {
       const data = getValues()
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const result = await diagnosticoService.submit(data, utmParams as any)
+      const result = await leadsService.submit(data, utmParams as any)
 
       if (result.success) {
         setIsSubmitted(true)
@@ -72,13 +69,7 @@ export function useDiagnosticoForm() {
       }
     } catch (error: unknown) {
       console.error(error)
-      // Assuming 'toast' is imported or globally available, and 'setStep' should be 'setCurrentStep'
-      // If 'toast' is not defined, this line will cause a runtime error.
-      // If 'setStep' is not defined, this line will cause a runtime error.
-      // For syntactic correctness, these lines are included as per instruction,
-      // but may require further context/imports to function correctly.
-      // toast.error('Erro ao enviar diagnóstico')
-      // setCurrentStep(0)
+      // TODO: Implementar toast error
     } finally {
       setIsSubmitting(false)
     }

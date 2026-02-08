@@ -1,15 +1,15 @@
-import { DiagnosticoFormData } from '@/lib/zod/diagnostico.schema'
+import { LeadFormData } from '@/lib/zod/lead.schema'
 import {
   MANAGEMENT_LEVEL_OPTIONS,
   TEAM_STRUCTURE_OPTIONS
-} from '@/shared/constants/diagnostico.constants'
+} from '@/shared/constants/lead.constants'
 import { useFormContext } from 'react-hook-form'
 
 export function Step3Structure() {
   const {
     register,
     formState: { errors }
-  } = useFormContext<DiagnosticoFormData>()
+  } = useFormContext<LeadFormData>()
 
   return (
     <div className="flex flex-col gap-8">

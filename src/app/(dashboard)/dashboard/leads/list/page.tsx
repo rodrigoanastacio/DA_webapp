@@ -1,5 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
-import { diagnosticoHandler } from '@/shared/api-handlers/diagnostico/diagnostico.handler'
+import { leadsHandler } from '@/shared/api-handlers/leads/leads.handler'
 import { LeadsHeader } from '../components/LeadsHeader'
 import { LeadsListTable } from '../components/LeadsListTable'
 import { LeadsStats } from '../components/LeadsStats'
@@ -8,7 +8,7 @@ export default async function LeadsListPage() {
   const supabase = await createClient()
 
   // Buscar leads do banco de dados
-  const { leads, total } = await diagnosticoHandler.list(supabase, {
+  const { leads, total } = await leadsHandler.list(supabase, {
     page: 1,
     perPage: 50,
     orderBy: 'created_at',

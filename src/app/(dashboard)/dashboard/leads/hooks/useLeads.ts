@@ -6,8 +6,8 @@ import {
   formatLeadStatus,
   formatRevenue,
   getLeadStatusStyle
-} from '@/shared/constants/diagnostico.constants'
-import { Lead } from '@/shared/entities/diagnostico/lead.types'
+} from '@/shared/constants/lead.constants'
+import { Lead } from '@/shared/entities/leads/lead.types'
 import { useState } from 'react'
 
 export function useLeads() {

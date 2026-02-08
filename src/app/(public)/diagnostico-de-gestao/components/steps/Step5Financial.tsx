@@ -1,12 +1,12 @@
-import { DiagnosticoFormData } from '@/lib/zod/diagnostico.schema'
-import { REVENUE_OPTIONS } from '@/shared/constants/diagnostico.constants'
+import { LeadFormData } from '@/lib/zod/lead.schema'
+import { REVENUE_OPTIONS } from '@/shared/constants/lead.constants'
 import { useFormContext } from 'react-hook-form'
 
 export function Step5Financial() {
   const {
     register,
     formState: { errors }
-  } = useFormContext<DiagnosticoFormData>()
+  } = useFormContext<LeadFormData>()
 
   return (
     <div className="flex flex-col gap-8">

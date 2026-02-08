@@ -1,6 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
-import { diagnosticoHandler } from '@/shared/api-handlers/diagnostico/diagnostico.handler'
 import { entrevistasHandler } from '@/shared/api-handlers/entrevistas/entrevistas.handler'
+import { leadsHandler } from '@/shared/api-handlers/leads/leads.handler'
 import { notFound } from 'next/navigation'
 import { MeetingRunner } from './components/MeetingRunner'
 
@@ -13,7 +13,7 @@ export default async function MeetingPage({
   const supabase = await createClient()
 
   // Fetch Lead Data
-  const { data: lead } = await diagnosticoHandler.getById(supabase, id)
+  const { data: lead } = await leadsHandler.getById(supabase, id)
 
   if (!lead) {
     notFound()

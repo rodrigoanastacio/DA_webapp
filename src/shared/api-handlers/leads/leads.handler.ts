@@ -1,17 +1,17 @@
 import { getTenantIdFromJWT } from '@/lib/auth/get-tenant-id'
-import { DiagnosticoFormData } from '@/lib/zod/diagnostico.schema'
-import { Diagnostico } from '@/shared/entities/diagnostico/diagnostico.entity'
+import { LeadFormData } from '@/lib/zod/lead.schema'
+import { LeadSubmission } from '@/shared/entities/leads/lead-submission.entity'
 import {
-  DiagnosticoRow,
   Lead,
+  LeadRow,
   LeadsListResponse
-} from '@/shared/entities/diagnostico/lead.types'
+} from '@/shared/entities/leads/lead.types'
 import { PostgrestError, SupabaseClient } from '@supabase/supabase-js'
 
-export const diagnosticoHandler = {
+export const leadsHandler = {
   create: async (
     supabase: SupabaseClient,
-    data: DiagnosticoFormData,
+    data: LeadFormData,
     metadata: {
       clientIp: string
       userAgent: string
@@ -21,37 +21,44 @@ export const diagnosticoHandler = {
       utmContent?: string
       utmTerm?: string
       referrer?: string
-    }
+    },
+    overrideTenantId?: string
   ) => {
-    const diagnostico = new Diagnostico(data)
+    const submission = new LeadSubmission(data)
 
-    const tenantId = await getTenantIdFromJWT()
+    let tenantId: string | null | undefined = overrideTenantId
 
     if (!tenantId) {
-      throw new Error('User has no tenant_id in JWT. Please re-login.')
+      tenantId = await getTenantIdFromJWT()
     }
 
-    if (diagnostico.isHighPotential) {
-      console.log(
-        `[ALERTA] Lead de alto potencial identificado: ${diagnostico.name}`
+    if (!tenantId) {
+      throw new Error(
+        'Tenant ID not found (JWT missing and no override provided)'
       )
     }
 
-    const { error } = await supabase.from('diagnosticos').insert([
+    if (submission.isHighPotential) {
+      console.log(
+        `[ALERTA] Lead de alto potencial identificado: ${submission.name}`
+      )
+    }
+
+    const { error } = await supabase.from('leads').insert([
       {
         tenant_id: tenantId,
-        nome_completo: diagnostico.name.trim(),
-        email: diagnostico.email.trim().toLowerCase(),
-        whatsapp: diagnostico.whatsapp.replace(/\D/g, ''),
-        cidade_estado: diagnostico.cityState.trim(),
-        tempo: diagnostico.experienceTime,
-        atuacao: diagnostico.currentRole,
-        estrutura_equipe: diagnostico.teamStructure,
-        nivel_gestao: diagnostico.managementLevel,
-        dificuldades: diagnostico.dificuldades,
-        faturamento: diagnostico.revenue,
-        expectativas: diagnostico.expectativas.trim(),
-        investimento: diagnostico.investment,
+        nome_completo: submission.name.trim(),
+        email: submission.email.trim().toLowerCase(),
+        whatsapp: submission.whatsapp.replace(/\D/g, ''),
+        cidade_estado: submission.cityState.trim(),
+        tempo: submission.experienceTime,
+        atuacao: submission.currentRole,
+        estrutura_equipe: submission.teamStructure,
+        nivel_gestao: submission.managementLevel,
+        dificuldades: submission.dificuldades,
+        faturamento: submission.revenue,
+        expectativas: submission.expectativas.trim(),
+        investimento: submission.investment,
         status: 'novo_lead',
         ip_cliente: metadata.clientIp,
         agente_usuario: metadata.userAgent,
@@ -77,7 +84,7 @@ export const diagnosticoHandler = {
     status: string
   ) => {
     const { error } = await supabase
-      .from('diagnosticos')
+      .from('leads')
       .update({ status })
       .eq('id', id)
 
@@ -108,10 +115,10 @@ export const diagnosticoHandler = {
     const to = from + perPage - 1
 
     const { count } = await supabase
-      .from('diagnosticos')
+      .from('leads')
       .select('*', { count: 'exact', head: true })
     const { data, error } = await supabase
-      .from('diagnosticos')
+      .from('leads')
       .select('*')
       .order(orderBy, { ascending: orderDirection === 'asc' })
       .range(from, to)
@@ -120,7 +127,7 @@ export const diagnosticoHandler = {
       throw error
     }
 
-    const leads: Lead[] = (data as DiagnosticoRow[]).map((row) => ({
+    const leads: Lead[] = (data as LeadRow[]).map((row) => ({
       id: row.id,
       nome_completo: row.nome_completo,
       email: row.email,
@@ -138,7 +145,13 @@ export const diagnosticoHandler = {
       status: row.status,
       ip_cliente: row.ip_cliente || undefined,
       agente_usuario: row.agente_usuario || undefined,
-      is_high_potential: calculateHighPotential(row)
+      is_high_potential: calculateHighPotential(row),
+      utm_source: row.utm_source || undefined,
+      utm_medium: row.utm_medium || undefined,
+      utm_campaign: row.utm_campaign || undefined,
+      utm_content: row.utm_content || undefined,
+      utm_term: row.utm_term || undefined,
+      referrer: row.referrer || undefined
     }))
 
     return {
@@ -154,7 +167,7 @@ export const diagnosticoHandler = {
     id: string
   ): Promise<{ data: Lead | null; error: PostgrestError | null }> => {
     const { data, error } = await supabase
-      .from('diagnosticos')
+      .from('leads')
       .select('*')
       .eq('id', id)
       .single()
@@ -163,7 +176,7 @@ export const diagnosticoHandler = {
       return { data: null, error }
     }
 
-    const row = data as DiagnosticoRow
+    const row = data as LeadRow
     const lead: Lead = {
       id: row.id,
       nome_completo: row.nome_completo,
@@ -182,19 +195,25 @@ export const diagnosticoHandler = {
       status: row.status,
       ip_cliente: row.ip_cliente || undefined,
       agente_usuario: row.agente_usuario || undefined,
-      is_high_potential: calculateHighPotential(row)
+      is_high_potential: calculateHighPotential(row),
+      utm_source: row.utm_source || undefined,
+      utm_medium: row.utm_medium || undefined,
+      utm_campaign: row.utm_campaign || undefined,
+      utm_content: row.utm_content || undefined,
+      utm_term: row.utm_term || undefined,
+      referrer: row.referrer || undefined
     }
 
     return { data: lead, error: null }
   }
 }
 
-function calculateHighPotential(row: DiagnosticoRow): boolean {
+function calculateHighPotential(row: LeadRow): boolean {
   const highRevenueThreshold = ['50k_100k', 'more_100k']
   const highInvestmentThreshold = ['2k_5k', 'more_5k']
 
   return (
-    highRevenueThreshold.includes(row.faturamento) &&
+    highRevenueThreshold.includes(row.faturamento) ||
     highInvestmentThreshold.includes(row.investimento)
   )
 }

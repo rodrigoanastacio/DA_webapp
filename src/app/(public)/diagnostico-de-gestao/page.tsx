@@ -1,5 +1,5 @@
 import { Metadata } from 'next'
-import DiagnosticWizard from './components/DiagnosticWizard'
+import LeadCaptureWizard from './components/LeadCaptureWizard'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://dayaneanastacio.com.br'),
@@ -54,5 +54,5 @@ export const metadata: Metadata = {
 }
 
 export default function DiagnosticoDeGestao() {
-  return <DiagnosticWizard />
+  return <LeadCaptureWizard />
 }

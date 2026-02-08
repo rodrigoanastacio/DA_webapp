@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Lead } from '@/shared/entities/diagnostico/lead.types'
+import { Lead } from '@/shared/entities/leads/lead.types'
 import { generateGoogleCalendarLink } from '@/shared/utils/calendar/googleCalendarLink'
 import { CalendarIcon, ExternalLink } from 'lucide-react'
 import { useState } from 'react'

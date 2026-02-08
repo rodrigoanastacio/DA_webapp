@@ -25,7 +25,7 @@ export interface Lead {
   referrer?: string
 }
 
-export interface DiagnosticoRow {
+export interface LeadRow {
   id: string
   nome_completo: string
   email: string

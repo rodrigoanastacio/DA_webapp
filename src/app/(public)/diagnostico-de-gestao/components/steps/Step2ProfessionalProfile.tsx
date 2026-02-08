@@ -1,15 +1,15 @@
-import { DiagnosticoFormData } from '@/lib/zod/diagnostico.schema'
+import { LeadFormData } from '@/lib/zod/lead.schema'
 import {
   ATUACAO_OPTIONS,
   EXPERIENCE_OPTIONS
-} from '@/shared/constants/diagnostico.constants'
+} from '@/shared/constants/lead.constants'
 import { useFormContext } from 'react-hook-form'
 
 export function Step2ProfessionalProfile() {
   const {
     register,
     formState: { errors }
-  } = useFormContext<DiagnosticoFormData>()
+  } = useFormContext<LeadFormData>()
 
   return (
     <div className="flex flex-col gap-8">

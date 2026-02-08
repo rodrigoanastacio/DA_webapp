@@ -1,4 +1,4 @@
-import { DiagnosticoFormData } from '@/lib/zod/diagnostico.schema'
+import { LeadFormData } from '@/lib/zod/lead.schema'
 import { useFormContext } from 'react-hook-form'
 
 const DIFFICULTY_OPTIONS = [
@@ -33,7 +33,7 @@ export function Step4Challenges() {
   const {
     register,
     formState: { errors }
-  } = useFormContext<DiagnosticoFormData>()
+  } = useFormContext<LeadFormData>()
 
   return (
     <div className="flex flex-col gap-8">
