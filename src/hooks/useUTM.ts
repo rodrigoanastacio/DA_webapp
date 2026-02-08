@@ -44,11 +44,16 @@ export function useUTM() {
     const stored = sessionStorage.getItem(STORAGE_KEY)
     if (stored) {
       try {
-        setUtms(JSON.parse(stored))
+        const parsed = JSON.parse(stored)
+        // Comparação simples para evitar re-render desnecessário
+        if (JSON.stringify(parsed) !== JSON.stringify(utms)) {
+          setUtms(parsed)
+        }
       } catch {
         // Ignorar erro de parse
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams])
 
   return utms
