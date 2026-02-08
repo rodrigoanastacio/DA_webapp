@@ -1,3 +1,4 @@
+import { useUTM } from '@/hooks/useUTM'
 import {
   DiagnosticoFormData,
   diagnosticoSchema
@@ -11,6 +12,7 @@ export function useDiagnosticoForm() {
   const [currentStep, setCurrentStep] = useState(0)
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const utmParams = useUTM()
 
   const methods = useForm<DiagnosticoFormData>({
     resolver: zodResolver(diagnosticoSchema),
@@ -22,7 +24,6 @@ export function useDiagnosticoForm() {
 
   const { trigger, getValues } = methods
 
-  // Corrigido: Mapeamento de campos por passo (0 a 5)
   const STEPS_FIELDS: (keyof DiagnosticoFormData)[][] = [
     ['name', 'email', 'whatsapp', 'cityState'], // Passo 0: Introdução (com dados de contato)
     ['experienceTime', 'currentRole'], // Passo 1: Perfil Profissional
@@ -62,7 +63,8 @@ export function useDiagnosticoForm() {
     setIsSubmitting(true)
     try {
       const data = getValues()
-      const result = await diagnosticoService.submit(data)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const result = await diagnosticoService.submit(data, utmParams as any)
 
       if (result.success) {
         setIsSubmitted(true)

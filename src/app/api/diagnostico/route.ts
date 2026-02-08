@@ -23,7 +23,13 @@ export async function POST(request: Request) {
     // 2. Delegação para a Camada de Handler (API Handler Layer)
     const metadata = {
       clientIp: request.headers.get('x-forwarded-for') || 'unknown',
-      userAgent: request.headers.get('user-agent') || 'unknown'
+      userAgent: request.headers.get('user-agent') || 'unknown',
+      utmSource: body.utm_source,
+      utmMedium: body.utm_medium,
+      utmCampaign: body.utm_campaign,
+      utmContent: body.utm_content,
+      utmTerm: body.utm_term,
+      referrer: body.referrer
     }
 
     const supabase = await createClient()

@@ -21,6 +21,7 @@ export interface LandingPage {
   created_at: string
   updated_at: string
   views?: number
+  template_id?: string
 }
 
 export interface CreateLandingPageInput {
@@ -28,4 +29,5 @@ export interface CreateLandingPageInput {
   slug: string
   description?: string
   content?: LandingPageContent
+  template_id?: string
 }

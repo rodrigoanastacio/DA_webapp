@@ -12,7 +12,16 @@ export const diagnosticoHandler = {
   create: async (
     supabase: SupabaseClient,
     data: DiagnosticoFormData,
-    metadata: { clientIp: string; userAgent: string }
+    metadata: {
+      clientIp: string
+      userAgent: string
+      utmSource?: string
+      utmMedium?: string
+      utmCampaign?: string
+      utmContent?: string
+      utmTerm?: string
+      referrer?: string
+    }
   ) => {
     const diagnostico = new Diagnostico(data)
 
@@ -45,7 +54,13 @@ export const diagnosticoHandler = {
         investimento: diagnostico.investment,
         status: 'novo_lead',
         ip_cliente: metadata.clientIp,
-        agente_usuario: metadata.userAgent
+        agente_usuario: metadata.userAgent,
+        utm_source: metadata.utmSource,
+        utm_medium: metadata.utmMedium,
+        utm_campaign: metadata.utmCampaign,
+        utm_content: metadata.utmContent,
+        utm_term: metadata.utmTerm,
+        referrer: metadata.referrer
       }
     ])
 

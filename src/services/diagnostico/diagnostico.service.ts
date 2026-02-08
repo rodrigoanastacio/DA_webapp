@@ -5,7 +5,13 @@ export const diagnosticoService = {
   /**
    * Envia os dados do diagnóstico para a API interna
    */
-  submit: async (data: DiagnosticoFormData) => {
-    return api.post<{ success: boolean }>('/api/diagnostico', data)
+  submit: async (
+    data: DiagnosticoFormData,
+    utmParams?: Record<string, string | null>
+  ) => {
+    return api.post<{ success: boolean }>('/api/diagnostico', {
+      ...data,
+      ...utmParams
+    })
   }
 }

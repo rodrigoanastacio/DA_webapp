@@ -62,6 +62,33 @@ export function LeadsListTable({ leads }: LeadsListTableProps) {
       )
     },
     {
+      key: 'origem' as keyof Lead,
+      label: 'Origem',
+      render: (lead) => {
+        let source = 'Direto'
+
+        if (lead.utm_source) {
+          source = lead.utm_source
+        } else if (lead.referrer) {
+          try {
+            source = new URL(lead.referrer).hostname.replace('www.', '')
+          } catch {
+            source = 'Referrer'
+          }
+        }
+
+        return (
+          <Badge
+            variant="outline"
+            className="text-[10px] font-bold text-gray-500 bg-gray-50 border-gray-200 truncate max-w-[120px]"
+            title={source}
+          >
+            {source}
+          </Badge>
+        )
+      }
+    },
+    {
       key: 'created_at',
       label: 'Data',
       sortable: false,
