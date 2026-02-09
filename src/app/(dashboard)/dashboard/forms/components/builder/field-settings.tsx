@@ -124,7 +124,7 @@ export function FieldSettings({
                           : ''
                       )}
                     >
-                      Única Página
+                      Simples
                     </Button>
                     <Button
                       variant={
@@ -143,7 +143,7 @@ export function FieldSettings({
                           : ''
                       )}
                     >
-                      Multi-etapas
+                      Multi Etapas
                     </Button>
                   </div>
                 </div>

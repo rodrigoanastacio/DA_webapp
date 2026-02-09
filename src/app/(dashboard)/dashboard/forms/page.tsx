@@ -24,7 +24,7 @@ export default async function FormsListPage() {
   const { forms } = await formsHandler.list(supabase, profile?.tenant_id || '')
 
   return (
-    <div className="flex flex-col gap-6 animate-in fade-in duration-700">
+    <div className="space-y-8 animate-in fade-in duration-700">
       <div className="flex justify-between items-center">
         <PageHeader
           title="Gestão de Formulários"
@@ -63,7 +63,7 @@ export default async function FormsListPage() {
         ) : (
           forms.map((form) => (
             <Link key={form.id} href={`/dashboard/forms/${form.id}/builder`}>
-              <div className="group bg-white p-6 border border-gray-100 rounded-[24px] hover:border-blue-400 hover:shadow-xl hover:shadow-blue-500/5 transition-all cursor-pointer h-full flex flex-col justify-between">
+              <div className="group bg-white p-6 border border-gray-100 hover:border-blue-400 hover:shadow-xl hover:shadow-blue-500/5 transition-all cursor-pointer h-full flex flex-col justify-between">
                 <div>
                   <div className="flex justify-between items-start mb-4">
                     <div className="p-3 bg-blue-50 text-blue-600 rounded-xl group-hover:bg-blue-600 group-hover:text-white transition-colors">
