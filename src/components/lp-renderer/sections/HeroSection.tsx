@@ -1,6 +1,6 @@
 'use client'
 
-import { CaptureModal } from '@/components/forms/CaptureModal'
+import { CaptureModal } from '@/components/forms/capture-modal'
 import { FormSchema } from '@/components/forms/types'
 import { cn } from '@/lib/utils'
 import Image from 'next/image'

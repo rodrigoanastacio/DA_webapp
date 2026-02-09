@@ -1,7 +1,7 @@
-import { FormBuilder } from '@/components/dashboard/forms/FormBuilder'
 import { createClient } from '@/lib/supabase/server'
 import { formsHandler } from '@/shared/api-handlers/forms/forms.handler'
 import { notFound } from 'next/navigation'
+import { FormBuilder } from '../../components/builder/form-builder'
 
 interface BuilderPageProps {
   params: Promise<{ id: string }>

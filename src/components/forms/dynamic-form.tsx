@@ -4,7 +4,12 @@ import { cn } from '@/lib/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Check, ChevronLeft, ChevronRight, Loader2 } from 'lucide-react'
 import { useMemo, useState } from 'react'
-import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
+import {
+  Controller,
+  FormProvider,
+  SubmitHandler,
+  useForm
+} from 'react-hook-form'
 import PhoneInput from 'react-phone-number-input/input'
 import { generateZodSchema } from './builder/schema-generator'
 import { DynamicFormProps, FormField } from './types'
@@ -31,8 +36,7 @@ export function DynamicForm({
     register,
     handleSubmit,
     trigger,
-    formState: { errors, isSubmitting },
-    watch
+    formState: { errors, isSubmitting }
   } = methods
 
   // Wizard Logic
@@ -99,17 +103,23 @@ export function DynamicForm({
             ))}
           </select>
         ) : field.type === 'tel' ? (
-          <PhoneInput
-            country="BR"
-            className={cn(
-              'form-input w-full rounded-lg border bg-white h-12 px-3 text-sm transition-colors',
-              error
-                ? 'border-red-300 focus:border-red-500 focus:ring-red-200'
-                : 'border-gray-200 focus:border-blue-500 focus:ring-blue-100'
+          <Controller
+            name={field.name}
+            control={methods.control}
+            render={({ field: controllerField }) => (
+              <PhoneInput
+                country="BR"
+                className={cn(
+                  'form-input w-full rounded-lg border bg-white h-12 px-3 text-sm transition-colors',
+                  error
+                    ? 'border-red-300 focus:border-red-500 focus:ring-red-200'
+                    : 'border-gray-200 focus:border-blue-500 focus:ring-blue-100'
+                )}
+                placeholder={field.placeholder}
+                value={controllerField.value as string | undefined}
+                onChange={controllerField.onChange}
+              />
             )}
-            placeholder={field.placeholder}
-            value={watch(field.name) as string | undefined}
-            onChange={(value) => methods.setValue(field.name, value)}
           />
         ) : field.type === 'checkbox' ? (
           <label className="flex items-center gap-2 cursor-pointer">

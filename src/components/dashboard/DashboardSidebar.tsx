@@ -23,6 +23,7 @@ const navigation = [
     href: '/dashboard/landing-pages',
     icon: LayoutTemplate
   },
+  { name: 'Formulários', href: '/dashboard/forms', icon: LayoutTemplate },
   { name: 'Configurações', href: '/dashboard/settings', icon: Settings }
 ]
 
