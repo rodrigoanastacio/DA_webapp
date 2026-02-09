@@ -41,10 +41,10 @@ export default async function LandingPage({ params }: LandingPageProps) {
   const { slug } = await params
   const supabase = await createClient()
 
-  // Buscar a página pelo slug
+  // Buscar a página pelo slug (incluindo form_id)
   const { data: page, error } = await supabase
     .from('landing_pages')
-    .select('*')
+    .select('*, form_id')
     .eq('slug', slug)
     .eq('is_published', true)
     .single()
@@ -57,12 +57,26 @@ export default async function LandingPage({ params }: LandingPageProps) {
     notFound()
   }
 
+  // Buscar o formulário associado, se houver
+  let formSchema: any = null
+  if (page.form_id) {
+    const { data: formData } = await supabase
+      .from('forms')
+      .select('schema')
+      .eq('id', page.form_id)
+      .single()
+
+    if (formData) {
+      formSchema = formData.schema
+    }
+  }
+
   const sections = page.content as LPSection[]
 
   return (
     <main className="min-h-screen bg-white">
       {sections.map((section) => (
-        <SectionRenderer key={section.id} section={section} />
+        <SectionRenderer key={section.id} section={section} form={formSchema} />
       ))}
     </main>
   )

@@ -1,0 +1,47 @@
+import { FormBuilder } from '@/components/dashboard/forms/FormBuilder'
+import { createClient } from '@/lib/supabase/server'
+import { formsHandler } from '@/shared/api-handlers/forms/forms.handler'
+import { notFound } from 'next/navigation'
+
+interface BuilderPageProps {
+  params: Promise<{ id: string }>
+}
+
+async function getTenantId(supabase: any) {
+  const {
+    data: { user }
+  } = await supabase.auth.getUser()
+  if (!user) throw new Error('Unauthorized')
+
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('tenant_id')
+    .eq('id', user.id)
+    .single()
+
+  if (!profile?.tenant_id) throw new Error('Tenant not found')
+  return profile.tenant_id
+}
+
+export default async function FormBuilderPage({ params }: BuilderPageProps) {
+  const { id } = await params
+  const supabase = await createClient()
+
+  try {
+    const tenantId = await getTenantId(supabase)
+    const form = await formsHandler.getById(supabase, id, tenantId)
+
+    if (!form) {
+      notFound()
+    }
+
+    return (
+      <div className="h-full animate-in fade-in duration-700">
+        <FormBuilder formId={id} initialData={form} />
+      </div>
+    )
+  } catch (error) {
+    console.error('[Form Builder Page]:', error)
+    notFound()
+  }
+}

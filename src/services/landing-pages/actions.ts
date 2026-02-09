@@ -13,6 +13,7 @@ export async function createLandingPage(input: {
   description?: string
   content?: LandingPageContent
   template_id?: string
+  form_id?: string
 }): Promise<SaveLandingPageResult> {
   try {
     const cookieStore = await cookies()
@@ -99,7 +100,9 @@ export async function createLandingPage(input: {
         is_published: false,
         template_id: input.template_id || 'default',
         meta_title: input.title,
-        meta_description: input.description || 'Página criada com o Construtor.'
+        meta_description:
+          input.description || 'Página criada com o Construtor.',
+        form_id: input.form_id
       })
       .select()
       .single()
@@ -129,6 +132,7 @@ export async function updateLandingPage(
     meta_title?: string
     meta_description?: string
     template_id?: string
+    form_id?: string
   }
 ) {
   const cookieStore = await cookies()

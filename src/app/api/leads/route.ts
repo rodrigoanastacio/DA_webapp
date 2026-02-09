@@ -1,4 +1,3 @@
-import { LeadFormData } from '@/lib/zod/lead.schema'
 import { leadsHandler } from '@/shared/api-handlers/leads/leads.handler'
 import { createClient } from '@supabase/supabase-js'
 import { NextRequest, NextResponse } from 'next/server'
@@ -40,12 +39,14 @@ export async function POST(req: NextRequest) {
       utmCampaign: body.utm_campaign,
       utmContent: body.utm_content,
       utmTerm: body.utm_term,
-      referrer: body.referrer
+      referrer: body.referrer,
+      form_id: body.form_id,
+      answers: body.answers
     }
 
     // O Zod schema strip() no handler deve ignorar campos extras (UTMs),
     // então passamos o body filtrado ou diretamente se a tipagem permitir.
-    await leadsHandler.create(supabase, body as LeadFormData, metadata)
+    await leadsHandler.create(supabase, body, metadata)
 
     return NextResponse.json({ success: true }, { status: 201 })
   } catch (error: unknown) {

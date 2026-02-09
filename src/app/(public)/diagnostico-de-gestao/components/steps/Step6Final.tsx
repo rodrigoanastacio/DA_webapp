@@ -1,3 +1,4 @@
+import { LeadFormData } from '@/lib/zod/lead.schema'
 import { useFormContext } from 'react-hook-form'
 
 const INVESTMENT_OPTIONS = [

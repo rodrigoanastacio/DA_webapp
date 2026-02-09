@@ -1,6 +1,10 @@
+'use client'
+
+import { CaptureModal } from '@/components/forms/CaptureModal'
+import { FormSchema } from '@/components/forms/types'
 import { cn } from '@/lib/utils'
 import Image from 'next/image'
-import Link from 'next/link'
+import { useState } from 'react'
 
 export interface HeroSectionProps {
   id?: string
@@ -10,6 +14,7 @@ export interface HeroSectionProps {
   ctaLink?: string
   backgroundImage?: string
   theme?: 'light' | 'dark'
+  form?: FormSchema
 }
 
 export function HeroSection({
@@ -19,8 +24,17 @@ export function HeroSection({
   ctaLabel = 'Saiba Mais',
   ctaLink = '#',
   backgroundImage,
-  theme = 'light'
+  theme = 'light',
+  form
 }: HeroSectionProps) {
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
+  const handleCtaClick = (e: React.MouseEvent) => {
+    if (form) {
+      e.preventDefault()
+      setIsModalOpen(true)
+    }
+  }
   return (
     <section
       id={id}
@@ -48,18 +62,27 @@ export function HeroSection({
           {subheadline}
         </p>
         <div className="flex justify-center gap-4">
-          <Link
+          <a
             href={ctaLink}
+            onClick={handleCtaClick}
             className={cn(
-              'px-8 py-4 rounded-xl font-bold transition-all',
+              'px-8 py-4 rounded-xl font-bold transition-all cursor-pointer inline-block',
               theme === 'dark'
                 ? 'bg-white text-slate-900 hover:bg-gray-100'
                 : 'bg-blue-600 text-white hover:bg-blue-700 shadow-lg hover:shadow-blue-200'
             )}
           >
             {ctaLabel}
-          </Link>
+          </a>
         </div>
+
+        {form && (
+          <CaptureModal
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            schema={form}
+          />
+        )}
       </div>
     </section>
   )

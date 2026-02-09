@@ -1,6 +1,4 @@
 import { getTenantIdFromJWT } from '@/lib/auth/get-tenant-id'
-import { LeadFormData } from '@/lib/zod/lead.schema'
-import { LeadSubmission } from '@/shared/entities/leads/lead-submission.entity'
 import {
   Lead,
   LeadRow,
@@ -11,7 +9,7 @@ import { PostgrestError, SupabaseClient } from '@supabase/supabase-js'
 export const leadsHandler = {
   create: async (
     supabase: SupabaseClient,
-    data: LeadFormData,
+    data: any,
     metadata: {
       clientIp: string
       userAgent: string
@@ -21,44 +19,68 @@ export const leadsHandler = {
       utmContent?: string
       utmTerm?: string
       referrer?: string
+      form_id?: string
+      answers?: Record<string, unknown>
     },
     overrideTenantId?: string
   ) => {
-    const submission = new LeadSubmission(data)
-
     let tenantId: string | null | undefined = overrideTenantId
 
+    // 1. Tentar obter via JWT (usuário logado)
     if (!tenantId) {
       tenantId = await getTenantIdFromJWT()
     }
 
+    // 2. Se não tiver JWT, obrigatório ter form_id para buscar o tenant dono do form
     if (!tenantId) {
-      throw new Error(
-        'Tenant ID not found (JWT missing and no override provided)'
-      )
+      if (!metadata.form_id) {
+        throw new Error('Form ID is required for public submissions')
+      }
+
+      // Buscar formulário para validar e obter tenant_id
+      const { data: form, error: formError } = await supabase
+        .from('forms')
+        .select('tenant_id, is_published')
+        .eq('id', metadata.form_id)
+        .single()
+
+      if (formError || !form) {
+        throw new Error('Form not found')
+      }
+
+      if (!form.is_published) {
+        throw new Error('Form is not published')
+      }
+
+      tenantId = form.tenant_id
     }
 
-    if (submission.isHighPotential) {
-      console.log(
-        `[ALERTA] Lead de alto potencial identificado: ${submission.name}`
-      )
+    if (!tenantId) {
+      throw new Error('Tenant ID could not be determined')
     }
+
+    // Tentar extrair campos básicos do JSON para conveniência na listagem
+    const answers = metadata.answers || data || {}
+    const nome =
+      (answers.nome as string) ||
+      (answers.name as string) ||
+      (answers.fullName as string) ||
+      (answers.nome_completo as string) ||
+      ''
+    const email =
+      (answers.email as string) || (answers.userEmail as string) || ''
+    const whatsapp =
+      (answers.whatsapp as string) ||
+      (answers.phone as string) ||
+      (answers.tel as string) ||
+      ''
 
     const { error } = await supabase.from('leads').insert([
       {
         tenant_id: tenantId,
-        nome_completo: submission.name.trim(),
-        email: submission.email.trim().toLowerCase(),
-        whatsapp: submission.whatsapp.replace(/\D/g, ''),
-        cidade_estado: submission.cityState.trim(),
-        tempo: submission.experienceTime,
-        atuacao: submission.currentRole,
-        estrutura_equipe: submission.teamStructure,
-        nivel_gestao: submission.managementLevel,
-        dificuldades: submission.dificuldades,
-        faturamento: submission.revenue,
-        expectativas: submission.expectativas.trim(),
-        investimento: submission.investment,
+        nome_completo: nome.toString().trim(),
+        email: email.toString().trim().toLowerCase(),
+        whatsapp: whatsapp.toString().replace(/\D/g, ''),
         status: 'novo_lead',
         ip_cliente: metadata.clientIp,
         agente_usuario: metadata.userAgent,
@@ -67,7 +89,9 @@ export const leadsHandler = {
         utm_campaign: metadata.utmCampaign,
         utm_content: metadata.utmContent,
         utm_term: metadata.utmTerm,
-        referrer: metadata.referrer
+        referrer: metadata.referrer,
+        form_id: metadata.form_id,
+        answers: answers
       }
     ])
 
@@ -151,7 +175,9 @@ export const leadsHandler = {
       utm_campaign: row.utm_campaign || undefined,
       utm_content: row.utm_content || undefined,
       utm_term: row.utm_term || undefined,
-      referrer: row.referrer || undefined
+      referrer: row.referrer || undefined,
+      form_id: (row as any).form_id,
+      answers: (row as any).answers
     }))
 
     return {
@@ -201,7 +227,9 @@ export const leadsHandler = {
       utm_campaign: row.utm_campaign || undefined,
       utm_content: row.utm_content || undefined,
       utm_term: row.utm_term || undefined,
-      referrer: row.referrer || undefined
+      referrer: row.referrer || undefined,
+      form_id: (row as any).form_id,
+      answers: (row as any).answers
     }
 
     return { data: lead, error: null }
@@ -213,7 +241,7 @@ function calculateHighPotential(row: LeadRow): boolean {
   const highInvestmentThreshold = ['2k_5k', 'more_5k']
 
   return (
-    highRevenueThreshold.includes(row.faturamento) ||
-    highInvestmentThreshold.includes(row.investimento)
+    highRevenueThreshold.includes(row.faturamento || '') ||
+    highInvestmentThreshold.includes(row.investimento || '')
   )
 }

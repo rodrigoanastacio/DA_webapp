@@ -18,6 +18,7 @@ export interface LandingPage {
   is_published: boolean
   meta_title?: string
   meta_description?: string
+  form_id?: string
   created_at: string
   updated_at: string
   views?: number
@@ -30,4 +31,5 @@ export interface CreateLandingPageInput {
   description?: string
   content?: LandingPageContent
   template_id?: string
+  form_id?: string
 }

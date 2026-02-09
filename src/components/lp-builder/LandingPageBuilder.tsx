@@ -5,6 +5,7 @@ import {
   SectionRenderer
 } from '@/components/lp-renderer/SectionRenderer'
 import { cn } from '@/lib/utils'
+import { FormRow } from '@/shared/api-handlers/forms/forms.handler'
 import {
   closestCenter,
   DndContext,
@@ -54,6 +55,8 @@ interface LandingPageBuilderProps {
   initialSlug?: string
   initialMetaTitle?: string
   initialMetaDescription?: string
+  initialFormId?: string
+  availableForms?: FormRow[]
   onSave: (
     sections: LPSection[],
     pageSettings: {
@@ -61,6 +64,7 @@ interface LandingPageBuilderProps {
       slug: string
       metaTitle?: string
       metaDescription?: string
+      formId?: string
     }
   ) => Promise<{ success: boolean; slug?: string; message?: string }>
   onTogglePublish?: (published: boolean) => Promise<{ success: boolean }>
@@ -154,6 +158,8 @@ export function LandingPageBuilder({
   initialSlug = '',
   initialMetaTitle = '',
   initialMetaDescription = '',
+  initialFormId = '',
+  availableForms = [],
   onSave,
   onTogglePublish,
   isSaving: isExternalSaving = false
@@ -167,7 +173,8 @@ export function LandingPageBuilder({
     title: initialTitle,
     slug: initialSlug,
     metaTitle: initialMetaTitle,
-    metaDescription: initialMetaDescription
+    metaDescription: initialMetaDescription,
+    formId: initialFormId
   })
 
   const isSaving = isExternalSaving || isInternalSaving
@@ -609,6 +616,42 @@ export function LandingPageBuilder({
                         placeholder="Breve resumo para buscadores..."
                         className="resize-none"
                       />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="pt-4 border-t border-gray-100">
+                  <p className="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-4">
+                    Captação de Leads
+                  </p>
+
+                  <div className="space-y-4">
+                    <div className="space-y-2">
+                      <Label>Formulário de Destino</Label>
+                      <Select
+                        value={pageSettings.formId}
+                        onValueChange={(val) =>
+                          setPageSettings((prev) => ({ ...prev, formId: val }))
+                        }
+                      >
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Nenhum (Botão padrão)" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="none">
+                            Nenhum (Botão padrão)
+                          </SelectItem>
+                          {availableForms.map((form) => (
+                            <SelectItem key={form.id} value={form.id}>
+                              {form.name}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <p className="text-[10px] text-gray-400">
+                        Define qual formulário será aberto ao clicar no CTA do
+                        Hero.
+                      </p>
                     </div>
                   </div>
                 </div>

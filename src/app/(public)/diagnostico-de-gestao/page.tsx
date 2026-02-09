@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import { Suspense } from 'react'
 import LeadCaptureWizard from './components/LeadCaptureWizard'
 
 export const metadata: Metadata = {
@@ -54,5 +55,9 @@ export const metadata: Metadata = {
 }
 
 export default function DiagnosticoDeGestao() {
-  return <LeadCaptureWizard />
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-blue-50" />}>
+      <LeadCaptureWizard />
+    </Suspense>
+  )
 }

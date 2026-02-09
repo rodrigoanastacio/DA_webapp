@@ -1,4 +1,5 @@
 'use client'
+import { FormRow } from '@/shared/api-handlers/forms/forms.handler'
 
 import { LandingPageBuilder } from '@/components/lp-builder/LandingPageBuilder'
 import { LPSection } from '@/components/lp-renderer/SectionRenderer'
@@ -12,6 +13,8 @@ interface Props {
   initialSlug: string
   initialMetaTitle?: string
   initialMetaDescription?: string
+  initialFormId?: string
+  availableForms: FormRow[]
 }
 
 export default function LandingPageEditor({
@@ -21,7 +24,9 @@ export default function LandingPageEditor({
   initialTitle,
   initialSlug,
   initialMetaTitle,
-  initialMetaDescription
+  initialMetaDescription,
+  initialFormId,
+  availableForms
 }: Props) {
   const { update, togglePublish, isSaving } = useLandingPage()
 
@@ -33,13 +38,16 @@ export default function LandingPageEditor({
       initialSlug={initialSlug}
       initialMetaTitle={initialMetaTitle}
       initialMetaDescription={initialMetaDescription}
+      initialFormId={initialFormId}
+      availableForms={availableForms}
       onSave={(sections, pageSettings) =>
         update(id, {
           content: sections,
           title: pageSettings.title,
           slug: pageSettings.slug,
           meta_title: pageSettings.metaTitle,
-          meta_description: pageSettings.metaDescription
+          meta_description: pageSettings.metaDescription,
+          form_id: pageSettings.formId
         })
       }
       onTogglePublish={(published: boolean) => togglePublish(id, published)}

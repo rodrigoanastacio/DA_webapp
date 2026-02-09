@@ -23,6 +23,8 @@ export interface Lead {
   utm_content?: string
   utm_term?: string
   referrer?: string
+  form_id?: string
+  answers?: Record<string, unknown>
 }
 
 export interface LeadRow {
@@ -49,6 +51,8 @@ export interface LeadRow {
   utm_content?: string | null
   utm_term?: string | null
   referrer?: string | null
+  form_id?: string | null
+  answers?: Record<string, unknown>
 }
 
 export interface LeadsListResponse {

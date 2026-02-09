@@ -1,3 +1,4 @@
+import { FormSchema } from '../forms/types'
 import { HeroSection } from './sections/HeroSection'
 
 export const SECTION_COMPONENTS = {
@@ -15,9 +16,10 @@ export interface LPSection {
 
 interface SectionRendererProps {
   section: LPSection
+  form?: FormSchema
 }
 
-export function SectionRenderer({ section }: SectionRendererProps) {
+export function SectionRenderer({ section, form }: SectionRendererProps) {
   const Component = SECTION_COMPONENTS[section.type]
 
   if (!Component) {
@@ -25,5 +27,5 @@ export function SectionRenderer({ section }: SectionRendererProps) {
     return null
   }
 
-  return <Component {...section.data} id={section.id} />
+  return <Component {...section.data} id={section.id} form={form} />
 }
