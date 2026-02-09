@@ -106,7 +106,10 @@ export const PainSection = () => {
     >
       <div className="max-w-[1200px] mx-auto px-6 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          <div ref={imageRef} className="relative group">
+          <div
+            ref={imageRef}
+            className="relative group min-h-[600px] aspect-4/5"
+          >
             <div className="absolute inset-0 bg-linear-to-t from-[#121212] via-[#121212]/30 to-transparent z-20 rounded-3xl"></div>
             <Image
               alt="Pilhas de documentos e processos jurídicos sob uma luz fraca"

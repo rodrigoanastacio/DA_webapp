@@ -47,6 +47,7 @@ export default async function LandingPage({ params }: LandingPageProps) {
     .select('*, form_id')
     .eq('slug', slug)
     .eq('is_published', true)
+    .eq('type', 'builder') // ← Apenas LPs do builder
     .single()
 
   if (error) {

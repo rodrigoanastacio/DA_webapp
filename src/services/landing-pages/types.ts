@@ -23,6 +23,7 @@ export interface LandingPage {
   updated_at: string
   views?: number
   template_id?: string
+  type?: 'builder' | 'custom'
 }
 
 export interface CreateLandingPageInput {

@@ -98,6 +98,7 @@ export async function createLandingPage(input: {
         slug: finalSlug,
         content: input.content || [],
         is_published: false,
+        type: 'builder', // ← Marca como LP do builder
         template_id: input.template_id || 'default',
         meta_title: input.title,
         meta_description:
@@ -263,6 +264,7 @@ export async function getLandingPages() {
       .from('landing_pages')
       .select('*')
       .eq('tenant_id', tenantId)
+      .eq('type', 'builder') // ← Filtra apenas LPs do builder
       .order('created_at', { ascending: false })
 
     if (error) {

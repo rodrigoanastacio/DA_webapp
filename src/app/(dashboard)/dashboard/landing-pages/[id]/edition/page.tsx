@@ -36,6 +36,23 @@ export default async function EditionPage({ params }: PageProps) {
     notFound()
   }
 
+  // Bloquear edição de LPs customizadas
+  if (landingPage.type === 'custom') {
+    return (
+      <div className="flex flex-col items-center justify-center h-[calc(100vh-8rem)] gap-4">
+        <div className="text-center max-w-md">
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">
+            LP Customizada
+          </h1>
+          <p className="text-gray-600">
+            Esta Landing Page é customizada e não pode ser editada pelo builder.
+            Ela foi criada com código personalizado.
+          </p>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="flex flex-col h-[calc(100vh-8rem)]">
       <div className="mb-6">
