@@ -93,9 +93,10 @@ export default async function FormsListPage() {
                   <div className="flex items-center gap-2">
                     <Layout className="w-3.5 h-3.5" />
                     <span>
+                      {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                       {(form.schema as any)?.display_type === 'wizard'
-                        ? 'Multi-etapas'
-                        : 'Página única'}
+                        ? 'Multi Etapas'
+                        : 'Simples'}
                     </span>
                   </div>
                   <div className="flex items-center gap-2">

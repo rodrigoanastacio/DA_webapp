@@ -1,3 +1,4 @@
+import { FormSchema } from '@/components/forms/types'
 import {
   LPSection,
   SectionRenderer
@@ -12,7 +13,6 @@ interface LandingPageProps {
   }>
 }
 
-// TODO: Gerar metadados dinâmicos (SEO)
 export async function generateMetadata({
   params
 }: LandingPageProps): Promise<Metadata> {
@@ -41,13 +41,12 @@ export default async function LandingPage({ params }: LandingPageProps) {
   const { slug } = await params
   const supabase = await createClient()
 
-  // Buscar a página pelo slug (incluindo form_id)
   const { data: page, error } = await supabase
     .from('landing_pages')
     .select('*, form_id')
     .eq('slug', slug)
     .eq('is_published', true)
-    .eq('type', 'builder') // ← Apenas LPs do builder
+    .eq('type', 'builder')
     .single()
 
   if (error) {
@@ -58,8 +57,7 @@ export default async function LandingPage({ params }: LandingPageProps) {
     notFound()
   }
 
-  // Buscar o formulário associado, se houver
-  let formSchema: any = null
+  let formSchema: FormSchema | undefined = undefined
   if (page.form_id) {
     const { data: formData } = await supabase
       .from('forms')

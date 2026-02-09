@@ -31,9 +31,11 @@ export function DynamicForm({
   const isLastStep = currentStepIndex === schema.steps.length - 1
 
   // 1. Construir schema de validação dinâmico com Zod
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const formSchemaObject: any = {}
   schema.steps.forEach((step) => {
     step.fields.forEach((field) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       let validator: any = z.string()
 
       if (field.type === 'email') {
@@ -63,14 +65,14 @@ export function DynamicForm({
     formState: { errors, isSubmitting }
   } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
-    defaultValues: (defaultValues as any) || {}
+    defaultValues: (defaultValues as Record<string, unknown>) || {}
   })
 
   // 3. Handlers
   const onNext = async () => {
     // Validar apenas campos do passo atual antes de prosseguir
     const currentFields = currentStep.fields.map((f) => f.name)
-    const isValid = await trigger(currentFields as any)
+    const isValid = await trigger(currentFields as (keyof FormValues)[])
 
     if (isValid) {
       setCurrentStepIndex((prev) => prev + 1)
@@ -110,7 +112,7 @@ export function DynamicForm({
           <Textarea
             id={field.name}
             placeholder={field.placeholder}
-            {...register(field.name as any)}
+            {...register(field.name as keyof FormValues)}
             className={cn(
               'rounded-xl border-gray-200 focus:ring-blue-500/20 transition-all min-h-[100px]',
               error && 'border-rose-500 focus:ring-rose-500/20'
@@ -119,9 +121,11 @@ export function DynamicForm({
         ) : field.type === 'select' ? (
           <Select
             onValueChange={(val) =>
-              setValue(field.name as any, val as any, { shouldValidate: true })
+              setValue(field.name as keyof FormValues, val, {
+                shouldValidate: true
+              })
             }
-            defaultValue={watch(field.name as any) as string}
+            defaultValue={watch(field.name as keyof FormValues) as string}
           >
             <SelectTrigger
               className={cn(
@@ -146,7 +150,7 @@ export function DynamicForm({
             id={field.name}
             type={field.type}
             placeholder={field.placeholder}
-            {...register(field.name as any)}
+            {...register(field.name as keyof FormValues)}
             className={cn(
               'rounded-xl border-gray-200 h-12 focus:ring-blue-500/20 transition-all',
               error && 'border-rose-500 focus:ring-rose-500/20'

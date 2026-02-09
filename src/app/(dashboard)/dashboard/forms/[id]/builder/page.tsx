@@ -7,7 +7,7 @@ interface BuilderPageProps {
   params: Promise<{ id: string }>
 }
 
-async function getTenantId(supabase: any) {
+async function getTenantId(supabase: Awaited<ReturnType<typeof createClient>>) {
   const {
     data: { user }
   } = await supabase.auth.getUser()
@@ -27,21 +27,24 @@ export default async function FormBuilderPage({ params }: BuilderPageProps) {
   const { id } = await params
   const supabase = await createClient()
 
+  let form
+  let tenantId
+
   try {
-    const tenantId = await getTenantId(supabase)
-    const form = await formsHandler.getById(supabase, id, tenantId)
-
-    if (!form) {
-      notFound()
-    }
-
-    return (
-      <div className="h-full animate-in fade-in duration-700">
-        <FormBuilder formId={id} initialData={form} />
-      </div>
-    )
+    tenantId = await getTenantId(supabase)
+    form = await formsHandler.getById(supabase, id, tenantId)
   } catch (error) {
     console.error('[Form Builder Page]:', error)
     notFound()
   }
+
+  if (!form) {
+    notFound()
+  }
+
+  return (
+    <div className="h-full animate-in fade-in duration-700">
+      <FormBuilder formId={id} initialData={form} />
+    </div>
+  )
 }

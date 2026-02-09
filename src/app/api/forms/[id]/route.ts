@@ -2,7 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import { formsHandler } from '@/shared/api-handlers/forms/forms.handler'
 import { NextResponse } from 'next/server'
 
-async function getTenantId(supabase: any) {
+async function getTenantId(supabase: Awaited<ReturnType<typeof createClient>>) {
   const {
     data: { user }
   } = await supabase.auth.getUser()
@@ -28,10 +28,10 @@ export async function GET(
     const tenantId = await getTenantId(supabase)
     const form = await formsHandler.getById(supabase, id, tenantId)
     return NextResponse.json(form)
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('[Forms Detail API GET]:', error)
-    const status = error.message === 'Unauthorized' ? 401 : 404
-    return NextResponse.json({ error: error.message }, { status })
+    const status = (error as Error).message === 'Unauthorized' ? 401 : 404
+    return NextResponse.json({ error: (error as Error).message }, { status })
   }
 }
 
@@ -47,10 +47,10 @@ export async function PATCH(
 
     const updatedForm = await formsHandler.update(supabase, id, tenantId, body)
     return NextResponse.json(updatedForm)
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('[Forms Detail API PATCH]:', error)
-    const status = error.message === 'Unauthorized' ? 401 : 500
-    return NextResponse.json({ error: error.message }, { status })
+    const status = (error as Error).message === 'Unauthorized' ? 401 : 500
+    return NextResponse.json({ error: (error as Error).message }, { status })
   }
 }
 
@@ -64,9 +64,9 @@ export async function DELETE(
     const tenantId = await getTenantId(supabase)
     await formsHandler.delete(supabase, id, tenantId)
     return NextResponse.json({ success: true })
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('[Forms Detail API DELETE]:', error)
-    const status = error.message === 'Unauthorized' ? 401 : 500
-    return NextResponse.json({ error: error.message }, { status })
+    const status = (error as Error).message === 'Unauthorized' ? 401 : 500
+    return NextResponse.json({ error: (error as Error).message }, { status })
   }
 }

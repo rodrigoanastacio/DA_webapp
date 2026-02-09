@@ -34,6 +34,7 @@ import { toast } from 'sonner'
 
 interface FormBuilderProps {
   formId: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   initialData: any
 }
 
@@ -59,6 +60,7 @@ export function FormBuilder({ formId, initialData }: FormBuilderProps) {
   const handleSave = async () => {
     setIsSaving(true)
     try {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       await formsService.update(formId, { schema: schema as any })
       toast.success('Alterações salvas com sucesso!')
     } catch (error) {
@@ -304,7 +306,7 @@ export function FormBuilder({ formId, initialData }: FormBuilderProps) {
                       </p>
                     </div>
                   ) : (
-                    schema.steps[activeStepIndex].fields.map((field, index) => (
+                    schema.steps[activeStepIndex].fields.map((field) => (
                       <div
                         key={field.name}
                         onClick={() => setSelectedField(field.name)}
@@ -831,7 +833,7 @@ function ToolButton({
   )
 }
 
-function Loader2(props: any) {
+function Loader2(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       {...props}

@@ -9,7 +9,7 @@ import { PostgrestError, SupabaseClient } from '@supabase/supabase-js'
 export const leadsHandler = {
   create: async (
     supabase: SupabaseClient,
-    data: any,
+    data: Record<string, unknown>,
     metadata: {
       clientIp: string
       userAgent: string
@@ -176,8 +176,8 @@ export const leadsHandler = {
       utm_content: row.utm_content || undefined,
       utm_term: row.utm_term || undefined,
       referrer: row.referrer || undefined,
-      form_id: (row as any).form_id,
-      answers: (row as any).answers
+      form_id: row.form_id || undefined,
+      answers: row.answers
     }))
 
     return {
@@ -228,8 +228,8 @@ export const leadsHandler = {
       utm_content: row.utm_content || undefined,
       utm_term: row.utm_term || undefined,
       referrer: row.referrer || undefined,
-      form_id: (row as any).form_id,
-      answers: (row as any).answers
+      form_id: row.form_id || undefined,
+      answers: row.answers
     }
 
     return { data: lead, error: null }
