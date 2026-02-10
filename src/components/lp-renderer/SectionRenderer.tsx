@@ -1,8 +1,14 @@
 import { FormSchema } from '../forms/types'
+import { BioSection } from './sections/BioSection'
+import { FeaturesSection } from './sections/FeaturesSection'
+import { FooterSection } from './sections/FooterSection'
 import { HeroSection } from './sections/HeroSection'
 
 export const SECTION_COMPONENTS = {
-  hero: HeroSection
+  hero: HeroSection,
+  features: FeaturesSection,
+  bio: BioSection,
+  footer: FooterSection
 } as const
 
 export type SectionType = keyof typeof SECTION_COMPONENTS

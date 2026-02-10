@@ -1,9 +1,9 @@
 'use client'
 import { FormRow } from '@/shared/api-handlers/forms/forms.handler'
 
-import { LandingPageBuilder } from '@/components/lp-builder/LandingPageBuilder'
 import { LPSection } from '@/components/lp-renderer/SectionRenderer'
 import { useLandingPage } from '@/hooks/useLandingPage'
+import { LandingPageBuilder } from './landing-page-builder'
 
 interface Props {
   initialSections: LPSection[]

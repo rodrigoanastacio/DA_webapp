@@ -1,9 +1,9 @@
 import { PageHeader } from '@/components/dashboard/PageHeader'
-import LandingPageEditor from '@/components/lp-builder/LandingPageEditor'
 import { createClient } from '@/lib/supabase/server'
 import { getLandingPage } from '@/services/landing-pages/actions'
 import { formsHandler } from '@/shared/api-handlers/forms/forms.handler'
 import { notFound } from 'next/navigation'
+import LandingPageEditor from '../../components/landing-page-editor'
 
 interface PageProps {
   params: Promise<{ id: string }>
