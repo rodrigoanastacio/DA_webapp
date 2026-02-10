@@ -10,11 +10,16 @@ import { useLeads } from '../hooks/useLeads'
 import { LeadDetailsDrawer } from './LeadDetailsDrawer'
 
 interface LeadsListTableProps {
-  leads: Lead[]
+  initialLeads?: Lead[]
+  variant?: 'default' | 'dayane'
 }
 
-export function LeadsListTable({ leads }: LeadsListTableProps) {
+export function LeadsListTable({
+  initialLeads = [],
+  variant = 'default'
+}: LeadsListTableProps) {
   const {
+    leads,
     selectedLead,
     isDrawerOpen,
     handleLeadClick,
@@ -24,7 +29,7 @@ export function LeadsListTable({ leads }: LeadsListTableProps) {
     formatRevenue,
     formatLeadStatus,
     getLeadStatusStyle
-  } = useLeads()
+  } = useLeads(initialLeads)
 
   const columns: Column<Lead>[] = [
     {
@@ -43,28 +48,41 @@ export function LeadsListTable({ leads }: LeadsListTableProps) {
       )
     },
     {
-      key: 'atuacao',
-      label: 'Empresa',
+      key: 'whatsapp',
+      label: 'WhatsApp',
       render: (lead) => (
-        <span className="text-sm font-bold text-gray-500">
-          {formatAtuacao(lead.atuacao)}
+        <span className="text-sm font-bold text-gray-700">
+          {lead.whatsapp || '-'}
         </span>
       )
     },
-    {
-      key: 'faturamento',
-      label: 'Faturamento Est.',
-      sortable: false,
-      render: (lead) => (
-        <span className="text-[15px] font-extrabold text-gray-900">
-          {formatRevenue(lead.faturamento)}
-        </span>
-      )
-    },
+    ...(variant === 'dayane'
+      ? [
+          {
+            key: 'atuacao' as keyof Lead,
+            label: 'Empresa',
+            render: (lead: Lead) => (
+              <span className="text-sm font-bold text-gray-500">
+                {formatAtuacao(lead.atuacao)}
+              </span>
+            )
+          },
+          {
+            key: 'faturamento' as keyof Lead,
+            label: 'Faturamento Est.',
+            sortable: false,
+            render: (lead: Lead) => (
+              <span className="text-[15px] font-extrabold text-gray-900">
+                {formatRevenue(lead.faturamento)}
+              </span>
+            )
+          }
+        ]
+      : []),
     {
       key: 'origem' as keyof Lead,
       label: 'Origem',
-      render: (lead) => {
+      render: (lead: Lead) => {
         let source = 'Direto'
 
         if (lead.utm_source) {

@@ -1,13 +1,14 @@
 import { createClient } from '@/lib/supabase/server'
 import { leadsHandler } from '@/shared/api-handlers/leads/leads.handler'
-import { LeadsHeader } from '../components/LeadsHeader'
-import { LeadsListTable } from '../components/LeadsListTable'
-import { LeadsStats } from '../components/LeadsStats'
+import { LeadsHeader } from '../leads/components/LeadsHeader'
+import { LeadsListTable } from '../leads/components/LeadsListTable'
+import { LeadsStats } from '../leads/components/LeadsStats'
 
-export default async function LeadsListPage() {
+export default async function DiagnosticosPage() {
   const supabase = await createClient()
 
-  // Buscar leads do banco de dados
+  // Buscar leads do banco de dados (Diagnósticos)
+  // TODO: Filtrar por form_id específico quando tivermos o ID fixo
   const { leads, total } = await leadsHandler.list(supabase, {
     page: 1,
     perPage: 50,
@@ -25,7 +26,12 @@ export default async function LeadsListPage() {
 
   return (
     <section className="space-y-8 animate-in fade-in duration-700">
-      <LeadsHeader totalLeads={total} highPotentialCount={highPotentialCount} />
+      <LeadsHeader
+        totalLeads={total}
+        highPotentialCount={highPotentialCount}
+        title="Diagnósticos (Dayane)"
+        description="Gestão exclusiva de diagnósticos empresariais"
+      />
 
       <LeadsStats
         totalLeads={total}
@@ -35,7 +41,7 @@ export default async function LeadsListPage() {
 
       <LeadsListTable
         initialLeads={leads}
-        variant="default" // Lista limpa (apenas contatos)
+        variant="dayane" // Ativa colunas Empresa/Faturamento
       />
     </section>
   )

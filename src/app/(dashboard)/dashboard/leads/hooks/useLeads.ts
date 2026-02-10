@@ -10,7 +10,8 @@ import {
 import { Lead } from '@/shared/entities/leads/lead.types'
 import { useState } from 'react'
 
-export function useLeads() {
+export function useLeads(initialLeads: Lead[] = []) {
+  const [leads, setLeads] = useState<Lead[]>(initialLeads)
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null)
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 
@@ -27,18 +28,29 @@ export function useLeads() {
   const handleUpdateStatus = async (status: string) => {
     if (!selectedLead) return
 
+    // Update local state for immediate feedback
     const updatedLead = { ...selectedLead, status }
     setSelectedLead(updatedLead)
+
+    // Update the list as well
+    setLeads((prev) =>
+      prev.map((l) => (l.id === updatedLead.id ? updatedLead : l))
+    )
 
     const result = await updateLeadStatus(selectedLead.id, status)
 
     if (!result.success) {
+      // Revert if failed
       setSelectedLead(selectedLead)
+      setLeads((prev) =>
+        prev.map((l) => (l.id === selectedLead.id ? selectedLead : l))
+      )
       console.error('Failed to update status')
     }
   }
 
   return {
+    leads,
     selectedLead,
     isDrawerOpen,
     handleLeadClick,

@@ -4,6 +4,7 @@ import { useDashboard } from '@/app/(dashboard)/hooks/useDashboard'
 import { TenantLogo } from '@/components/TenantLogo'
 import { cn } from '@/lib/utils'
 import {
+  ClipboardList,
   Home,
   LayoutTemplate,
   LogOut,
@@ -17,6 +18,11 @@ import { usePathname } from 'next/navigation'
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: Home },
   { name: 'Leads', href: '/dashboard/leads/list', icon: Users },
+  {
+    name: 'Diagnósticos',
+    href: '/dashboard/diagnosticos',
+    icon: ClipboardList
+  },
   { name: 'Equipe', href: '/dashboard/team/list', icon: UsersRound },
   {
     name: 'Landing Pages',
@@ -33,8 +39,11 @@ interface DashboardSidebarProps {
     email?: string
     avatar_url?: string
     role?: string
+    tenant_id?: string
   }
 }
+
+const DAYANE_TENANT_ID = 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11'
 
 export function DashboardSidebar({ user }: DashboardSidebarProps) {
   const pathname = usePathname()
@@ -43,6 +52,9 @@ export function DashboardSidebar({ user }: DashboardSidebarProps) {
   const filteredNavigation = navigation.filter((item) => {
     if (item.href === '/dashboard/team/list') {
       return user?.role === 'admin'
+    }
+    if (item.href === '/dashboard/diagnosticos') {
+      return user?.tenant_id === DAYANE_TENANT_ID
     }
     return true
   })
