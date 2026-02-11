@@ -1,11 +1,12 @@
-import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 import { diagnosticosHandler } from '@/shared/api-handlers/diagnosticos/diagnosticos.handler'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json()
-    const supabase = await createClient()
+    // Use admin client to bypass RLS for public form submissions
+    const supabase = createAdminClient()
 
     const metadata = {
       clientIp:

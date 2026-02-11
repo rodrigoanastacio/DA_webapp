@@ -1,4 +1,3 @@
-import { getTenantIdFromJWT } from '@/lib/auth/get-tenant-id'
 import {
   Diagnostico,
   DiagnosticoRow,
@@ -34,14 +33,12 @@ export const diagnosticosHandler = {
       referrer?: string
     }
   ) => {
-    const tenantId = await getTenantIdFromJWT()
-    if (!tenantId) {
-      throw new Error('Unauthorized: Tenant ID could not be determined')
-    }
+    // Diagnósticos são exclusivos da Dayane
+    const DAYANE_TENANT_ID = 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11'
 
     const { error } = await supabase.from('diagnosticos').insert([
       {
-        tenant_id: tenantId,
+        tenant_id: DAYANE_TENANT_ID,
         nome_completo: data.nome.trim(),
         email: data.email.trim().toLowerCase(),
         whatsapp: data.whatsapp.replace(/\D/g, ''),
