@@ -1,6 +1,6 @@
 import { useUTM } from '@/hooks/useUTM'
 import { LeadFormData, leadSchema } from '@/lib/zod/lead.schema'
-import { leadsService } from '@/services/leads/leads.service'
+import { diagnosticosService } from '@/services/diagnosticos/diagnosticos.service'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -61,7 +61,7 @@ export function useLeadForm() {
     try {
       const data = getValues()
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const result = await leadsService.submit(data, utmParams as any)
+      const result = await diagnosticosService.submit(data, utmParams as any)
 
       if (result.success) {
         setIsSubmitted(true)

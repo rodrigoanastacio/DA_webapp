@@ -11,14 +11,20 @@ import {
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { Diagnostico } from '@/shared/entities/diagnosticos/diagnostico.types'
 import { Lead } from '@/shared/entities/leads/lead.types'
 import { generateGoogleCalendarLink } from '@/shared/utils/calendar/googleCalendarLink'
 import { CalendarIcon, ExternalLink } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner' // Assuming sonner is installed as per plan
 
+// Type guard para verificar se é Diagnostico
+function isDiagnostico(lead: Lead | Diagnostico): lead is Diagnostico {
+  return 'atuacao' in lead && 'faturamento' in lead
+}
+
 interface ScheduleMeetingModalProps {
-  lead: Lead
+  lead: Lead | Diagnostico
   isOpen: boolean
   onClose: () => void
 }
@@ -41,7 +47,9 @@ export function ScheduleMeetingModal({
 
     const link = generateGoogleCalendarLink({
       title: `Diagnóstico: ${lead.nome_completo} | Dayane Anastácio`,
-      details: `Reunião de Diagnóstico com ${lead.nome_completo}\nAtuação: ${lead.atuacao}\nGestão: ${lead.nivel_gestao}\n\nLink da reunião: (Adicionar link do Meet/Zoom)`,
+      details: isDiagnostico(lead)
+        ? `Reunião de Diagnóstico com ${lead.nome_completo}\nAtuação: ${lead.atuacao}\nGestão: ${lead.nivel_gestao}\n\nLink da reunião: (Adicionar link do Meet/Zoom)`
+        : `Reunião com ${lead.nome_completo}\n\nLink da reunião: (Adicionar link do Meet/Zoom)`,
       start: startDateTime,
       location: 'Google Meet'
     })

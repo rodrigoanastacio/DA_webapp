@@ -17,7 +17,7 @@ export default async function LeadsListPage() {
 
   // Calcular estatísticas
   const highPotentialCount = leads.filter(
-    (lead) => lead.is_high_potential
+    (lead) => 'is_high_potential' in lead && lead.is_high_potential
   ).length
 
   // Taxa de conversão (mock por enquanto)

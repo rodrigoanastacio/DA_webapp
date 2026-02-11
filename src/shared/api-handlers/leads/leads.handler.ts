@@ -153,31 +153,24 @@ export const leadsHandler = {
 
     const leads: Lead[] = (data as LeadRow[]).map((row) => ({
       id: row.id,
+      tenant_id: row.tenant_id,
       nome_completo: row.nome_completo,
       email: row.email,
-      whatsapp: row.whatsapp,
-      cidade_estado: row.cidade_estado,
-      tempo: row.tempo,
-      atuacao: row.atuacao,
-      estrutura_equipe: row.estrutura_equipe,
-      nivel_gestao: row.nivel_gestao,
-      dificuldades: row.dificuldades,
-      faturamento: row.faturamento,
-      expectativas: row.expectativas,
-      investimento: row.investimento,
+      whatsapp: row.whatsapp || undefined,
+      form_id: row.form_id || undefined,
+      landing_page_id: row.landing_page_id || undefined,
+      answers: row.answers || {},
       created_at: row.created_at,
+      updated_at: row.updated_at,
       status: row.status,
       ip_cliente: row.ip_cliente || undefined,
       agente_usuario: row.agente_usuario || undefined,
-      is_high_potential: calculateHighPotential(row),
       utm_source: row.utm_source || undefined,
       utm_medium: row.utm_medium || undefined,
       utm_campaign: row.utm_campaign || undefined,
       utm_content: row.utm_content || undefined,
       utm_term: row.utm_term || undefined,
-      referrer: row.referrer || undefined,
-      form_id: row.form_id || undefined,
-      answers: row.answers
+      referrer: row.referrer || undefined
     }))
 
     return {
@@ -205,43 +198,26 @@ export const leadsHandler = {
     const row = data as LeadRow
     const lead: Lead = {
       id: row.id,
+      tenant_id: row.tenant_id,
       nome_completo: row.nome_completo,
       email: row.email,
-      whatsapp: row.whatsapp,
-      cidade_estado: row.cidade_estado,
-      tempo: row.tempo,
-      atuacao: row.atuacao,
-      estrutura_equipe: row.estrutura_equipe,
-      nivel_gestao: row.nivel_gestao,
-      dificuldades: row.dificuldades,
-      faturamento: row.faturamento,
-      expectativas: row.expectativas,
-      investimento: row.investimento,
+      whatsapp: row.whatsapp || undefined,
+      form_id: row.form_id || undefined,
+      landing_page_id: row.landing_page_id || undefined,
+      answers: row.answers || {},
       created_at: row.created_at,
+      updated_at: row.updated_at,
       status: row.status,
       ip_cliente: row.ip_cliente || undefined,
       agente_usuario: row.agente_usuario || undefined,
-      is_high_potential: calculateHighPotential(row),
       utm_source: row.utm_source || undefined,
       utm_medium: row.utm_medium || undefined,
       utm_campaign: row.utm_campaign || undefined,
       utm_content: row.utm_content || undefined,
       utm_term: row.utm_term || undefined,
-      referrer: row.referrer || undefined,
-      form_id: row.form_id || undefined,
-      answers: row.answers
+      referrer: row.referrer || undefined
     }
 
     return { data: lead, error: null }
   }
-}
-
-function calculateHighPotential(row: LeadRow): boolean {
-  const highRevenueThreshold = ['50k_100k', 'more_100k']
-  const highInvestmentThreshold = ['2k_5k', 'more_5k']
-
-  return (
-    highRevenueThreshold.includes(row.faturamento || '') ||
-    highInvestmentThreshold.includes(row.investimento || '')
-  )
 }

@@ -7,15 +7,18 @@ import {
   formatRevenue,
   getLeadStatusStyle
 } from '@/shared/constants/lead.constants'
+import { Diagnostico } from '@/shared/entities/diagnosticos/diagnostico.types'
 import { Lead } from '@/shared/entities/leads/lead.types'
 import { useState } from 'react'
 
-export function useLeads(initialLeads: Lead[] = []) {
-  const [leads, setLeads] = useState<Lead[]>(initialLeads)
-  const [selectedLead, setSelectedLead] = useState<Lead | null>(null)
+export function useLeads(initialLeads: (Lead | Diagnostico)[] = []) {
+  const [leads, setLeads] = useState<(Lead | Diagnostico)[]>(initialLeads)
+  const [selectedLead, setSelectedLead] = useState<Lead | Diagnostico | null>(
+    null
+  )
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 
-  const handleLeadClick = (lead: Lead) => {
+  const handleLeadClick = (lead: Lead | Diagnostico) => {
     setSelectedLead(lead)
     setIsDrawerOpen(true)
   }

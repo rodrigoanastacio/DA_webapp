@@ -1,5 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
-import { leadsHandler } from '@/shared/api-handlers/leads/leads.handler'
+import { diagnosticosHandler } from '@/shared/api-handlers/diagnosticos/diagnosticos.handler'
 import { LeadsHeader } from '../leads/components/LeadsHeader'
 import { LeadsListTable } from '../leads/components/LeadsListTable'
 import { LeadsStats } from '../leads/components/LeadsStats'
@@ -7,9 +7,8 @@ import { LeadsStats } from '../leads/components/LeadsStats'
 export default async function DiagnosticosPage() {
   const supabase = await createClient()
 
-  // Buscar leads do banco de dados (Diagnósticos)
-  // TODO: Filtrar por form_id específico quando tivermos o ID fixo
-  const { leads, total } = await leadsHandler.list(supabase, {
+  // Buscar diagnósticos do banco de dados
+  const { diagnosticos, total } = await diagnosticosHandler.list(supabase, {
     page: 1,
     perPage: 50,
     orderBy: 'created_at',
@@ -17,8 +16,8 @@ export default async function DiagnosticosPage() {
   })
 
   // Calcular estatísticas
-  const highPotentialCount = leads.filter(
-    (lead) => lead.is_high_potential
+  const highPotentialCount = diagnosticos.filter(
+    (diagnostico) => diagnostico.is_high_potential
   ).length
 
   // Taxa de conversão (mock por enquanto)
@@ -40,7 +39,7 @@ export default async function DiagnosticosPage() {
       />
 
       <LeadsListTable
-        initialLeads={leads}
+        initialLeads={diagnosticos}
         variant="dayane" // Ativa colunas Empresa/Faturamento
       />
     </section>

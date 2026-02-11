@@ -24,6 +24,7 @@ import {
   getLeadStatusStyle,
   LeadStatusType
 } from '@/shared/constants/lead.constants'
+import { Diagnostico } from '@/shared/entities/diagnosticos/diagnostico.types'
 import { Lead } from '@/shared/entities/leads/lead.types'
 import {
   AlertCircle,
@@ -38,8 +39,13 @@ import {
   X
 } from 'lucide-react'
 
+// Type guard para verificar se é Diagnostico
+function isDiagnostico(lead: Lead | Diagnostico): lead is Diagnostico {
+  return 'atuacao' in lead && 'faturamento' in lead
+}
+
 interface LeadDetailsDrawerProps {
-  lead: Lead | null
+  lead: Lead | Diagnostico | null
   isOpen: boolean
   onClose: () => void
   onUpdateStatus?: (status: string) => void
@@ -94,8 +100,12 @@ export function LeadDetailsDrawer({
 
             <div className="flex flex-wrap gap-3 mt-8">
               <Button
-                className="bg-[#10B981] hover:bg-[#059669] text-white flex items-center gap-2 rounded-xl h-12 px-6 font-bold shadow-sm transition-all active:scale-95"
+                variant="outline"
+                size="sm"
+                className="gap-2"
+                disabled={!lead.whatsapp}
                 onClick={() =>
+                  lead.whatsapp &&
                   window.open(
                     `https://wa.me/55${lead.whatsapp.replace(/\D/g, '')}`,
                     '_blank'
@@ -149,140 +159,146 @@ export function LeadDetailsDrawer({
 
           {/* Content Section */}
           <div className="p-8 space-y-10">
-            {/* Perfil Profissional */}
-            <section className="space-y-6">
-              <div className="flex items-center gap-3 text-blue-600">
-                <div className="p-2 bg-blue-50 rounded-lg">
-                  <User className="w-5 h-5 fill-blue-600/10" />
-                </div>
-                <h3 className="text-[14px] font-extrabold uppercase tracking-widest text-[#1e40af]">
-                  Perfil Profissional
-                </h3>
-              </div>
-
-              <div className="grid grid-cols-2 gap-x-12 gap-y-8 p-8 rounded-[24px] bg-[#f8fafc]/50 border border-gray-100/50">
-                {/* Removido campos mock (Especialidade/OAB) pois não existem no banco */}
-                <div className="space-y-1">
-                  <p className="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest">
-                    Tempo de Atuação
-                  </p>
-                  <p className="text-[15px] font-bold text-gray-900">
-                    {formatExperience(lead.tempo)}
-                  </p>
-                </div>
-                <div className="space-y-1">
-                  <p className="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest">
-                    Localização
-                  </p>
-                  <p className="text-[15px] font-bold text-blue-600 underline underline-offset-4 decoration-blue-200 cursor-pointer">
-                    {lead.cidade_estado}
-                  </p>
-                </div>
-              </div>
-            </section>
-
-            {/* Estrutura do Escritório */}
-            <section className="space-y-6">
-              <div className="flex items-center gap-3 text-blue-600">
-                <div className="p-2 bg-blue-50 rounded-lg">
-                  <Briefcase className="w-5 h-5 fill-blue-600/10" />
-                </div>
-                <h3 className="text-[14px] font-extrabold uppercase tracking-widest text-[#1e40af]">
-                  Estrutura do Escritório
-                </h3>
-              </div>
-
-              <div className="grid grid-cols-2 gap-x-12 gap-y-8 p-8 rounded-[24px] bg-[#f8fafc]/50 border border-gray-100/50">
-                <div className="space-y-1">
-                  <p className="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest">
-                    Tamanho da Equipe
-                  </p>
-                  <p className="text-[15px] font-bold text-gray-900">
-                    {formatTeamStructure(lead.estrutura_equipe)}
-                  </p>
-                </div>
-                <div className="space-y-1">
-                  <p className="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest">
-                    Modelo de Negócio
-                  </p>
-                  <p className="text-[15px] font-bold text-gray-900">
-                    {formatAtuacao(lead.atuacao)}
-                  </p>
-                </div>
-                <div className="space-y-1 col-span-2">
-                  <p className="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest mb-2">
-                    Resumo da Operação
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    <Badge
-                      variant="secondary"
-                      className="bg-white border-gray-200 text-gray-600 px-3 py-1 text-[11px] font-bold"
-                    >
-                      Gestão {formatManagementLevel(lead.nivel_gestao)}
-                    </Badge>
-                    <Badge
-                      variant="secondary"
-                      className="bg-white border-gray-200 text-gray-600 px-3 py-1 text-[11px] font-bold"
-                    >
-                      Faturamento: {formatRevenue(lead.faturamento)}
-                    </Badge>
+            {/* Perfil Profissional - Only for Diagnostico */}
+            {isDiagnostico(lead) && (
+              <section className="space-y-6">
+                <div className="flex items-center gap-3 text-blue-600">
+                  <div className="p-2 bg-blue-50 rounded-lg">
+                    <User className="w-5 h-5 fill-blue-600/10" />
                   </div>
+                  <h3 className="text-[14px] font-extrabold uppercase tracking-widest text-[#1e40af]">
+                    Perfil Profissional
+                  </h3>
                 </div>
-              </div>
-            </section>
 
-            {/* Dores Identificadas */}
-            <section className="space-y-6">
-              <div className="flex items-center gap-3 text-rose-500">
-                <div className="p-2 bg-rose-50 rounded-lg">
-                  <AlertCircle className="w-5 h-5 fill-rose-500/10" />
-                </div>
-                <h3 className="text-[14px] font-extrabold uppercase tracking-widest text-rose-800">
-                  Dores & Expectativas
-                </h3>
-              </div>
-
-              <div className="space-y-4">
-                <p className="text-gray-500">
-                  O lead declarou ter &quot;alta urgência&quot; para resolver o
-                  problema.
-                </p>
-                {lead.dificuldades.map((dificuldade, i) => (
-                  <div
-                    key={i}
-                    className="p-5 rounded-2xl bg-rose-50/30 border border-rose-100 flex gap-4"
-                  >
-                    <div className="w-6 h-6 rounded-full bg-rose-100 flex items-center justify-center shrink-0">
-                      <AlertCircle className="w-3.5 h-3.5 text-rose-600" />
-                    </div>
-                    <div className="space-y-1">
-                      <p className="text-[14px] font-bold text-rose-900 leading-tight">
-                        {dificuldade
-                          .replace(/_/g, ' ')
-                          .replace(/\b\w/g, (l) => l.toUpperCase())}
-                      </p>
-                      <p className="text-[12px] text-rose-600/70 font-medium">
-                        Dificuldade crítica identificada no diagnóstico inicial.
-                      </p>
-                    </div>
-                  </div>
-                ))}
-
-                <div className="p-5 rounded-2xl bg-[#fff7ed] border border-[#ffedd5] flex gap-4">
-                  <div className="w-6 h-6 rounded-full bg-[#ffedd5] flex items-center justify-center shrink-0">
-                    <FileText className="w-3.5 h-3.5 text-[#ea580c]" />
+                <div className="grid grid-cols-2 gap-x-12 gap-y-8 p-8 rounded-[24px] bg-[#f8fafc]/50 border border-gray-100/50">
+                  <div className="space-y-1">
+                    <p className="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest">
+                      Tempo de Atuação
+                    </p>
+                    <p className="text-[15px] font-bold text-gray-900">
+                      {formatExperience(lead.tempo)}
+                    </p>
                   </div>
                   <div className="space-y-1">
-                    <p className="text-[14px] font-bold text-[#9a3412] leading-tight">
-                      Expectativas do Lead
+                    <p className="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest">
+                      Localização
                     </p>
-                    <p className="text-[13px] text-[#9a3412]/70 font-medium italic">
-                      &quot;{lead.expectativas}&quot;
+                    <p className="text-[15px] font-bold text-blue-600 underline underline-offset-4 decoration-blue-200 cursor-pointer">
+                      {lead.cidade_estado}
                     </p>
                   </div>
                 </div>
-              </div>
-            </section>
+              </section>
+            )}
+
+            {/* Estrutura do Escritório - Only for Diagnostico */}
+            {isDiagnostico(lead) && (
+              <section className="space-y-6">
+                <div className="flex items-center gap-3 text-blue-600">
+                  <div className="p-2 bg-blue-50 rounded-lg">
+                    <Briefcase className="w-5 h-5 fill-blue-600/10" />
+                  </div>
+                  <h3 className="text-[14px] font-extrabold uppercase tracking-widest text-[#1e40af]">
+                    Estrutura do Escritório
+                  </h3>
+                </div>
+
+                <div className="grid grid-cols-2 gap-x-12 gap-y-8 p-8 rounded-[24px] bg-[#f8fafc]/50 border border-gray-100/50">
+                  <div className="space-y-1">
+                    <p className="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest">
+                      Tamanho da Equipe
+                    </p>
+                    <p className="text-[15px] font-bold text-gray-900">
+                      {formatTeamStructure(lead.estrutura_equipe)}
+                    </p>
+                  </div>
+                  <div className="space-y-1">
+                    <p className="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest">
+                      Modelo de Negócio
+                    </p>
+                    <p className="text-[15px] font-bold text-gray-900">
+                      {formatAtuacao(lead.atuacao)}
+                    </p>
+                  </div>
+                  <div className="space-y-1 col-span-2">
+                    <p className="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest mb-2">
+                      Resumo da Operação
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      <Badge
+                        variant="secondary"
+                        className="bg-white border-gray-200 text-gray-600 px-3 py-1 text-[11px] font-bold"
+                      >
+                        Gestão {formatManagementLevel(lead.nivel_gestao)}
+                      </Badge>
+                      <Badge
+                        variant="secondary"
+                        className="bg-white border-gray-200 text-gray-600 px-3 py-1 text-[11px] font-bold"
+                      >
+                        Faturamento: {formatRevenue(lead.faturamento)}
+                      </Badge>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            )}
+
+            {/* Dores Identificadas - Only for Diagnostico */}
+            {isDiagnostico(lead) && (
+              <section className="space-y-6">
+                <div className="flex items-center gap-3 text-rose-500">
+                  <div className="p-2 bg-rose-50 rounded-lg">
+                    <AlertCircle className="w-5 h-5 fill-rose-500/10" />
+                  </div>
+                  <h3 className="text-[14px] font-extrabold uppercase tracking-widest text-rose-800">
+                    Dores & Expectativas
+                  </h3>
+                </div>
+
+                <div className="space-y-4">
+                  <p className="text-gray-500">
+                    O lead declarou ter &quot;alta urgência&quot; para resolver
+                    o problema.
+                  </p>
+                  {lead.dificuldades.map((dificuldade: string, i: number) => (
+                    <div
+                      key={i}
+                      className="p-5 rounded-2xl bg-rose-50/30 border border-rose-100 flex gap-4"
+                    >
+                      <div className="w-6 h-6 rounded-full bg-rose-100 flex items-center justify-center shrink-0">
+                        <AlertCircle className="w-3.5 h-3.5 text-rose-600" />
+                      </div>
+                      <div className="space-y-1">
+                        <p className="text-[14px] font-bold text-rose-900 leading-tight">
+                          {dificuldade
+                            .replace(/_/g, ' ')
+                            .replace(/\b\w/g, (l: string) => l.toUpperCase())}
+                        </p>
+                        <p className="text-[12px] text-rose-600/70 font-medium">
+                          Dificuldade crítica identificada no diagnóstico
+                          inicial.
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+
+                  <div className="p-5 rounded-2xl bg-[#fff7ed] border border-[#ffedd5] flex gap-4">
+                    <div className="w-6 h-6 rounded-full bg-[#ffedd5] flex items-center justify-center shrink-0">
+                      <FileText className="w-3.5 h-3.5 text-[#ea580c]" />
+                    </div>
+                    <div className="space-y-1">
+                      <p className="text-[14px] font-bold text-[#9a3412] leading-tight">
+                        Expectativas do Lead
+                      </p>
+                      <p className="text-[13px] text-[#9a3412]/70 font-medium italic">
+                        &quot;{lead.expectativas}&quot;
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            )}
           </div>
 
           {/* Footer Actions */}

@@ -5,12 +5,18 @@ import InteractiveTable, {
 } from '@/components/dashboard/InteractiveTable'
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'
+import { Diagnostico } from '@/shared/entities/diagnosticos/diagnostico.types'
 import { Lead } from '@/shared/entities/leads/lead.types'
 import { useLeads } from '../hooks/useLeads'
 import { LeadDetailsDrawer } from './LeadDetailsDrawer'
 
+// Type guard para verificar se é Diagnostico
+function isDiagnostico(lead: Lead | Diagnostico): lead is Diagnostico {
+  return 'atuacao' in lead && 'faturamento' in lead
+}
+
 interface LeadsListTableProps {
-  initialLeads?: Lead[]
+  initialLeads?: (Lead | Diagnostico)[]
   variant?: 'default' | 'dayane'
 }
 
@@ -31,7 +37,7 @@ export function LeadsListTable({
     getLeadStatusStyle
   } = useLeads(initialLeads)
 
-  const columns: Column<Lead>[] = [
+  const columns: Column<Lead | Diagnostico>[] = [
     {
       key: 'nome_completo',
       label: 'Nome do Lead',
@@ -59,30 +65,30 @@ export function LeadsListTable({
     ...(variant === 'dayane'
       ? [
           {
-            key: 'atuacao' as keyof Lead,
+            key: 'atuacao',
             label: 'Empresa',
-            render: (lead: Lead) => (
+            render: (lead: Lead | Diagnostico) => (
               <span className="text-sm font-bold text-gray-500">
-                {formatAtuacao(lead.atuacao)}
+                {isDiagnostico(lead) ? formatAtuacao(lead.atuacao) : '-'}
               </span>
             )
           },
           {
-            key: 'faturamento' as keyof Lead,
+            key: 'faturamento',
             label: 'Faturamento Est.',
             sortable: false,
-            render: (lead: Lead) => (
+            render: (lead: Lead | Diagnostico) => (
               <span className="text-[15px] font-extrabold text-gray-900">
-                {formatRevenue(lead.faturamento)}
+                {isDiagnostico(lead) ? formatRevenue(lead.faturamento) : '-'}
               </span>
             )
           }
         ]
       : []),
     {
-      key: 'origem' as keyof Lead,
+      key: 'origem',
       label: 'Origem',
-      render: (lead: Lead) => {
+      render: (lead: Lead | Diagnostico) => {
         let source = 'Direto'
 
         if (lead.utm_source) {
