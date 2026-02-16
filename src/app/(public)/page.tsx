@@ -1,7 +1,7 @@
 import { AuthorityBio } from '@/components/home/AuthorityBio'
-import { Header } from '@/components/home/Header'
 import { HeroInstitucional } from '@/components/home/HeroInstitucional'
 import { ServicesSection } from '@/components/home/ServicesSection'
+import { Header } from '@/components/layout/header'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { Metadata } from 'next'
 

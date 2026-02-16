@@ -7,7 +7,7 @@ import Link from 'next/link'
 
 export function HeroInstitucional() {
   return (
-    <section className="relative overflow-hidden bg-white">
+    <section id="inicio" className="relative overflow-hidden bg-white">
       <div className="relative max-w-screen-2xl mx-auto min-h-screen flex flex-col lg:justify-center">
         <div className="absolute top-0 right-0 -translate-y-12 translate-x-1/4 w-[800px] h-[800px] bg-blue-500/5 rounded-full blur-3xl pointer-events-none" />
 

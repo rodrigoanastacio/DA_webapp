@@ -1,3 +1,4 @@
+import { Footer } from '@/components/layout/footer'
 import type { Metadata } from 'next'
 import { Manrope, Montserrat } from 'next/font/google'
 import './globals.css'
@@ -42,6 +43,7 @@ export default function RootLayout({
         className={`${manrope.variable} ${montserrat.variable} font-manrope antialiased bg-white text-gray-900 min-h-screen selection:bg-lp-primary selection:text-white`}
       >
         {children}
+        <Footer />
       </body>
     </html>
   )
