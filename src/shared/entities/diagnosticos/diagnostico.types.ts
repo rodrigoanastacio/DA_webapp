@@ -7,7 +7,7 @@ export interface Diagnostico {
   nome_completo: string
   email: string
   whatsapp: string
-  cidade_estado: string
+  instagram: string
   tempo: string
   atuacao: string
   estrutura_equipe: string
@@ -39,7 +39,7 @@ export interface DiagnosticoRow {
   nome_completo: string
   email: string
   whatsapp: string
-  cidade_estado: string | null
+  instagram: string | null
   tempo: string | null
   atuacao: string | null
   estrutura_equipe: string | null

@@ -1,5 +1,6 @@
 'use client'
 
+import { ArrowRight, Loader2 } from 'lucide-react'
 import { FormProvider } from 'react-hook-form'
 import { useLeadForm } from '../hooks/use-lead-form'
 import { Step1Introduction } from './steps/Step1Introduction'
@@ -140,23 +141,19 @@ export default function LeadCaptureWizard() {
                     {isSubmitting ? (
                       <span className="flex items-center gap-2">
                         Enviando...
-                        <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        <Loader2 className="w-4 h-4 animate-spin" />
                       </span>
                     ) : currentStep === 5 ? (
                       <>
                         Enviar Diagnóstico
-                        <span className="material-symbols-outlined text-[20px] leading-none">
-                          send
-                        </span>
+                        <ArrowRight className="w-5 h-5" />
                       </>
                     ) : (
                       <>
                         {currentStepData.nextLabel.includes('Finalização')
                           ? 'Ir para Finalização'
                           : 'Próxima Etapa'}
-                        <span className="material-symbols-outlined text-[20px] leading-none">
-                          arrow_forward
-                        </span>
+                        <ArrowRight className="w-5 h-5" />
                       </>
                     )}
                   </button>

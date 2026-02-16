@@ -12,7 +12,7 @@ export const diagnosticosHandler = {
       nome: string
       email: string
       whatsapp: string
-      cityState: string
+      instagram: string
       experienceTime: string
       currentRole: string
       teamStructure: string
@@ -42,7 +42,7 @@ export const diagnosticosHandler = {
         nome_completo: data.nome.trim(),
         email: data.email.trim().toLowerCase(),
         whatsapp: data.whatsapp.replace(/\D/g, ''),
-        cidade_estado: data.cityState,
+        instagram: data.instagram,
         tempo: data.experienceTime,
         atuacao: data.currentRole,
         estrutura_equipe: data.teamStructure,
@@ -127,7 +127,7 @@ export const diagnosticosHandler = {
         nome_completo: row.nome_completo,
         email: row.email,
         whatsapp: row.whatsapp,
-        cidade_estado: row.cidade_estado || '',
+        instagram: row.instagram || '',
         tempo: row.tempo || '',
         atuacao: row.atuacao || '',
         estrutura_equipe: row.estrutura_equipe || '',
@@ -180,7 +180,7 @@ export const diagnosticosHandler = {
       nome_completo: row.nome_completo,
       email: row.email,
       whatsapp: row.whatsapp,
-      cidade_estado: row.cidade_estado || '',
+      instagram: row.instagram || '',
       tempo: row.tempo || '',
       atuacao: row.atuacao || '',
       estrutura_equipe: row.estrutura_equipe || '',

@@ -16,11 +16,31 @@ export function Step1Introduction() {
       {/* Step Title/Header */}
       <div className="flex flex-col gap-2 border-b border-gray-100 pb-6">
         <h1 className="text-blue-300 text-3xl md:text-4xl font-extrabold leading-tight tracking-tight">
-          Vamos começar o seu diagnóstico
+          Diagnóstico Inicial | Estruturação de Negócios
         </h1>
         <p className="text-gray-400 text-base md:text-lg leading-relaxed max-w-2xl">
-          Preencha seus dados básicos para iniciarmos a análise personalizada da
-          gestão do seu escritório de advocacia.
+          Esse formulário é um diagnóstico inicial para que eu possa entender o
+          momento atual da sua empresa, seus desafios e objetivos de
+          crescimento.
+        </p>
+        <p className="text-gray-400 text-base md:text-lg leading-relaxed max-w-2xl">
+          Através do meu <strong>método de Gestão</strong>, eu já ajudei
+          empresas e escritórios a sairem do caos operacional, sobrecarga
+          diária, e da rotina de passar o dia "apagando incêndios".
+        </p>
+        <p className="text-gray-400 text-base md:text-lg leading-relaxed max-w-2xl">
+          O objetivo do meu trabalho é organizar o seu negócio, para que você
+          possa crescer de forma mais <strong>previsível e sustentável</strong>.
+        </p>
+        <p className="text-gray-400 text-base md:text-lg leading-relaxed max-w-2xl">
+          Permitir que você tenha{' '}
+          <strong>mais tempo, clareza e direcionamento</strong> para conduzir
+          sua empresa e o melhor: fazer as coisas funcionarem sem que tudo
+          dependa "exclusivamente de você"!
+        </p>
+        <p className="text-gray-400 text-base md:text-lg leading-relaxed max-w-2xl">
+          Então, basta preencher o formulário e descobrir o caminho para ter{' '}
+          <strong>mais clareza, controle e planejamento do seu negócio.</strong>
         </p>
       </div>
 
@@ -80,7 +100,8 @@ export function Step1Introduction() {
               control={control}
               render={({ field }) => (
                 <PhoneInput
-                  {...field}
+                  value={field.value}
+                  onChange={(value) => field.onChange(value)}
                   placeholder="(00) 00000-0000"
                   className={cn(
                     'h-12',
@@ -100,21 +121,22 @@ export function Step1Introduction() {
 
           <label className="flex flex-col flex-1">
             <span className="text-blue-300 text-sm font-semibold pb-2">
-              Cidade / Estado <span className="text-blue-300">*</span>
+              @ de Instagram da sua empresa{' '}
+              <span className="text-blue-300">*</span>
             </span>
             <input
-              {...register('cityState')}
-              placeholder="Ex: São Paulo - SP"
+              {...register('instagram')}
+              placeholder="@seu_instagram"
               type="text"
               className={`form-input w-full rounded-lg border bg-white focus:ring-1 focus:ring-blue-700 placeholder:text-gray-400 h-12 px-3 text-sm transition-colors ${
-                errors.cityState
+                errors.instagram
                   ? 'border-red-300 focus:border-red-500'
                   : 'border-gray-200 focus:border-blue-700'
               }`}
             />
-            {errors.cityState && (
+            {errors.instagram && (
               <span className="text-red-500 text-xs mt-1">
-                {errors.cityState.message}
+                {errors.instagram.message}
               </span>
             )}
           </label>

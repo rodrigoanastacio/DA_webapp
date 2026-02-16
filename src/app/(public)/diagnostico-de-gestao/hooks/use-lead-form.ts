@@ -15,6 +15,10 @@ export function useLeadForm() {
     resolver: zodResolver(leadSchema),
     mode: 'onChange',
     defaultValues: {
+      name: '',
+      email: '',
+      whatsapp: '',
+      instagram: '',
       dificuldades: []
     }
   })
@@ -22,7 +26,7 @@ export function useLeadForm() {
   const { trigger, getValues } = methods
 
   const STEPS_FIELDS: (keyof LeadFormData)[][] = [
-    ['name', 'email', 'whatsapp', 'cityState'], // Passo 0: Introdução (com dados de contato)
+    ['name', 'email', 'whatsapp', 'instagram'], // Passo 0: Introdução (com dados de contato)
     ['experienceTime', 'currentRole'], // Passo 1: Perfil Profissional
     ['teamStructure', 'managementLevel'], // Passo 2: Estrutura
     ['dificuldades'], // Passo 3: Desafios

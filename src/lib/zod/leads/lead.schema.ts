@@ -8,7 +8,14 @@ export const leadSchema = z.object({
   name: z.string().min(2, 'Nome é obrigatório'),
   email: z.string().email('E-mail inválido'),
   whatsapp: z.string().min(10, 'WhatsApp inválido'),
-  cityState: z.string().min(2, 'Cidade/Estado é obrigatório'),
+  instagram: z
+    .string()
+    .min(1, 'Instagram é obrigatório')
+    .regex(
+      /^@?[\w.]+$/,
+      'Instagram inválido (use apenas letras, números, . e _)'
+    )
+    .transform((val) => (val.startsWith('@') ? val : `@${val}`)),
 
   // Step 2: Perfil Profissional
   experienceTime: z
