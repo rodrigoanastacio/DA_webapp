@@ -10,58 +10,58 @@ export class LeadSubmission {
   readonly name: string
   readonly email: string
   readonly whatsapp: string
-  readonly cityState: string
+  readonly instagram: string
   readonly experienceTime: string
-  readonly currentRole: string
+  readonly revenue: string
   readonly teamStructure: string
   readonly managementLevel: string
-  readonly dificuldades: string[]
-  readonly revenue: string
-  readonly expectativas: string
+  readonly overloadChallenges: string
+  readonly idealStructure: string
   readonly investment: string
 
   constructor(data: LeadFormData) {
     this.name = data.name
     this.email = data.email
     this.whatsapp = data.whatsapp
-    this.cityState = data.cityState
+    this.instagram = data.instagram
     this.experienceTime = data.experienceTime
-    this.currentRole = data.currentRole
+    this.revenue = data.revenue
     this.teamStructure = data.teamStructure
     this.managementLevel = data.managementLevel
-    this.dificuldades = data.dificuldades
-    this.revenue = data.revenue
-    this.expectativas = data.expectativas
+    this.overloadChallenges = data.overloadChallenges
+    this.idealStructure = data.idealStructure
     this.investment = data.investment
   }
 
   /**
    * Identifica se este lead representa um potencial cliente de alto valor
-   * baseado em faturamento e disposição para investimento.
+   * baseado em faturamento e disposição para call estratégica.
    */
   get isHighPotential(): boolean {
-    const highRevenue = ['more_100k', '50k_100k'].includes(this.revenue)
-    const highInvestment = ['more_5k', '2k_5k'].includes(this.investment)
-    return highRevenue || highInvestment
+    const highRevenue = ['ABOVE_70K', 'FROM_30K_TO_70K'].includes(this.revenue)
+    const interestedInCall = ['interested', 'need_more_info'].includes(
+      this.investment
+    )
+    return highRevenue && interestedInCall
   }
 
   /**
-   * Retorna um rótulo legível para o nível de maturidade da gestão.
+   * Retorna um rótulo legível para o tamanho da equipe.
    */
-  get managementMaturityLabel(): string {
-    const maturityMap: Record<string, string> = {
-      precaria: 'Inexistente / Primitiva',
-      basica: 'Básica (Apenas Financeiro)',
-      desenvolvimento: 'Em Evolução',
-      avancada: 'Profissional / Completa'
+  get teamSizeLabel(): string {
+    const sizeMap: Record<string, string> = {
+      solo: 'Solo',
+      '1_2_people': '1-2 pessoas',
+      '3_5_people': '3-5 pessoas',
+      more_5_people: 'Mais de 5 pessoas'
     }
-    return maturityMap[this.managementLevel] || 'Não Identificada'
+    return sizeMap[this.teamStructure] || 'Não Identificado'
   }
 
   /**
    * Gera um resumo do perfil operacional para logs ou notificações.
    */
   get profileSummary(): string {
-    return `${this.currentRole} | ${this.experienceTime} de exp. | Estrutura: ${this.teamStructure}`
+    return `${this.revenue} | ${this.experienceTime} de exp. | Estrutura: ${this.teamSizeLabel}`
   }
 }

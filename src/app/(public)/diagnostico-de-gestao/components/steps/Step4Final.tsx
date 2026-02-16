@@ -1,25 +1,26 @@
 import { LeadFormData } from '@/lib/zod/lead.schema'
 import { useFormContext } from 'react-hook-form'
 
-const INVESTMENT_OPTIONS = [
+const CALL_AVAILABILITY_OPTIONS = [
   {
-    value: 'ready',
-    label: 'Sim, tenho orçamento e urgência',
-    description: 'Quero começar o quanto antes para ver resultados rápidos.'
+    value: 'interested',
+    label: 'Sim, tenho interesse em conversar',
+    description: ''
   },
   {
-    value: 'planning',
-    label: 'Sim, mas preciso planejar o orçamento',
-    description: 'Tenho interesse, mas preciso entender os custos primeiro.'
+    value: 'need_more_info',
+    label: 'Sim, mas preciso entender melhor como funciona',
+    description: ''
   },
   {
-    value: 'evaluating',
-    label: 'Ainda estou avaliando a necessidade',
-    description: 'Estou na fase de pesquisa e curiosidade.'
+    value: 'guidance_only',
+    label:
+      'No momento, prefiro apenas receber orientações (não inclui um plano de ação e direcionamento)',
+    description: ''
   }
 ]
 
-export function Step6Final() {
+export function Step4Final() {
   const {
     register,
     formState: { errors }
@@ -30,40 +31,21 @@ export function Step6Final() {
       {/* Header */}
       <div className="flex flex-col gap-2">
         <h1 className="text-3xl md:text-4xl font-extrabold leading-tight tracking-tight text-gray-800">
-          Intenção e Expectativas
+          Próximos Passos
         </h1>
         <p className="text-blue-300 text-base md:text-lg leading-relaxed">
-          Para finalizar, me conta de forma breve quais suas expectativas com um
-          serviço de gestão e organização jurídica.
+          Estamos quase finalizando! Agora preciso entender sua disponibilidade
+          para darmos continuidade.
         </p>
       </div>
 
-      {/* Expectativas - Textarea */}
-      <div className="flex flex-col gap-3">
-        <label className="text-gray-800 text-base font-semibold">
-          O que você espera resolver com uma assessoria em gestão?
-        </label>
-        <div className="relative group">
-          <textarea
-            {...register('expectativas')}
-            rows={8}
-            className="w-full min-h-[240px] resize-y rounded-xl border border-gray-100 bg-blue-50 p-4 text-gray-800 placeholder:text-gray-400 focus:border-blue-700 focus:ring-1 focus:ring-blue-700 focus:outline-none transition-all text-base shadow-sm"
-            placeholder="Descreva seus principais desafios (ex: falta de tempo, desorganização financeira, processos manuais) e o que espera alcançar com nossa ajuda..."
-          />
-        </div>
-        {errors.expectativas && (
-          <span className="text-red-500 text-xs">
-            {errors.expectativas.message}
-          </span>
-        )}
-      </div>
-
-      {/* Investment - Radio Group */}
+      {/* Call Availability - Radio Group */}
       <div className="flex flex-col gap-4">
         <div>
           <label className="text-gray-800 text-base font-semibold">
-            Você está disposto(a) a investir em organização e gestão
-            profissional?
+            Caso eu identifique que faz sentido avançarmos, você tem
+            disponibilidade para participar de uma call estratégica e{' '}
+            <strong>aprofundarmos o diagnóstico da sua empresa</strong>?
           </label>
           <p className="text-blue-300 text-sm">
             Selecione a opção que melhor descreve seu momento.
@@ -71,7 +53,7 @@ export function Step6Final() {
         </div>
 
         <div className="grid grid-cols-1 gap-3">
-          {INVESTMENT_OPTIONS.map((option) => (
+          {CALL_AVAILABILITY_OPTIONS.map((option) => (
             <label
               key={option.value}
               className="relative flex items-start gap-3 p-4 rounded-xl border border-gray-100 cursor-pointer hover:border-blue-700 hover:bg-blue-50/50 transition-all group selection-card"
@@ -86,9 +68,11 @@ export function Step6Final() {
                 <span className="text-base font-medium text-gray-800 group-hover:text-blue-700 transition-colors">
                   {option.label}
                 </span>
-                <span className="text-sm text-blue-300">
-                  {option.description}
-                </span>
+                {option.description && (
+                  <span className="text-sm text-blue-300">
+                    {option.description}
+                  </span>
+                )}
               </span>
               <div className="absolute inset-0 border-2 border-transparent peer-checked:border-blue-700 rounded-xl pointer-events-none"></div>
             </label>

@@ -14,12 +14,11 @@ export const diagnosticosHandler = {
       whatsapp: string
       instagram: string
       experienceTime: string
-      currentRole: string
+      revenue: string
       teamStructure: string
       managementLevel: string
-      dificuldades: string[]
-      revenue: string
-      expectativas: string
+      overloadChallenges: string
+      idealStructure: string
       investment: string
     },
     metadata: {
@@ -44,12 +43,11 @@ export const diagnosticosHandler = {
         whatsapp: data.whatsapp.replace(/\D/g, ''),
         instagram: data.instagram,
         tempo: data.experienceTime,
-        atuacao: data.currentRole,
+        faturamento: data.revenue,
         estrutura_equipe: data.teamStructure,
         nivel_gestao: data.managementLevel,
-        dificuldades: data.dificuldades,
-        faturamento: data.revenue,
-        expectativas: data.expectativas,
+        desafio_sobrecarga: data.overloadChallenges,
+        estrutura_ideal: data.idealStructure,
         investimento: data.investment,
         status: 'novo_lead',
         ip_cliente: metadata.clientIp,
@@ -129,12 +127,11 @@ export const diagnosticosHandler = {
         whatsapp: row.whatsapp,
         instagram: row.instagram || '',
         tempo: row.tempo || '',
-        atuacao: row.atuacao || '',
         estrutura_equipe: row.estrutura_equipe || '',
         nivel_gestao: row.nivel_gestao || '',
-        dificuldades: row.dificuldades || [],
+        desafio_sobrecarga: row.desafio_sobrecarga || '',
+        estrutura_ideal: row.estrutura_ideal || '',
         faturamento: row.faturamento || '',
-        expectativas: row.expectativas || '',
         investimento: row.investimento || '',
         created_at: row.created_at,
         updated_at: row.updated_at,
@@ -182,12 +179,11 @@ export const diagnosticosHandler = {
       whatsapp: row.whatsapp,
       instagram: row.instagram || '',
       tempo: row.tempo || '',
-      atuacao: row.atuacao || '',
       estrutura_equipe: row.estrutura_equipe || '',
       nivel_gestao: row.nivel_gestao || '',
-      dificuldades: row.dificuldades || [],
+      desafio_sobrecarga: row.desafio_sobrecarga || '',
+      estrutura_ideal: row.estrutura_ideal || '',
       faturamento: row.faturamento || '',
-      expectativas: row.expectativas || '',
       investimento: row.investimento || '',
       created_at: row.created_at,
       updated_at: row.updated_at,
@@ -208,11 +204,11 @@ export const diagnosticosHandler = {
 }
 
 function calculateHighPotential(row: DiagnosticoRow): boolean {
-  const highRevenueThreshold = ['50k_100k', 'more_100k']
-  const highInvestmentThreshold = ['2k_5k', 'more_5k']
+  const highRevenueThreshold = ['ABOVE_70K', 'FROM_30K_TO_70K']
+  const interestedInCall = ['interested', 'need_more_info']
 
   return (
-    highRevenueThreshold.includes(row.faturamento || '') ||
-    highInvestmentThreshold.includes(row.investimento || '')
+    highRevenueThreshold.includes(row.faturamento || '') &&
+    interestedInCall.includes(row.investimento || '')
   )
 }

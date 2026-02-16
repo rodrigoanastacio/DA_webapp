@@ -1,8 +1,5 @@
 import { LeadFormData } from '@/lib/zod/lead.schema'
-import {
-  MANAGEMENT_LEVEL_OPTIONS,
-  TEAM_STRUCTURE_OPTIONS
-} from '@/shared/constants/lead.constants'
+import { TEAM_STRUCTURE_OPTIONS } from '@/shared/constants/lead.constants'
 import { useFormContext } from 'react-hook-form'
 
 export function Step3Structure() {
@@ -30,7 +27,7 @@ export function Step3Structure() {
           <span className="flex items-center justify-center w-6 h-6 rounded-full bg-blue-700 text-white text-[10px] font-bold">
             1
           </span>
-          <span>Seu escritório possui equipe?</span>
+          <span>Você trabalha sozinho(a) ou possui equipe?</span>
         </div>
 
         <div className="flex flex-col gap-3">
@@ -63,47 +60,86 @@ export function Step3Structure() {
 
         <div className="border-t border-gray-100 my-2"></div>
 
-        {/* Management Level */}
-        <div className="flex flex-col gap-6">
+        {/* Structural Challenge - Textarea */}
+        <div className="flex flex-col gap-3">
           <div className="flex items-center gap-2 text-gray-700 text-sm font-semibold">
             <span className="flex items-center justify-center w-6 h-6 rounded-full bg-blue-700 text-white text-[10px] font-bold">
               2
             </span>
-            <span>Como você avalia a gestão atual do escritório?</span>
+            <span>
+              Hoje, qual é o principal desafio estrutural ou de organização da
+              sua empresa?
+            </span>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {MANAGEMENT_LEVEL_OPTIONS.map((option) => (
-              <label
-                key={option.value}
-                className="relative flex flex-col gap-3 p-4 rounded-xl border border-gray-100 cursor-pointer hover:border-blue-700 hover:bg-blue-50/50 transition-all group selection-card h-full"
-              >
-                <div className="flex justify-between w-full">
-                  <input
-                    {...register('managementLevel')}
-                    type="radio"
-                    value={option.value}
-                    className="peer h-5 w-5 border-2 border-blue-100 text-blue-700 focus:ring-blue-700 focus:ring-offset-0 bg-transparent"
-                  />
-                  <span className="material-symbols-outlined text-gray-400 group-hover:text-blue-700 transition-colors text-[20px]">
-                    {option.icon}
-                  </span>
-                </div>
-                <div className="flex grow flex-col">
-                  <p className="text-sm font-semibold text-gray-800 mb-1 group-hover:text-blue-700 transition-colors">
-                    {option.label}
-                  </p>
-                  <p className="text-sm text-blue-300 leading-snug">
-                    {option.description}
-                  </p>
-                </div>
-                <div className="absolute inset-0 border-2 border-transparent peer-checked:border-blue-700 rounded-xl pointer-events-none"></div>
-              </label>
-            ))}
+          <div className="relative group">
+            <textarea
+              {...register('managementLevel')}
+              rows={6}
+              className="w-full min-h-[180px] resize-y rounded-xl border border-gray-100 bg-blue-50 p-4 text-gray-800 placeholder:text-gray-400 focus:border-blue-700 focus:ring-1 focus:ring-blue-700 focus:outline-none transition-all text-base shadow-sm"
+              placeholder="Descreva o principal desafio que você enfrenta hoje (ex: falta de organização financeira, processos manuais, dificuldade em delegar, etc.)..."
+            />
           </div>
           {errors.managementLevel && (
             <span className="text-red-500 text-xs">
               {errors.managementLevel.message}
+            </span>
+          )}
+        </div>
+
+        <div className="border-t border-gray-100 my-2"></div>
+
+        {/* Overload Challenges - Textarea */}
+        <div className="flex flex-col gap-3">
+          <div className="flex items-center gap-2 text-gray-700 text-sm font-semibold">
+            <span className="flex items-center justify-center w-6 h-6 rounded-full bg-blue-700 text-white text-[10px] font-bold">
+              3
+            </span>
+            <span>
+              O que mais tem gerado sobrecarga na sua rotina atualmente?
+            </span>
+          </div>
+
+          <div className="relative group">
+            <textarea
+              {...register('overloadChallenges')}
+              rows={6}
+              className="w-full min-h-[180px] resize-y rounded-xl border border-gray-100 bg-blue-50 p-4 text-gray-800 placeholder:text-gray-400 focus:border-blue-700 focus:ring-1 focus:ring-blue-700 focus:outline-none transition-all text-base shadow-sm"
+              placeholder="Sua resposta"
+            />
+          </div>
+          {errors.overloadChallenges && (
+            <span className="text-red-500 text-xs">
+              {errors.overloadChallenges.message}
+            </span>
+          )}
+        </div>
+
+        <div className="border-t border-gray-100 my-2"></div>
+
+        {/* Ideal Structure - Textarea */}
+        <div className="flex flex-col gap-3">
+          <div className="flex items-center gap-2 text-gray-700 text-sm font-semibold">
+            <span className="flex items-center justify-center w-6 h-6 rounded-full bg-blue-700 text-white text-[10px] font-bold">
+              4
+            </span>
+            <span>
+              Se sua empresa estivesse estruturada e organizada da forma ideal,
+              o que mudaria na prática?
+            </span>
+          </div>
+
+          <div className="relative group">
+            <textarea
+              {...register('idealStructure')}
+              rows={6}
+              className="w-full min-h-[180px] resize-y rounded-xl border border-gray-100 bg-blue-50 p-4 text-gray-800 placeholder:text-gray-400 focus:border-blue-700 focus:ring-1 focus:ring-blue-700 focus:outline-none transition-all text-base shadow-sm"
+              placeholder="Sua resposta"
+            />
+          </div>
+          {errors.idealStructure && (
+            <span className="text-red-500 text-xs">
+              {errors.idealStructure.message}
             </span>
           )}
         </div>

@@ -9,12 +9,11 @@ export interface Diagnostico {
   whatsapp: string
   instagram: string
   tempo: string
-  atuacao: string
   estrutura_equipe: string
   nivel_gestao: string
-  dificuldades: string[]
+  desafio_sobrecarga: string
+  estrutura_ideal: string
   faturamento: string
-  expectativas: string
   investimento: string
   status: string
   ip_cliente?: string
@@ -41,12 +40,11 @@ export interface DiagnosticoRow {
   whatsapp: string
   instagram: string | null
   tempo: string | null
-  atuacao: string | null
   estrutura_equipe: string | null
   nivel_gestao: string | null
-  dificuldades: string[] | null
+  desafio_sobrecarga: string | null
+  estrutura_ideal: string | null
   faturamento: string | null
-  expectativas: string | null
   investimento: string | null
   status: string
   ip_cliente: string | null

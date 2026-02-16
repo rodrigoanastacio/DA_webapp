@@ -21,32 +21,25 @@ export const leadSchema = z.object({
   experienceTime: z
     .string({ message: 'Selecione o tempo de atuação' })
     .min(1, 'Selecione o tempo de atuação'),
-  currentRole: z
-    .string({ message: 'Selecione sua atuação atual' })
-    .min(1, 'Selecione sua atuação atual'),
+  revenue: z
+    .string({ message: 'Selecione a faixa de faturamento' })
+    .min(1, 'Selecione a faixa de faturamento'),
 
   // Step 3: Estrutura
   teamStructure: z
     .string({ message: 'Selecione a estrutura da equipe' })
     .min(1, 'Selecione a estrutura da equipe'),
   managementLevel: z
-    .string({ message: 'Selecione o nível de gestão' })
-    .min(1, 'Selecione o nível de gestão'),
+    .string({ message: 'Descreva o principal desafio' })
+    .min(10, 'Faça uma breve descrição do desafio'),
+  overloadChallenges: z
+    .string({ message: 'Descreva o que gera sobrecarga' })
+    .min(10, 'Faça uma breve descrição'),
+  idealStructure: z
+    .string({ message: 'Descreva a estrutura ideal' })
+    .min(10, 'Faça uma breve descrição'),
 
-  // Step 4: Desafios
-  dificuldades: z
-    .array(z.string())
-    .min(1, 'Selecione pelo menos uma dificuldade'),
-
-  // Step 5: Momento Financeiro
-  revenue: z
-    .string({ message: 'Selecione a faixa de faturamento' })
-    .min(1, 'Selecione a faixa de faturamento'),
-
-  // Step 6: Finalização
-  expectativas: z
-    .string({ message: 'Descreva suas expectativas' })
-    .min(10, 'Faça uma breve descrição das expectativas'),
+  // Step 4: Finalização
   investment: z
     .string({ message: 'Selecione uma opção de investimento' })
     .min(1, 'Selecione uma opção de investimento')

@@ -6,26 +6,22 @@ import { useLeadForm } from '../hooks/use-lead-form'
 import { Step1Introduction } from './steps/Step1Introduction'
 import { Step2ProfessionalProfile } from './steps/Step2ProfessionalProfile'
 import { Step3Structure } from './steps/Step3Structure'
-import { Step4Challenges } from './steps/Step4Challenges'
-import { Step5Financial } from './steps/Step5Financial'
-import { Step6Final } from './steps/Step6Final'
+import { Step4Final } from './steps/Step4Final'
 import { StepSuccess } from './steps/StepSuccess'
 
 const STEPS_DATA = [
-  { id: 0, label: 'Etapa 1 de 6', nextLabel: 'Próximo: Perfil Profissional' },
+  { id: 0, label: 'Etapa 1 de 4', nextLabel: 'Próximo: Perfil Profissional' },
   {
     id: 1,
-    label: 'Etapa 2 de 6',
+    label: 'Etapa 2 de 4',
     nextLabel: 'Próximo: Estrutura do Escritório'
   },
-  { id: 2, label: 'Etapa 3 de 6', nextLabel: 'Próximo: Dificuldades Atuais' },
-  { id: 3, label: 'Etapa 4 de 6', nextLabel: 'Próximo: Momento Financeiro' },
   {
-    id: 4,
-    label: 'Etapa 5 de 6',
+    id: 2,
+    label: 'Etapa 3 de 4',
     nextLabel: 'Próximo: Intenção e Expectativas'
   },
-  { id: 5, label: 'Etapa 6 de 6', nextLabel: 'Finalização' }
+  { id: 3, label: 'Etapa 4 de 4', nextLabel: 'Finalização' }
 ]
 
 export default function LeadCaptureWizard() {
@@ -38,7 +34,7 @@ export default function LeadCaptureWizard() {
     prevStep
   } = useLeadForm()
 
-  const progressPercentage = ((currentStep + 1) / 6) * 100
+  const progressPercentage = ((currentStep + 1) / 4) * 100
 
   if (isSubmitted) {
     return (
@@ -65,11 +61,7 @@ export default function LeadCaptureWizard() {
       case 2:
         return <Step3Structure />
       case 3:
-        return <Step4Challenges />
-      case 4:
-        return <Step5Financial />
-      case 5:
-        return <Step6Final />
+        return <Step4Final />
       default:
         return null
     }
@@ -81,10 +73,10 @@ export default function LeadCaptureWizard() {
         {/* Header with Progress */}
         <div className="mb-6 px-4 flex flex-col gap-2">
           <div className="flex items-center justify-between">
-            {currentStep === 5 ? (
+            {currentStep === 3 ? (
               <div className="flex items-center gap-2">
                 <p className="text-blue-700 text-sm font-bold uppercase tracking-wider">
-                  Etapa 6 de 6
+                  Etapa 4 de 4
                 </p>
                 <span className="inline-flex items-center rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
                   100% Completo
@@ -107,7 +99,7 @@ export default function LeadCaptureWizard() {
               style={{ width: `${progressPercentage}%` }}
             />
           </div>
-          {currentStep === 5 && (
+          {currentStep === 3 && (
             <p className="text-blue-300 text-xs font-medium">
               Finalização e Envio
             </p>
@@ -143,7 +135,7 @@ export default function LeadCaptureWizard() {
                         Enviando...
                         <Loader2 className="w-4 h-4 animate-spin" />
                       </span>
-                    ) : currentStep === 5 ? (
+                    ) : currentStep === 3 ? (
                       <>
                         Enviar Diagnóstico
                         <ArrowRight className="w-5 h-5" />

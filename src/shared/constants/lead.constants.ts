@@ -40,31 +40,45 @@ export function formatAtuacao(atuacao: string): string {
 }
 
 export enum RevenueType {
-  LOW = 'low',
-  MEDIUM = 'medium',
-  HIGH = 'high'
+  NO_REVENUE = 'no_revenue',
+  UP_TO_10K = 'up_to_10k',
+  FROM_10K_TO_30K = 'from_10k_to_30k',
+  FROM_30K_TO_70K = 'from_30k_to_70k',
+  ABOVE_70K = 'above_70k'
 }
 
 export const REVENUE_LABELS: Record<RevenueType, string> = {
-  [RevenueType.LOW]: 'Até R$ 20 mil',
-  [RevenueType.MEDIUM]: 'R$ 20 mil - R$ 40 mil',
-  [RevenueType.HIGH]: 'Acima de R$ 40 mil'
+  [RevenueType.NO_REVENUE]: 'Ainda não faturo de forma recorrente',
+  [RevenueType.UP_TO_10K]: 'Até R$ 10 mil',
+  [RevenueType.FROM_10K_TO_30K]: 'R$ 10 mil - R$ 30 mil',
+  [RevenueType.FROM_30K_TO_70K]: 'R$ 30 mil - R$ 70 mil',
+  [RevenueType.ABOVE_70K]: 'Acima de R$ 70 mil'
 }
 
 export const REVENUE_OPTIONS = [
   {
-    value: RevenueType.LOW,
-    label: 'Até R$ 20.000,00',
-    description: 'Escritórios em fase inicial ou reestruturação.'
+    value: RevenueType.NO_REVENUE,
+    label: 'Ainda não faturo de forma recorrente',
+    description: 'Negócio em fase de estruturação inicial.'
   },
   {
-    value: RevenueType.MEDIUM,
-    label: 'De R$ 20.000,00 a R$ 40.000,00',
-    description: 'Escritórios em crescimento/expansão.'
+    value: RevenueType.UP_TO_10K,
+    label: 'Até R$ 10.000,00',
+    description: 'Escritórios em fase inicial.'
   },
   {
-    value: RevenueType.HIGH,
-    label: 'Acima de R$ 40.000,00',
+    value: RevenueType.FROM_10K_TO_30K,
+    label: 'De R$ 10.000,00 a R$ 30.000,00',
+    description: 'Escritórios em crescimento.'
+  },
+  {
+    value: RevenueType.FROM_30K_TO_70K,
+    label: 'De R$ 30.000,00 a R$ 70.000,00',
+    description: 'Escritórios em expansão.'
+  },
+  {
+    value: RevenueType.ABOVE_70K,
+    label: 'Acima de R$ 70.000,00',
     description: 'Escritórios consolidados.'
   }
 ]
@@ -126,7 +140,7 @@ export function getLeadStatusStyle(status: string): string {
 
 export const EXPERIENCE_OPTIONS = [
   { value: 'less_1', label: 'Menos de 1 ano' },
-  { value: '1_3', label: '1 a 3 anos' },
+  { value: '1_2', label: '1 a 2 anos' },
   { value: '3_5', label: '3 a 5 anos' },
   { value: 'more_5', label: 'Mais de 5 anos' }
 ]
@@ -138,19 +152,24 @@ export function formatExperience(experience: string): string {
 
 export const TEAM_STRUCTURE_OPTIONS = [
   {
-    value: 'clt_associados',
-    label: 'Sim, tenho funcionários CLT/Associados',
-    description: 'Escritório com equipe fixa e estrutura formal'
-  },
-  {
     value: 'solo',
-    label: 'Não, atuo sozinho',
-    description: 'Advocacia autônoma ou em parceria pontual'
+    label: 'Trabalho sozinho(a)',
+    description: 'Atuo de forma independente, sem equipe fixa.'
   },
   {
-    value: 'estagiarios',
-    label: 'Tenho apenas estagiários',
-    description: 'Estrutura enxuta com apoio acadêmico'
+    value: '1_2_people',
+    label: 'Tenho 1 a 2 pessoas',
+    description: 'Equipe pequena com poucos colaboradores.'
+  },
+  {
+    value: '3_5_people',
+    label: 'Tenho 3 a 5 pessoas',
+    description: 'Equipe de tamanho médio.'
+  },
+  {
+    value: 'more_5_people',
+    label: 'Tenho mais de 5 pessoas',
+    description: 'Equipe estruturada e consolidada.'
   }
 ]
 

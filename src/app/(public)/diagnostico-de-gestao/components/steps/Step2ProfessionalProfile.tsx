@@ -1,8 +1,9 @@
 import { LeadFormData } from '@/lib/zod/lead.schema'
 import {
-  ATUACAO_OPTIONS,
-  EXPERIENCE_OPTIONS
+  EXPERIENCE_OPTIONS,
+  REVENUE_OPTIONS
 } from '@/shared/constants/lead.constants'
+import { Clock, DollarSign } from 'lucide-react'
 import { useFormContext } from 'react-hook-form'
 
 export function Step2ProfessionalProfile() {
@@ -27,10 +28,8 @@ export function Step2ProfessionalProfile() {
       {/* Experience Time */}
       <div className="flex flex-col gap-6">
         <div className="flex items-center gap-2 text-gray-700 text-sm font-semibold">
-          <span className="material-symbols-outlined text-[20px] text-blue-700">
-            history
-          </span>
-          <span>Há quanto tempo você atua como advogado(a)?</span>
+          <Clock className="w-5 h-5 text-blue-700" />
+          <span>Há quanto tempo sua empresa está em funcionamento?</span>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -60,22 +59,20 @@ export function Step2ProfessionalProfile() {
 
         <div className="border-t border-gray-100 my-2"></div>
 
-        {/* Current Role */}
+        {/* Revenue */}
         <div className="flex items-center gap-2 text-gray-700 text-sm font-semibold">
-          <span className="material-symbols-outlined text-[20px] text-blue-700">
-            work
-          </span>
-          <span>Hoje você atua como:</span>
+          <DollarSign className="w-5 h-5 text-blue-700" />
+          <span>Qual é o faturamento médio mensal atual do seu negócio?</span>
         </div>
 
         <div className="flex flex-col gap-3">
-          {ATUACAO_OPTIONS.map((option) => (
+          {REVENUE_OPTIONS.map((option) => (
             <label
               key={option.value}
               className="relative flex items-start p-4 rounded-lg border border-blue-100 cursor-pointer hover:border-blue-700 hover:bg-blue-50/50 transition-all group"
             >
               <input
-                {...register('currentRole')}
+                {...register('revenue')}
                 type="radio"
                 value={option.value}
                 className="peer h-5 w-5 mt-0.5 border-2 border-blue-100 text-blue-700 focus:ring-blue-700 focus:ring-offset-0 bg-transparent"
@@ -90,10 +87,8 @@ export function Step2ProfessionalProfile() {
             </label>
           ))}
         </div>
-        {errors.currentRole && (
-          <span className="text-red-500 text-xs">
-            {errors.currentRole.message}
-          </span>
+        {errors.revenue && (
+          <span className="text-red-500 text-xs">{errors.revenue.message}</span>
         )}
       </div>
     </div>

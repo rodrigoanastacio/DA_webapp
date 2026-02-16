@@ -18,8 +18,7 @@ export function useLeadForm() {
       name: '',
       email: '',
       whatsapp: '',
-      instagram: '',
-      dificuldades: []
+      instagram: ''
     }
   })
 
@@ -27,11 +26,14 @@ export function useLeadForm() {
 
   const STEPS_FIELDS: (keyof LeadFormData)[][] = [
     ['name', 'email', 'whatsapp', 'instagram'], // Passo 0: Introdução (com dados de contato)
-    ['experienceTime', 'currentRole'], // Passo 1: Perfil Profissional
-    ['teamStructure', 'managementLevel'], // Passo 2: Estrutura
-    ['dificuldades'], // Passo 3: Desafios
-    ['revenue'], // Passo 4: Momento Financeiro
-    ['expectativas', 'investment'] // Passo 5: Finalização
+    ['experienceTime', 'revenue'], // Passo 1: Perfil Profissional
+    [
+      'teamStructure',
+      'managementLevel',
+      'overloadChallenges',
+      'idealStructure'
+    ], // Passo 2: Estrutura
+    ['investment'] // Passo 3: Finalização
   ]
 
   const nextStep = async () => {
@@ -46,7 +48,7 @@ export function useLeadForm() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const isValid = await trigger(fieldsToValidate as unknown as any)
     if (isValid) {
-      if (currentStep === 5) {
+      if (currentStep === 3) {
         await handleSubmit()
         return
       }

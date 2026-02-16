@@ -1,3 +1,4 @@
+import { CheckCircle2 } from 'lucide-react'
 import Link from 'next/link'
 
 export function StepSuccess() {
@@ -5,9 +6,7 @@ export function StepSuccess() {
     <div className="flex flex-col gap-8 items-center text-center py-8">
       {/* Icon */}
       <div className="w-20 h-20 rounded-full bg-green-100 flex items-center justify-center text-green-600 mb-4 animate-bounce-short">
-        <span className="material-symbols-outlined text-[48px]">
-          check_circle
-        </span>
+        <CheckCircle2 className="w-12 h-12" />
       </div>
 
       {/* Header */}
