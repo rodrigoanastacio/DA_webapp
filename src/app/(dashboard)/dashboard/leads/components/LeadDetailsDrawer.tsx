@@ -30,7 +30,6 @@ import { Lead } from '@/shared/entities/leads/lead.types'
 import {
   AlertCircle,
   Briefcase,
-  Calendar,
   ChevronDown,
   FileText,
   Instagram,
@@ -48,17 +47,12 @@ interface LeadDetailsDrawerProps {
   onUpdateStatus?: (status: string) => void
 }
 
-import { useState } from 'react' // Ensure React hook import
-import { ScheduleMeetingModal } from './ScheduleMeetingModal' // Import Modal
-
 export function LeadDetailsDrawer({
   lead,
   isOpen,
   onClose,
   onUpdateStatus
 }: LeadDetailsDrawerProps) {
-  const [isScheduleModalOpen, setIsScheduleModalOpen] = useState(false)
-
   if (!lead) return null
 
   return (
@@ -98,8 +92,7 @@ export function LeadDetailsDrawer({
             <div className="flex flex-wrap gap-3 mt-8">
               <Button
                 variant="outline"
-                size="sm"
-                className="gap-2"
+                className="bg-[#25D366] hover:bg-[#1DA851] text-white flex items-center gap-2 rounded-xl h-12 px-6 font-bold shadow-sm transition-all active:scale-95 text-[14px]"
                 disabled={!lead.whatsapp}
                 onClick={() =>
                   lead.whatsapp &&
@@ -109,18 +102,10 @@ export function LeadDetailsDrawer({
                   )
                 }
               >
-                <div className="flex items-center gap-2">
-                  <MessageCircle className="w-5 h-5" />
-                  WHATSAPP
-                </div>
+                <MessageCircle className="w-5 h-5" />
+                WHATSAPP
               </Button>
-              <Button
-                className="bg-[#4F46E5] hover:bg-[#4338CA] text-white flex items-center gap-2 rounded-xl h-12 px-6 font-bold shadow-sm transition-all active:scale-95 text-[14px]"
-                onClick={() => setIsScheduleModalOpen(true)}
-              >
-                <Calendar className="w-5 h-5 text-blue-100" />
-                AGENDAR
-              </Button>
+
               <div className="flex-1 min-w-[180px]">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
@@ -289,7 +274,7 @@ export function LeadDetailsDrawer({
                   {lead.is_high_potential && (
                     <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-100 flex items-start gap-3">
                       <div className="p-1 bg-emerald-100 rounded-full mt-0.5">
-                        <Calendar className="w-3 h-3 text-emerald-600" />
+                        <AlertCircle className="w-3 h-3 text-emerald-600" />
                       </div>
                       <div>
                         <p className="text-[13px] font-bold text-emerald-800">
@@ -338,25 +323,11 @@ export function LeadDetailsDrawer({
                 <button className="text-[11px] font-extrabold text-gray-400 hover:text-rose-500 uppercase tracking-widest transition-colors">
                   DESCARTAR LEAD
                 </button>
-                <Button
-                  className="bg-[#4F46E5] hover:bg-[#4338CA] text-white rounded-xl h-12 px-8 font-extrabold shadow-lg shadow-blue-200/50 transition-all active:scale-95 text-[14px] tracking-tight"
-                  onClick={() =>
-                    (window.location.href = `/dashboard/meeting/${lead.id}`)
-                  }
-                >
-                  INICIAR REUNIÃO
-                </Button>
               </div>
             </div>
           </div>
         </SheetContent>
       </Sheet>
-
-      <ScheduleMeetingModal
-        lead={lead}
-        isOpen={isScheduleModalOpen}
-        onClose={() => setIsScheduleModalOpen(false)}
-      />
     </>
   )
 }

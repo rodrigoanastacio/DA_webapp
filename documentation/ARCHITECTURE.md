@@ -45,6 +45,16 @@ Onde vive a inteligência da aplicação. Independente do framework (poderia ser
 
 - **Entities**: Tipos TypeScript e Classes de Domínio.
 - **Handlers**: Funções puras que executam a lógica de negócio e acessam o banco.
+- **Utils (`src/shared/utils/`)**: Funções utilitárias puras e reutilizáveis, sem dependência de framework.
+- **Constants (`src/shared/constants/`)**: Constantes, formatadores de domínio e mapas de opções.
+
+#### Utils Disponíveis
+
+| Função           | Arquivo                         | Descrição                                                   |
+| :--------------- | :------------------------------ | :---------------------------------------------------------- |
+| `formatWhatsApp` | `utils/phone/formatWhatsApp.ts` | Formata números de telefone no padrão BR: `(DD) XXXXX-XXXX` |
+
+> 💡 **Convenção**: Antes de criar um novo utilitário, verifique se já existe em `src/shared/utils/` ou `src/shared/constants/`.
 
 ### 4. Estratégia de Data Fetching
 
@@ -66,6 +76,24 @@ O Next.js não permite passar instâncias de Classes (Entities) diretamente para
 - **Problema**: "Warning: Only plain objects can be passed to Client Components..."
 - **Solução**: Implementar método `.toPlainObj()` na Entidade.
 - **Uso**: `data={member.toPlainObj()}` ao invés de `data={member}`.
+
+**Zero Comments Policy**
+
+O código deve ser **autoexplicativo**. Nomes de funções, variáveis e tipos bem descritivos eliminam a necessidade de comentários.
+
+- ❌ **Proibido**: Comentários explicativos, JSDoc em funções internas, blocos `/** */` descrevendo o que a função faz.
+- ❌ **Proibido**: Comentários inline tipo `// formata o telefone` ou `// verifica se é admin`.
+- ✅ **Permitido**: Comentários em regex complexas ou workarounds temporários com `// TODO:`.
+- ✅ **Regra**: Se o código precisa de comentário para ser entendido, **renomeie** a função/variável.
+
+```typescript
+// ❌ Errado
+/** Formats phone to BR pattern */
+function format(p: string) { ... }
+
+// ✅ Correto
+function formatWhatsApp(phone: string | null | undefined): string { ... }
+```
 
 ## Fluxo de Dados (Exemplo: Atualizar Status)
 

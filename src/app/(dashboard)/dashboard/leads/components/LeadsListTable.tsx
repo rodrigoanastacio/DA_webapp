@@ -10,6 +10,7 @@ import {
   isDiagnostico
 } from '@/shared/entities/diagnosticos/diagnostico.types'
 import { Lead } from '@/shared/entities/leads/lead.types'
+import { formatWhatsApp } from '@/shared/utils/phone/formatWhatsApp'
 import { useLeads } from '../hooks/useLeads'
 import { LeadDetailsDrawer } from './LeadDetailsDrawer'
 
@@ -57,7 +58,7 @@ export function LeadsListTable({
       label: 'WhatsApp',
       render: (lead) => (
         <span className="text-sm font-bold text-gray-700">
-          {lead.whatsapp || '-'}
+          {formatWhatsApp(lead.whatsapp)}
         </span>
       )
     },
