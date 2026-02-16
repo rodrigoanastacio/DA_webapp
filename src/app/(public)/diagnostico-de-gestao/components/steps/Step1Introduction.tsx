@@ -26,7 +26,7 @@ export function Step1Introduction() {
         <p className="text-gray-400 text-base md:text-lg leading-relaxed max-w-2xl">
           Através do meu <strong>método de Gestão</strong>, eu já ajudei
           empresas e escritórios a sairem do caos operacional, sobrecarga
-          diária, e da rotina de passar o dia "apagando incêndios".
+          diária, e da rotina de passar o dia &ldquo;apagando incêndios&rdquo;.
         </p>
         <p className="text-gray-400 text-base md:text-lg leading-relaxed max-w-2xl">
           O objetivo do meu trabalho é organizar o seu negócio, para que você
@@ -36,7 +36,7 @@ export function Step1Introduction() {
           Permitir que você tenha{' '}
           <strong>mais tempo, clareza e direcionamento</strong> para conduzir
           sua empresa e o melhor: fazer as coisas funcionarem sem que tudo
-          dependa "exclusivamente de você"!
+          dependa &ldquo;exclusivamente de você&rdquo;!
         </p>
         <p className="text-gray-400 text-base md:text-lg leading-relaxed max-w-2xl">
           Então, basta preencher o formulário e descobrir o caminho para ter{' '}
