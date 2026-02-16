@@ -28,10 +28,10 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: 'https://dayaneanastacio.com.br/assets/dayane-anastacio.jpg',
+        url: 'https://dayaneanastacio.com.br/assets/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Dayane Anastácio - Consultora em Gestão Jurídica'
+        alt: 'Dayane Anastácio - Consultoria em Gestão Jurídica'
       }
     ]
   },
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     title: 'Dayane Anastacio | Consultoria em Gestão Jurídica',
     description:
       'Pare de ser refém do seu próprio escritório. Tenha processos que funcionam sem você.',
-    images: ['https://dayaneanastacio.com.br/assets/dayane-anastacio.jpg']
+    images: ['https://dayaneanastacio.com.br/assets/og-image.jpg']
   },
   alternates: {
     canonical: 'https://dayaneanastacio.com.br/'
