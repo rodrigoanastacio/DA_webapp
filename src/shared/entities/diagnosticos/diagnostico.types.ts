@@ -1,3 +1,5 @@
+import { Lead } from '../leads/lead.types'
+
 /**
  * Diagnostico entity - Representa um diagnóstico empresarial
  */
@@ -67,4 +69,11 @@ export interface DiagnosticosListResponse {
   total: number
   page?: number
   perPage?: number
+}
+
+/**
+ * Type guard check if it is a Diagnostico
+ */
+export function isDiagnostico(lead: Lead | Diagnostico): lead is Diagnostico {
+  return 'faturamento' in lead && 'estrutura_ideal' in lead
 }

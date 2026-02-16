@@ -2,7 +2,6 @@
 
 import { updateLeadStatus } from '@/app/(dashboard)/dashboard/leads/actions/updateLeadStatus'
 import {
-  formatAtuacao,
   formatLeadStatus,
   formatRevenue,
   getLeadStatusStyle
@@ -59,7 +58,6 @@ export function useLeads(initialLeads: (Lead | Diagnostico)[] = []) {
     handleLeadClick,
     handleCloseDrawer,
     handleUpdateStatus,
-    formatAtuacao,
     formatRevenue,
     formatLeadStatus,
     getLeadStatusStyle

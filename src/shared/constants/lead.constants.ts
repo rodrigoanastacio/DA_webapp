@@ -1,44 +1,3 @@
-export enum AtuacaoType {
-  AUTONOMO = 'autonomo',
-  SOCIO = 'socio',
-  ASSOCIADO = 'associado',
-  DEPT_JURIDICO = 'dept_juridico'
-}
-
-export const ATUACAO_LABELS: Record<AtuacaoType, string> = {
-  [AtuacaoType.AUTONOMO]: 'Advogado Autônomo',
-  [AtuacaoType.SOCIO]: 'Sócio de Escritório',
-  [AtuacaoType.ASSOCIADO]: 'Advogado Associado',
-  [AtuacaoType.DEPT_JURIDICO]: 'Departamento Jurídico'
-}
-
-export const ATUACAO_OPTIONS = [
-  {
-    value: AtuacaoType.AUTONOMO,
-    label: ATUACAO_LABELS[AtuacaoType.AUTONOMO],
-    description: 'Atua sozinho, sem sócios ou equipe fixa.'
-  },
-  {
-    value: AtuacaoType.SOCIO,
-    label: ATUACAO_LABELS[AtuacaoType.SOCIO],
-    description: 'Participação societária em escritório de advocacia.'
-  },
-  {
-    value: AtuacaoType.ASSOCIADO,
-    label: ATUACAO_LABELS[AtuacaoType.ASSOCIADO],
-    description: 'Trabalha em escritório sem participação societária.'
-  },
-  {
-    value: AtuacaoType.DEPT_JURIDICO,
-    label: ATUACAO_LABELS[AtuacaoType.DEPT_JURIDICO],
-    description: 'Atua internamente em empresas ou instituições.'
-  }
-]
-
-export function formatAtuacao(atuacao: string): string {
-  return ATUACAO_LABELS[atuacao as AtuacaoType] || atuacao
-}
-
 export enum RevenueType {
   NO_REVENUE = 'no_revenue',
   UP_TO_10K = 'up_to_10k',
@@ -176,31 +135,4 @@ export const TEAM_STRUCTURE_OPTIONS = [
 export function formatTeamStructure(structure: string): string {
   const option = TEAM_STRUCTURE_OPTIONS.find((opt) => opt.value === structure)
   return option ? option.label : structure
-}
-
-export const MANAGEMENT_LEVEL_OPTIONS = [
-  {
-    value: 'precaria',
-    label: 'Precária / Inexistente',
-    description: 'Não há controle de processos ou fluxo de caixa organizado.',
-    icon: 'warning'
-  },
-  {
-    value: 'basica',
-    label: 'Básica (Financeiro)',
-    description: 'Controle mínimo de contas a pagar e receber, sem estratégia.',
-    icon: 'attach_money'
-  },
-  {
-    value: 'desenvolvimento',
-    label: 'Em desenvolvimento',
-    description:
-      'Existem processos definidos mas não documentados ou seguidos.',
-    icon: 'trending_up'
-  }
-]
-
-export function formatManagementLevel(level: string): string {
-  const option = MANAGEMENT_LEVEL_OPTIONS.find((opt) => opt.value === level)
-  return option ? option.label : level
 }

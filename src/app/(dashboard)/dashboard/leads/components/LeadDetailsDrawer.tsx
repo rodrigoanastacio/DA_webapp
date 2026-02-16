@@ -15,16 +15,17 @@ import {
   SheetTitle
 } from '@/components/ui/sheet'
 import {
-  formatAtuacao,
   formatExperience,
   formatLeadStatus,
-  formatManagementLevel,
   formatRevenue,
   formatTeamStructure,
   getLeadStatusStyle,
   LeadStatusType
 } from '@/shared/constants/lead.constants'
-import { Diagnostico } from '@/shared/entities/diagnosticos/diagnostico.types'
+import {
+  Diagnostico,
+  isDiagnostico
+} from '@/shared/entities/diagnosticos/diagnostico.types'
 import { Lead } from '@/shared/entities/leads/lead.types'
 import {
   AlertCircle,
@@ -32,17 +33,13 @@ import {
   Calendar,
   ChevronDown,
   FileText,
+  Instagram,
   Mail,
   MessageCircle,
   Phone,
   User,
   X
 } from 'lucide-react'
-
-// Type guard para verificar se é Diagnostico
-function isDiagnostico(lead: Lead | Diagnostico): lead is Diagnostico {
-  return 'atuacao' in lead && 'faturamento' in lead
-}
 
 interface LeadDetailsDrawerProps {
   lead: Lead | Diagnostico | null
@@ -112,8 +109,10 @@ export function LeadDetailsDrawer({
                   )
                 }
               >
-                <MessageCircle className="w-5 h-5" />
-                WHATSAPP
+                <div className="flex items-center gap-2">
+                  <MessageCircle className="w-5 h-5" />
+                  WHATSAPP
+                </div>
               </Button>
               <Button
                 className="bg-[#4F46E5] hover:bg-[#4338CA] text-white flex items-center gap-2 rounded-xl h-12 px-6 font-bold shadow-sm transition-all active:scale-95 text-[14px]"
@@ -182,11 +181,21 @@ export function LeadDetailsDrawer({
                   </div>
                   <div className="space-y-1">
                     <p className="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest">
-                      Localização
+                      Instagram
                     </p>
-                    <p className="text-[15px] font-bold text-blue-600 underline underline-offset-4 decoration-blue-200 cursor-pointer">
-                      {lead.cidade_estado}
-                    </p>
+                    {lead.instagram ? (
+                      <a
+                        href={`https://instagram.com/${lead.instagram.replace('@', '')}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[15px] font-bold text-pink-600 hover:text-pink-700 flex items-center gap-1"
+                      >
+                        <Instagram className="w-4 h-4" />
+                        {lead.instagram}
+                      </a>
+                    ) : (
+                      <p className="text-[15px] font-bold text-gray-400">-</p>
+                    )}
                   </div>
                 </div>
               </section>
@@ -215,29 +224,18 @@ export function LeadDetailsDrawer({
                   </div>
                   <div className="space-y-1">
                     <p className="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest">
-                      Modelo de Negócio
+                      Faturamento Mensal
                     </p>
-                    <p className="text-[15px] font-bold text-gray-900">
-                      {formatAtuacao(lead.atuacao)}
+                    <p className="text-[15px] font-bold text-emerald-600">
+                      {formatRevenue(lead.faturamento)}
                     </p>
                   </div>
                   <div className="space-y-1 col-span-2">
                     <p className="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest mb-2">
-                      Resumo da Operação
+                      Nível de Gestão (Auto-avaliação)
                     </p>
-                    <div className="flex flex-wrap gap-2">
-                      <Badge
-                        variant="secondary"
-                        className="bg-white border-gray-200 text-gray-600 px-3 py-1 text-[11px] font-bold"
-                      >
-                        Gestão {formatManagementLevel(lead.nivel_gestao)}
-                      </Badge>
-                      <Badge
-                        variant="secondary"
-                        className="bg-white border-gray-200 text-gray-600 px-3 py-1 text-[11px] font-bold"
-                      >
-                        Faturamento: {formatRevenue(lead.faturamento)}
-                      </Badge>
+                    <div className="p-4 bg-white rounded-xl border border-gray-100 text-[13px] text-gray-600 italic">
+                      &quot;{lead.nivel_gestao}&quot;
                     </div>
                   </div>
                 </div>
@@ -252,50 +250,58 @@ export function LeadDetailsDrawer({
                     <AlertCircle className="w-5 h-5 fill-rose-500/10" />
                   </div>
                   <h3 className="text-[14px] font-extrabold uppercase tracking-widest text-rose-800">
-                    Dores & Expectativas
+                    Diagnóstico Detalhado
                   </h3>
                 </div>
 
-                <div className="space-y-4">
-                  <p className="text-gray-500">
-                    O lead declarou ter &quot;alta urgência&quot; para resolver
-                    o problema.
-                  </p>
-                  {lead.dificuldades.map((dificuldade: string, i: number) => (
-                    <div
-                      key={i}
-                      className="p-5 rounded-2xl bg-rose-50/30 border border-rose-100 flex gap-4"
-                    >
-                      <div className="w-6 h-6 rounded-full bg-rose-100 flex items-center justify-center shrink-0">
-                        <AlertCircle className="w-3.5 h-3.5 text-rose-600" />
-                      </div>
-                      <div className="space-y-1">
-                        <p className="text-[14px] font-bold text-rose-900 leading-tight">
-                          {dificuldade
-                            .replace(/_/g, ' ')
-                            .replace(/\b\w/g, (l: string) => l.toUpperCase())}
-                        </p>
-                        <p className="text-[12px] text-rose-600/70 font-medium">
-                          Dificuldade crítica identificada no diagnóstico
-                          inicial.
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-
-                  <div className="p-5 rounded-2xl bg-[#fff7ed] border border-[#ffedd5] flex gap-4">
-                    <div className="w-6 h-6 rounded-full bg-[#ffedd5] flex items-center justify-center shrink-0">
-                      <FileText className="w-3.5 h-3.5 text-[#ea580c]" />
-                    </div>
-                    <div className="space-y-1">
-                      <p className="text-[14px] font-bold text-[#9a3412] leading-tight">
-                        Expectativas do Lead
+                <div className="space-y-6">
+                  {/* Desafio de Sobrecarga */}
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2">
+                      <div className="w-1.5 h-1.5 rounded-full bg-rose-500" />
+                      <p className="text-[11px] font-extrabold text-rose-600 uppercase tracking-widest">
+                        Principais Desafios de Sobrecarga
                       </p>
-                      <p className="text-[13px] text-[#9a3412]/70 font-medium italic">
-                        &quot;{lead.expectativas}&quot;
+                    </div>
+                    <div className="p-5 rounded-2xl bg-rose-50/50 border border-rose-100">
+                      <p className="text-[14px] text-gray-700 leading-relaxed whitespace-pre-wrap">
+                        {lead.desafio_sobrecarga || 'Não informado'}
                       </p>
                     </div>
                   </div>
+
+                  {/* Estrutura Ideal */}
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2">
+                      <div className="w-1.5 h-1.5 rounded-full bg-blue-500" />
+                      <p className="text-[11px] font-extrabold text-blue-600 uppercase tracking-widest">
+                        Estrutura Ideal Desejada
+                      </p>
+                    </div>
+                    <div className="p-5 rounded-2xl bg-blue-50/50 border border-blue-100">
+                      <p className="text-[14px] text-gray-700 leading-relaxed whitespace-pre-wrap">
+                        {lead.estrutura_ideal || 'Não informado'}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Investimento / Call Alert */}
+                  {lead.is_high_potential && (
+                    <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-100 flex items-start gap-3">
+                      <div className="p-1 bg-emerald-100 rounded-full mt-0.5">
+                        <Calendar className="w-3 h-3 text-emerald-600" />
+                      </div>
+                      <div>
+                        <p className="text-[13px] font-bold text-emerald-800">
+                          Interesse em Call Estratégica
+                        </p>
+                        <p className="text-[12px] text-emerald-600 mt-0.5">
+                          Este lead demonstrou interesse explícito em agendar
+                          uma conversa.
+                        </p>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </section>
             )}
