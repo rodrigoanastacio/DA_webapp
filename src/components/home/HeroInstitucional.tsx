@@ -34,7 +34,7 @@ export function HeroInstitucional() {
             alt="Dayane Anastácio - Consultora em Gestão Jurídica"
             width={800}
             height={1000}
-            className="w-full h-auto object-cover max-h-[70vh]"
+            className="w-full h-auto object-cover object-top max-h-[70vh]"
             priority
           />
         </div>
@@ -45,45 +45,45 @@ export function HeroInstitucional() {
             <div className="flex flex-col justify-center space-y-6 pt-10 pb-16 md:py-28 lg:pr-16">
               <FadeIn delay={0.1}>
                 <motion.div
-                  className="inline-flex items-center gap-2 px-5 py-2 text-sm font-bold text-blue-700 bg-white/80 backdrop-blur-sm border border-blue-100 rounded-full cursor-default shadow-sm w-fit"
+                  className="inline-flex items-center gap-2 px-5 py-2 text-sm font-semibold text-orange-900 bg-stone-50 backdrop-blur-sm border border-orange-100 rounded-full cursor-default shadow-amber-100 w-fit"
                   whileHover={{ scale: 1.05 }}
                 >
                   <span
                     className="relative flex h-2.5 w-2.5"
                     aria-hidden="true"
                   >
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-500 opacity-75" />
-                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-blue-600" />
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-600 opacity-75" />
+                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-amber-600" />
                   </span>
-                  Gestão Jurídica e Organização
+                  Gestão, Consultoria e Planejamento
                 </motion.div>
               </FadeIn>
 
               <FadeIn delay={0.2} duration={0.8}>
                 <div className="space-y-3">
-                  <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 tracking-tight leading-[1.1]">
-                    Pare de ser refém do seu próprio escritório.
+                  <h1 className="font-montserrat text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 tracking-tight leading-[1.1]">
+                    Gestão e processos para{' '}
+                    <strong className="text-4xl md:text-5xl lg:text-6xl font-bold text-amber-900 tracking-tight leading-[1.1]">
+                      escritórios de advocacia e negócios digitais
+                    </strong>
                   </h1>
-                  <p className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-blue-600 tracking-tight leading-[1.1]">
-                    Tenha processos que funcionam sem você.
-                  </p>
                 </div>
               </FadeIn>
 
               <FadeIn delay={0.4}>
                 <p className="text-lg text-gray-600 max-w-xl leading-relaxed">
-                  Serviços especializados em gestão, processos e previsibilidade
-                  para escritórios e advogados que buscam crescimento
-                  sustentável.
+                  Estrutura empresarial, rotina sustentável e decisões
+                  estratégicas para quem busca crescer com previsibilidade e
+                  liberdade operacional.
                 </p>
               </FadeIn>
 
               <ScaleIn delay={0.6}>
                 <Link
-                  href="/mentoria-e-gestao-estrategica"
-                  className="inline-flex items-center px-10 py-5 text-lg font-bold text-white transition-all duration-300 bg-blue-600 rounded-2xl hover:bg-blue-700 hover:shadow-xl hover:shadow-blue-200 hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 w-fit"
+                  href="/lp/mentoria-e-gestao-estrategica"
+                  className="inline-flex items-center px-10 py-5 text-lg font-bold text-white transition-all duration-300 bg-amber-800 rounded-2xl hover:bg-amber-900 hover:shadow-amber-400 hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-amber-900 focus:ring-offset-2 w-fit"
                 >
-                  Conhecer o método
+                  Quero estruturar meu negócio
                 </Link>
               </ScaleIn>
             </div>

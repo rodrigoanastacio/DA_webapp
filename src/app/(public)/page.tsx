@@ -4,9 +4,9 @@ import { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title:
-    'Consultoria em Gestão para Escritórios de Advocacia | Dayane Anastacio',
+    'Gestão e Estruturação para Escritórios e Negócios Digitais | Dayane Anastácio',
   description:
-    'Consultoria especializada em gestão jurídica. Processos claros, previsibilidade financeira e crescimento sustentável para escritórios de advocacia. Método GERAR com 10+ anos de experiência.',
+    'Especialista em gestão e processos para escritórios de advocacia e negócios digitais que cresceram, mas não têm estrutura para sustentar o crescimento.',
   keywords: [
     'gestão jurídica',
     'consultoria escritório advocacia',
@@ -19,9 +19,9 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title:
-      'Dayane Anastacio | Consultoria em Gestão para Escritórios de Advocacia',
+      'Gestão e Estruturação para Escritórios e Negócios Digitais | Dayane Anastácio',
     description:
-      'Pare de ser refém do seu próprio escritório. Tenha processos que funcionam sem você. Consultoria com o Método GERAR.',
+      'Especialista em gestão e processos para escritórios de advocacia e negócios digitais que cresceram, mas não têm estrutura para sustentar o crescimento.',
     url: 'https://dayaneanastacio.com.br/',
     siteName: 'Dayane Anastacio',
     locale: 'pt_BR',
@@ -31,15 +31,16 @@ export const metadata: Metadata = {
         url: 'https://dayaneanastacio.com.br/assets/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Dayane Anastácio - Consultoria em Gestão Jurídica'
+        alt: 'Dayane Anastácio - Gestão para Escritórios de Advocacia'
       }
     ]
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Dayane Anastacio | Consultoria em Gestão Jurídica',
+    title:
+      'Gestão e Estruturação para Escritórios e Negócios Digitais | Dayane Anastácio',
     description:
-      'Pare de ser refém do seu próprio escritório. Tenha processos que funcionam sem você.',
+      'Especialista em gestão e processos para escritórios de advocacia e negócios digitais que cresceram, mas não têm estrutura para sustentar o crescimento.',
     images: ['https://dayaneanastacio.com.br/assets/og-image.jpg']
   },
   alternates: {

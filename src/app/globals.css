@@ -3,6 +3,7 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
+  --font-montserrat: var(--font-montserrat);
   --color-blue-50: #eff6ff;
   --color-blue-100: #bfdbfe;
   --color-blue-300: #596e83;
