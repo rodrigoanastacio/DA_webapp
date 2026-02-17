@@ -1,6 +1,7 @@
 import { AuthorityBio } from '@/components/home/AuthorityBio'
 import { HeroInstitucional } from '@/components/home/HeroInstitucional'
 import { ServicesSection } from '@/components/home/ServicesSection'
+import { TestimonialsSection } from '@/components/home/TestimonialsSection'
 import { Header } from '@/components/layout/header'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { Metadata } from 'next'
@@ -59,6 +60,7 @@ export default function Home() {
       <HeroInstitucional />
       <ServicesSection />
       <AuthorityBio />
+      <TestimonialsSection />
     </main>
   )
 }
