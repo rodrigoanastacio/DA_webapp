@@ -113,7 +113,10 @@ export function Footer() {
             reservados.
           </p>
           <div className="flex gap-6">
-            <Link href="#" className="hover:text-slate-400 transition-colors">
+            <Link
+              href="/privacidade"
+              className="hover:text-amber-500 transition-colors"
+            >
               Política de Privacidade
             </Link>
             <Link href="#" className="hover:text-slate-400 transition-colors">
