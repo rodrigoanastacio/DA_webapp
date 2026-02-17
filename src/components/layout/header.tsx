@@ -17,8 +17,7 @@ export function Header() {
   const navLinks = [
     { name: 'Início', href: '#inicio' },
     { name: 'Sobre', href: '#sobre' },
-    { name: 'Serviços', href: '#servicos' },
-    { name: 'Contato', href: '#contato' }
+    { name: 'Serviços', href: '#servicos' }
   ]
 
   return (
@@ -48,7 +47,7 @@ export function Header() {
             <Link
               key={link.name}
               href={link.href}
-              className={`text-sm font-medium transition-colors hover:text-amber-600 ${
+              className={`text-md font-medium transition-colors hover:text-amber-600 ${
                 isScrolled ? 'text-slate-600' : 'text-slate-600'
               }`}
             >
@@ -57,9 +56,9 @@ export function Header() {
           ))}
 
           <Link
-            href="https://wa.me/5511999999999" // TODO: Add real number
+            href="https://wa.me/551189763949"
             target="_blank"
-            className="px-5 py-2 rounded-full bg-slate-900 text-white text-sm font-bold hover:bg-amber-600 transition-all shadow-lg hover:shadow-amber-500/20 transform hover:-translate-y-0.5"
+            className="px-5 py-2 rounded-full bg-slate-900 text-white text-md font-bold hover:bg-amber-600 transition-all shadow-lg hover:shadow-amber-500/20 transform hover:-translate-y-0.5"
           >
             Agendar Consultoria
           </Link>

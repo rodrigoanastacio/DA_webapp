@@ -35,7 +35,7 @@ export function Footer() {
                 <Instagram size={18} />
               </a>
               <a
-                href="mailto:contato@dayaneanastacio.com.br"
+                href="mailto:dayanastacioconsultoria@gmail.com"
                 className="w-10 h-10 flex items-center justify-center bg-slate-900 rounded-lg hover:bg-emerald-600 hover:text-white text-slate-400 transition-all duration-300 border border-slate-800 hover:border-emerald-500"
                 aria-label="Email"
               >
@@ -72,14 +72,6 @@ export function Footer() {
                   className="text-slate-400 hover:text-amber-500 transition-colors block py-1"
                 >
                   Sobre Mim
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#contato"
-                  className="text-slate-400 hover:text-amber-500 transition-colors block py-1"
-                >
-                  Contato
                 </Link>
               </li>
             </ul>
