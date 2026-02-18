@@ -16,6 +16,16 @@ const nextConfig: NextConfig = {
         hostname: 'cswfvgifofdkssbfpecd.supabase.co'
       }
     ]
+  },
+  async redirects() {
+    return [
+      {
+        source: '/diagnostico',
+        destination:
+          '/diagnostico?utm_source=instagram&utm_medium=social_organic&utm_campaign=perfil_bio&utm_content=link_diagnostico',
+        permanent: false
+      }
+    ]
   }
 }
 
