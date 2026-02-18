@@ -1,5 +1,6 @@
 'use client'
 
+import { sendGTMEvent } from '@/lib/gtm'
 import { Instagram, Mail, MapPin } from 'lucide-react'
 import Link from 'next/link'
 
@@ -29,6 +30,13 @@ export function Footer() {
                 href="https://instagram.com/dayane.anastacio"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() =>
+                  sendGTMEvent({
+                    event: 'contact_click',
+                    method: 'instagram',
+                    location: 'footer_institucional'
+                  })
+                }
                 className="w-10 h-10 flex items-center justify-center bg-slate-900 rounded-lg hover:bg-amber-600 hover:text-white text-slate-400 transition-all duration-300 border border-slate-800 hover:border-amber-500"
                 aria-label="Instagram"
               >
@@ -36,6 +44,13 @@ export function Footer() {
               </a>
               <a
                 href="mailto:dayanastacioconsultoria@gmail.com"
+                onClick={() =>
+                  sendGTMEvent({
+                    event: 'contact_click',
+                    method: 'email',
+                    location: 'footer_institucional'
+                  })
+                }
                 className="w-10 h-10 flex items-center justify-center bg-slate-900 rounded-lg hover:bg-emerald-600 hover:text-white text-slate-400 transition-all duration-300 border border-slate-800 hover:border-emerald-500"
                 aria-label="Email"
               >

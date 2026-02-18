@@ -1,3 +1,6 @@
+'use client'
+
+import { sendGTMEvent } from '@/lib/gtm'
 import Link from 'next/link'
 
 export const FinalCTA = () => {
@@ -14,6 +17,14 @@ export const FinalCTA = () => {
         </p>
         <Link
           href="/diagnostico-de-gestao"
+          onClick={() =>
+            sendGTMEvent({
+              event: 'cta_click',
+              location: 'final_cta_institucional',
+              label: 'quero_mudar_minha_rotina_agora',
+              destination: '/diagnostico-de-gestao'
+            })
+          }
           className="inline-block bg-gray-900 text-white font-bold text-lg px-12 py-5 rounded-full shadow-xl"
         >
           Quero mudar minha rotina agora

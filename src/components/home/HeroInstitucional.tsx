@@ -1,6 +1,7 @@
 'use client'
 
 import { FadeIn, FadeInRight, ScaleIn } from '@/components/ui/motion-container'
+import { sendGTMEvent } from '@/lib/gtm'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -81,6 +82,14 @@ export function HeroInstitucional() {
               <ScaleIn delay={0.6}>
                 <Link
                   href="/lp/mentoria-e-gestao-estrategica"
+                  onClick={() =>
+                    sendGTMEvent({
+                      event: 'cta_click',
+                      location: 'hero_institucional_cta',
+                      label: 'quero_estruturar_meu_negocio',
+                      destination: '/lp/mentoria-e-gestao-estrategica'
+                    })
+                  }
                   className="inline-flex items-center px-10 py-5 text-lg font-bold text-white transition-all duration-300 bg-amber-800 rounded-2xl hover:bg-amber-900 hover:shadow-amber-400 hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-amber-900 focus:ring-offset-2 w-fit"
                 >
                   Quero estruturar meu negócio

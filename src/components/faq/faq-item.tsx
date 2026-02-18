@@ -1,5 +1,6 @@
 'use client'
 
+import { sendGTMEvent } from '@/lib/gtm'
 import { motion } from 'framer-motion'
 import { Plus } from 'lucide-react'
 import { useState } from 'react'
@@ -24,7 +25,17 @@ export const FAQItem = ({ question, answer, index }: FAQItemProps) => {
       className="bg-white border border-gray-200 rounded-3xl overflow-hidden hover:border-lp-primary/30 transition-colors"
     >
       <button
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => {
+          const newIsOpen = !isOpen
+          setIsOpen(newIsOpen)
+          if (newIsOpen) {
+            sendGTMEvent({
+              event: 'faq_expanded',
+              question_index: index + 1,
+              section: 'faq'
+            })
+          }
+        }}
         aria-expanded={isOpen}
         aria-controls={`faq-answer-${index}`}
         aria-label={`Pergunta ${index + 1}: ${question}`}

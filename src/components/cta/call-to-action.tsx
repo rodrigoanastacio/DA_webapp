@@ -26,8 +26,8 @@ export const CallToAction = () => {
             onClick={() =>
               sendGTMEvent({
                 event: 'cta_click',
-                location: 'footer_cta',
-                label: 'quero_mudar_rotina',
+                location: 'call_to_action_cta',
+                label: 'quero_mudar_minha_rotina_agora',
                 destination: '/diagnostico-de-gestao'
               })
             }
