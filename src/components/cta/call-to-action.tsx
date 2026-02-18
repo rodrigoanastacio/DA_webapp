@@ -19,23 +19,10 @@ export const CallToAction = () => {
         <div className="flex flex-col items-center space-y-8">
           <Link
             href="/diagnostico-de-gestao"
-            className="group relative overflow-hidden bg-primary text-white px-10 md:px-16 py-6 md:py-7 rounded-2xl text-lg md:text-xl font-bold hover:scale-105 hover:bg-blue-600 transition-all shadow-[0_20px_50px_rgba(11,63,218,0.3)] focus:outline-none focus:ring-4 focus:ring-primary/50"
+            className="group relative overflow-hidden bg-blue-600 text-white px-10 md:px-16 py-6 md:py-7 rounded-2xl text-lg md:text-xl font-bold hover:scale-105 hover:bg-blue-500 transition-all shadow-[0_20px_50px_rgba(217,119,6,0.3)] focus:outline-none focus:ring-4 focus:ring-blue-50"
           >
             Quero mudar minha rotina agora
           </Link>
-
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 md:gap-8 text-[10px] font-bold uppercase tracking-[0.3em] text-gray-400">
-            <span className="flex items-center gap-2">
-              <span className="material-symbols-outlined text-sm">lock</span>
-              Acesso Privado
-            </span>
-            <span className="flex items-center gap-2">
-              <span className="material-symbols-outlined text-sm">
-                verified
-              </span>
-              Qualidade Premium
-            </span>
-          </div>
         </div>
       </div>
     </section>

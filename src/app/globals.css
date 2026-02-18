@@ -26,6 +26,8 @@ html {
 
   --color-lp-primary: #1f2937;
   --color-lp-secondary: #d97706;
+  --color-deep-navy: #0f172a;
+  --color-lp-bg-light: #f8fafc;
 
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;

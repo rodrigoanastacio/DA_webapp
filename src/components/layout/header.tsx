@@ -54,14 +54,6 @@ export function Header() {
               {link.name}
             </Link>
           ))}
-
-          <Link
-            href="https://wa.me/551189763949"
-            target="_blank"
-            className="px-5 py-2 rounded-full bg-slate-900 text-white text-md font-bold hover:bg-amber-600 transition-all shadow-lg hover:shadow-amber-500/20 transform hover:-translate-y-0.5"
-          >
-            Agendar Consultoria
-          </Link>
         </nav>
 
         {/* Mobile Toggle */}
@@ -91,12 +83,6 @@ export function Header() {
                 {link.name}
               </Link>
             ))}
-            <Link
-              href="https://wa.me/5511999999999"
-              className="mt-4 px-8 py-3 rounded-full bg-slate-900 text-white font-bold w-full text-center hover:bg-amber-600 transition-colors"
-            >
-              Agendar Consultoria
-            </Link>
           </motion.div>
         )}
       </div>
