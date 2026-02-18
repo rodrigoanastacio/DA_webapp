@@ -22,7 +22,7 @@ const nextConfig: NextConfig = {
       {
         source: '/diagnostico',
         destination:
-          '/diagnostico?utm_source=instagram&utm_medium=social_organic&utm_campaign=perfil_bio&utm_content=link_diagnostico',
+          '/diagnostico-de-gestao?utm_source=instagram&utm_medium=social_organic&utm_campaign=perfil_bio&utm_content=link_diagnostico',
         permanent: false
       }
     ]
