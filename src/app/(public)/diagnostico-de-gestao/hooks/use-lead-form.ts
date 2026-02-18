@@ -1,4 +1,5 @@
 import { useUTM } from '@/hooks/useUTM'
+import { sendGTMEvent } from '@/lib/gtm'
 import { LeadFormData, leadSchema } from '@/lib/zod/lead.schema'
 import { diagnosticosService } from '@/services/diagnosticos/diagnosticos.service'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -72,10 +73,22 @@ export function useLeadForm() {
       if (result.success) {
         setIsSubmitted(true)
         window.scrollTo({ top: 0, behavior: 'smooth' })
+
+        sendGTMEvent({
+          event: 'diagnostic_submission',
+          status: 'success',
+          form_name: 'diagnostico_inicial'
+        })
       }
     } catch (error: unknown) {
       console.error(error)
       // TODO: Implementar toast error
+
+      sendGTMEvent({
+        event: 'diagnostic_submission',
+        status: 'error',
+        error_message: error instanceof Error ? error.message : 'Unknown error'
+      })
     } finally {
       setIsSubmitting(false)
     }

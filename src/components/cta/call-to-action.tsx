@@ -1,3 +1,7 @@
+'use client'
+
+import { sendGTMEvent } from '@/lib/gtm'
+
 import Link from 'next/link'
 
 export const CallToAction = () => {
@@ -19,6 +23,14 @@ export const CallToAction = () => {
         <div className="flex flex-col items-center space-y-8">
           <Link
             href="/diagnostico-de-gestao"
+            onClick={() =>
+              sendGTMEvent({
+                event: 'cta_click',
+                location: 'footer_cta',
+                label: 'quero_mudar_rotina',
+                destination: '/diagnostico-de-gestao'
+              })
+            }
             className="group relative overflow-hidden bg-blue-600 text-white px-10 md:px-16 py-6 md:py-7 rounded-2xl text-lg md:text-xl font-bold hover:scale-105 hover:bg-blue-500 transition-all shadow-[0_20px_50px_rgba(217,119,6,0.3)] focus:outline-none focus:ring-4 focus:ring-blue-50"
           >
             Quero mudar minha rotina agora

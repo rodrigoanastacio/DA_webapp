@@ -2,6 +2,7 @@
 
 import checkmarkAnimation from '@/../public/lottie/checkmark-success.json'
 import { FadeIn, ScaleIn } from '@/components/ui/motion-container'
+import { sendGTMEvent } from '@/lib/gtm'
 import { motion } from 'framer-motion'
 import Lottie from 'lottie-react'
 import Link from 'next/link'
@@ -52,6 +53,14 @@ export const Hero = () => {
           <ScaleIn delay={0.6}>
             <Link
               href={cta.href}
+              onClick={() =>
+                sendGTMEvent({
+                  event: 'cta_click',
+                  location: 'hero_cta',
+                  label: 'diagnostico_gratuito',
+                  destination: cta.href
+                })
+              }
               className="group inline-flex items-center gap-3 px-10 py-5 text-lg font-bold text-white transition-all duration-300 bg-blue-600 rounded-2xl hover:bg-blue-700 hover:shadow-xl hover:shadow-blue-200 hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2"
             >
               <div className="w-6 h-6 transition-transform group-hover:scale-110">

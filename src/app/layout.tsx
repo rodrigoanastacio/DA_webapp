@@ -1,3 +1,4 @@
+import { GoogleTagManager } from '@/components/analytics/GoogleTagManager'
 import type { Metadata } from 'next'
 import { Manrope, Montserrat } from 'next/font/google'
 import './globals.css'
@@ -41,6 +42,7 @@ export default function RootLayout({
       <body
         className={`${manrope.variable} ${montserrat.variable} font-manrope antialiased bg-white text-gray-900 min-h-screen selection:bg-lp-primary selection:text-white`}
       >
+        <GoogleTagManager />
         {children}
       </body>
     </html>
