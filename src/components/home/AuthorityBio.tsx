@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { GraduationCap, TrendingUp, UserCheck } from 'lucide-react'
+import { TrendingUp, UserCheck } from 'lucide-react'
 import Image from 'next/image'
 
 export const AuthorityBio = () => {
@@ -17,17 +17,6 @@ export const AuthorityBio = () => {
       title: 'Especialista em Processos',
       subtitle: 'Otimização e Escala Operacional',
       fullWidth: false
-    },
-    {
-      icon: GraduationCap,
-      title: 'Formação Acadêmica',
-      subtitle: [
-        'Secretariado Executivo Bilíngue',
-        'Especialização em Administração',
-        'Consultoria de Imagem',
-        'Gestão de Eventos e Processos'
-      ],
-      fullWidth: true
     }
   ]
 
@@ -36,13 +25,11 @@ export const AuthorityBio = () => {
       className="py-24 lg:py-32 bg-white overflow-hidden relative"
       id="sobre"
     >
-      {/* Background Decorative Elements */}
       <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-96 h-96 bg-amber-50 rounded-full blur-3xl opacity-50 pointer-events-none" />
       <div className="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/2 w-64 h-64 bg-orange-50 rounded-full blur-2xl opacity-40 pointer-events-none" />
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
-          {/* Image Column */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -56,11 +43,10 @@ export const AuthorityBio = () => {
                 alt="Dayane Anastácio - Consultora de Gestão"
                 fill
                 className="object-cover object-top hover:scale-105 transition-transform duration-700"
-                sizes="(max-width: 768px) 100vw, 50vw"
+                sizes="(max-width: 768px) 100vw, 100vw"
                 priority
               />
 
-              {/* Floating Badge */}
               <div className="absolute bottom-6 right-6 bg-white/90 backdrop-blur-md px-6 py-3 rounded-2xl shadow-lg border border-white/50 flex items-center gap-3">
                 <div className="w-3 h-3 rounded-full bg-green-500 animate-pulse" />
                 <span className="text-sm font-bold text-gray-800">
@@ -69,11 +55,9 @@ export const AuthorityBio = () => {
               </div>
             </div>
 
-            {/* Outline Decoration */}
             <div className="absolute -z-10 top-6 -left-6 w-full h-full rounded-3xl border-2 border-amber-100" />
           </motion.div>
 
-          {/* Content Column */}
           <div className="w-full lg:w-7/12 space-y-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -87,28 +71,56 @@ export const AuthorityBio = () => {
               </div>
 
               <h2 className="font-montserrat text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight mb-6">
-                Gestão estratégica para quem{' '}
+                Gestão estratégica para{' '}
                 <span className="text-amber-900 decoration-amber-200/30 underline decoration-4 underline-offset-4">
-                  decide crescer
+                  empresas em crescimento
                 </span>
               </h2>
 
               <p className="text-lg text-gray-600 leading-relaxed max-w-2xl">
-                Dayane Anastácio não é apenas uma consultora de processos; é uma
-                estrategista de negócios. Com mais de uma década atuando no
-                mercado jurídico e corporativo, ela desenvolveu o{' '}
-                <strong>Método GERAR</strong> para transformar escritórios
-                caóticos em empresas organizadas e lucrativas.
+                Eu não comecei estruturando empresas. Eu comecei vivenciando,
+                por dentro, o impacto da falta de gestão.
               </p>
 
-              <p className="text-lg text-gray-600 leading-relaxed max-w-2xl mt-4">
-                Sua missão é clara: devolver ao sócio a liberdade de focar no
-                que realmente importa — expandir o negócio e viver bem, enquanto
-                a operação roda com precisão.
+              <p className="text-lg text-gray-600 leading-relaxed max-w-3xl mt-4">
+                Ao longo de mais de 10 anos atuando no mercado jurídico e
+                corporativo, acompanhei de perto o crescimento de negócios que
+                expandiram rápido — mas sem estrutura suficiente para sustentar
+                o próprio "sucesso" . O resultado quase sempre era o mesmo:
+                sobrecarga, retrabalho e decisões tomadas sob pressão.
+              </p>
+
+              <p className="text-lg text-gray-600 leading-relaxed max-w-3xl mt-4">
+                Foi nesse cenário que construí minha base profissional. Entendi,
+                na prática, que crescimento sem organização não é evolução — é
+                risco.
+              </p>
+
+              <p className="text-lg text-gray-600 leading-relaxed max-w-3xl mt-4">
+                Com essa vivência, desenvolvi o Método GERAR, um modelo próprio
+                de estruturação que organiza processos, rotina e acompanhamento
+                estratégico para transformar operações desorganizadas em
+                sistemas funcionais e sustentáveis.
+              </p>
+
+              <p className="text-lg text-gray-600 leading-relaxed max-w-3xl mt-4">
+                Hoje, atuo estruturando empresas que já validaram seu mercado e
+                precisam consolidar sua base para crescer com direção, clareza e
+                previsibilidade.
+              </p>
+
+              <p className="text-lg text-gray-600 leading-relaxed max-w-3xl mt-4">
+                Meu papel não é executar tarefas. É organizar o negócio para que
+                ele funcione com lógica, prioridades definidas e decisões mais
+                seguras.
+              </p>
+
+              <p className="text-lg text-gray-600 leading-relaxed max-w-3xl mt-4">
+                Eu conheço o cenário da falta de gestão. E conheço o caminho
+                para estruturar o que já cresceu.
               </p>
             </motion.div>
 
-            {/* Credentials Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mt-4">
               {credentials.map((item, idx) => (
                 <motion.div
