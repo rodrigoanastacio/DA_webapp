@@ -47,7 +47,7 @@ export function TestimonialsSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="inline-block px-4 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-amber-500 text-sm font-bold tracking-wide uppercase shadow-sm"
+            className="inline-block px-4 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-brand-gold text-sm font-bold tracking-wide uppercase shadow-sm"
           >
             Histórias de transformação real
           </motion.span>
@@ -58,7 +58,7 @@ export function TestimonialsSection() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="font-montserrat text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight"
           >
-            O que dizem <span className="text-amber-500">nossos clientes</span>
+            O que dizem <span className="text-brand-gold">meus clientes</span>
           </motion.h2>
         </div>
 
@@ -71,7 +71,7 @@ export function TestimonialsSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-slate-900 border border-slate-800 rounded-3xl p-8 flex flex-col relative hover:border-amber-500/30 transition-colors duration-300"
+              className="bg-brand-navy/50 border border-slate-800 rounded-3xl p-8 flex flex-col relative hover:border-brand-gold/30 transition-colors duration-300"
             >
               {/* Quote Icon */}
               <Quote
@@ -85,7 +85,7 @@ export function TestimonialsSection() {
                   <Star
                     key={i}
                     size={18}
-                    className="text-amber-500 fill-amber-500"
+                    className="text-brand-gold fill-brand-gold"
                   />
                 ))}
               </div>
@@ -111,7 +111,7 @@ export function TestimonialsSection() {
                   <h4 className="font-bold text-white text-base leading-tight">
                     {testimonial.name}
                   </h4>
-                  <p className="text-amber-500 text-xs uppercase tracking-wide font-bold mt-1">
+                  <p className="text-brand-gold text-xs uppercase tracking-wide font-bold mt-1">
                     {testimonial.role}
                   </p>
                 </div>

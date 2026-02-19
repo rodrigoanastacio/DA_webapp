@@ -41,7 +41,7 @@ export function ServicesSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="inline-block px-4 py-1.5 rounded-full bg-white border border-orange-100 text-orange-800 text-sm font-bold tracking-wide shadow-sm"
+            className="inline-block px-4 py-1.5 rounded-full bg-brand-gold/10 border border-brand-gold/20 text-brand-gold text-sm font-bold tracking-wide shadow-amber-100 w-fit"
           >
             O que eu entrego
           </motion.span>
@@ -53,7 +53,7 @@ export function ServicesSection() {
             className="font-montserrat text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight"
           >
             Soluções para quem deseja{' '}
-            <span className="text-amber-900">
+            <span className="text-brand-gold">
               sair do improviso e do caos diário
             </span>
           </motion.h2>
@@ -76,7 +76,7 @@ export function ServicesSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="flex flex-col bg-slate-900 rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl hover:shadow-slate-900/20 hover:-translate-y-2 transition-all duration-300 group"
+              className="flex flex-col bg-brand-navy rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl hover:shadow-brand-navy/20 hover:-translate-y-2 transition-all duration-300 group ring-1 ring-white/5"
             >
               <div className="relative h-64 overflow-hidden">
                 <Image
@@ -86,14 +86,14 @@ export function ServicesSection() {
                   className="object-cover transition-transform duration-700 group-hover:scale-110"
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
-                <div className="absolute inset-0 bg-linear-to-t from-slate-900 to-transparent opacity-80" />
+                <div className="absolute inset-0 bg-linear-to-t from-brand-navy to-transparent opacity-80" />
 
-                <div className="absolute bottom-6 left-8 inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-slate-800/90 backdrop-blur-sm text-amber-500 shadow-lg border border-slate-700">
+                <div className="absolute bottom-6 left-8 inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-white/10 backdrop-blur-md text-brand-gold shadow-lg border border-brand-gold/20">
                   <service.icon size={28} strokeWidth={1.5} />
                 </div>
               </div>
               <div className="p-8 flex flex-col grow">
-                <h3 className="font-montserrat text-2xl font-bold text-white mb-4 group-hover:text-amber-500 transition-colors">
+                <h3 className="font-montserrat text-2xl font-bold text-white mb-4 group-hover:text-brand-gold transition-colors">
                   {service.title}
                 </h3>
 

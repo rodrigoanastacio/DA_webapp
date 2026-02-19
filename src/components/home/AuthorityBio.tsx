@@ -25,8 +25,8 @@ export const AuthorityBio = () => {
       className="py-24 lg:py-32 bg-white overflow-hidden relative"
       id="sobre"
     >
-      <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-96 h-96 bg-amber-50 rounded-full blur-3xl opacity-50 pointer-events-none" />
-      <div className="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/2 w-64 h-64 bg-orange-50 rounded-full blur-2xl opacity-40 pointer-events-none" />
+      <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-96 h-96 bg-brand-gold/5 rounded-full blur-3xl opacity-50 pointer-events-none" />
+      <div className="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/2 w-64 h-64 bg-brand-navy/5 rounded-full blur-2xl opacity-40 pointer-events-none" />
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
@@ -55,7 +55,7 @@ export const AuthorityBio = () => {
               </div>
             </div>
 
-            <div className="absolute -z-10 top-6 -left-6 w-full h-full rounded-3xl border-2 border-amber-100" />
+            <div className="absolute -z-10 top-6 -left-6 w-full h-full rounded-3xl border-2 border-brand-gold/20" />
           </motion.div>
 
           <div className="w-full lg:w-7/12 space-y-8">
@@ -65,14 +65,13 @@ export const AuthorityBio = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-50 border border-amber-100 text-amber-800 text-xs font-bold uppercase tracking-wider mb-6">
-                <span className="w-1.5 h-1.5 rounded-full bg-amber-600" />
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-gold/20 border border-brand-gold/20 text-brand-gold text-xs font-bold uppercase tracking-wider mb-6">
                 Quem vai te guiar
               </div>
 
-              <h2 className="font-montserrat text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight mb-6">
+              <h2 className="font-montserrat text-3xl md:text-4xl lg:text-5xl font-bold text-brand-navy leading-tight mb-6">
                 Gestão estratégica para{' '}
-                <span className="text-amber-900 decoration-amber-200/30 underline decoration-4 underline-offset-4">
+                <span className="text-brand-gold decoration-brand-gold/30">
                   empresas em crescimento
                 </span>
               </h2>
@@ -129,9 +128,9 @@ export const AuthorityBio = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: 0.4 + idx * 0.1 }}
-                  className={`flex items-start gap-4 p-5 bg-stone-50 rounded-2xl border border-stone-100 hover:border-amber-200 hover:bg-amber-50/50 transition-colors duration-300 ${item.fullWidth ? 'sm:col-span-2' : ''}`}
+                  className={`flex items-start gap-4 p-5 bg-white rounded-2xl border border-brand-gold/20 hover:border-brand-gold/30 hover:bg-brand-gold/5 transition-colors duration-300 shadow-sm ${item.fullWidth ? 'sm:col-span-2' : ''}`}
                 >
-                  <div className="shrink-0 w-12 h-12 rounded-xl bg-white text-amber-600 flex items-center justify-center shadow-sm border border-stone-100 mt-1">
+                  <div className="shrink-0 w-12 h-12 rounded-xl bg-brand-gold/10 text-brand-gold flex items-center justify-center shadow-md border border-brand-navy/10 mt-1">
                     <item.icon size={24} strokeWidth={1.5} />
                   </div>
                   <div>

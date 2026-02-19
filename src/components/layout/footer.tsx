@@ -18,7 +18,7 @@ export function Footer() {
           <div className="lg:col-span-4 space-y-6">
             <Link href="/" className="inline-block">
               <h2 className="font-montserrat text-2xl font-bold text-white tracking-tight">
-                Dayane <span className="text-amber-500">Anastácio</span>
+                Dayane <span className="text-brand-gold">Anastácio</span>
               </h2>
             </Link>
             <p className="text-slate-400 text-sm leading-relaxed max-w-sm">
@@ -37,7 +37,7 @@ export function Footer() {
                     location: 'footer_institucional'
                   })
                 }
-                className="w-10 h-10 flex items-center justify-center bg-slate-900 rounded-lg hover:bg-amber-600 hover:text-white text-slate-400 transition-all duration-300 border border-slate-800 hover:border-amber-500"
+                className="w-10 h-10 flex items-center justify-center bg-slate-900 rounded-lg hover:bg-brand-gold/40 hover:text-white text-slate-400 transition-all duration-300 border border-slate-800 hover:border-brand-gold/50"
                 aria-label="Instagram"
               >
                 <Instagram size={18} />
@@ -51,7 +51,7 @@ export function Footer() {
                     location: 'footer_institucional'
                   })
                 }
-                className="w-10 h-10 flex items-center justify-center bg-slate-900 rounded-lg hover:bg-emerald-600 hover:text-white text-slate-400 transition-all duration-300 border border-slate-800 hover:border-emerald-500"
+                className="w-10 h-10 flex items-center justify-center bg-slate-900 rounded-lg hover:bg-brand-gold/40 hover:text-white text-slate-400 transition-all duration-300 border border-slate-800 hover:border-brand-gold/50"
                 aria-label="Email"
               >
                 <Mail size={18} />
@@ -68,7 +68,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/"
-                  className="text-slate-400 hover:text-amber-500 transition-colors block py-1"
+                  className="text-slate-400 hover:text-brand-gold transition-colors block py-1"
                 >
                   Início
                 </Link>
@@ -76,7 +76,7 @@ export function Footer() {
               <li>
                 <Link
                   href="#servicos"
-                  className="text-slate-400 hover:text-amber-500 transition-colors block py-1"
+                  className="text-slate-400 hover:text-brand-gold transition-colors block py-1"
                 >
                   Serviços
                 </Link>
@@ -84,7 +84,7 @@ export function Footer() {
               <li>
                 <Link
                   href="#sobre"
-                  className="text-slate-400 hover:text-amber-500 transition-colors block py-1"
+                  className="text-slate-400 hover:text-brand-gold transition-colors block py-1"
                 >
                   Sobre Mim
                 </Link>
@@ -92,7 +92,6 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Services Column (3 cols) */}
           <div className="lg:col-span-2">
             <h3 className="font-montserrat font-bold text-white mb-6 text-sm uppercase tracking-wider">
               Consultoria
@@ -111,7 +110,10 @@ export function Footer() {
             </h3>
             <ul className="space-y-4 text-sm text-slate-400">
               <li className="flex items-start gap-3">
-                <MapPin className="shrink-0 text-amber-500 mt-0.5" size={16} />
+                <MapPin
+                  className="shrink-0 text-brand-gold/80 mt-0.5"
+                  size={16}
+                />
                 <span>
                   São Paulo, SP
                   <br />
@@ -130,12 +132,9 @@ export function Footer() {
           <div className="flex gap-6">
             <Link
               href="/privacidade"
-              className="hover:text-amber-500 transition-colors"
+              className="hover:text-brand-gold transition-colors"
             >
               Política de Privacidade
-            </Link>
-            <Link href="#" className="hover:text-slate-400 transition-colors">
-              Termos de Uso
             </Link>
           </div>
         </div>

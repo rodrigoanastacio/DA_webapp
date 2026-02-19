@@ -16,8 +16,8 @@ export function Header() {
 
   const navLinks = [
     { name: 'Início', href: '#inicio' },
-    { name: 'Sobre', href: '#sobre' },
-    { name: 'Serviços', href: '#servicos' }
+    { name: 'Serviços', href: '#servicos' },
+    { name: 'Sobre', href: '#sobre' }
   ]
 
   return (
@@ -32,10 +32,10 @@ export function Header() {
         {/* Logo */}
         <Link href="/" className="relative z-50 group">
           <h1
-            className={`font-montserrat text-xl md:text-2xl font-bold tracking-tight transition-colors duration-300 ${isScrolled ? 'text-slate-900' : 'text-slate-900'}`}
+            className={`font-montserrat text-xl md:text-2xl font-bold tracking-tight transition-colors duration-300 ${isScrolled ? 'text-brand-navy' : 'text-brand-navy'}`}
           >
             Dayane{' '}
-            <span className="text-amber-600 group-hover:text-amber-500 transition-colors">
+            <span className="text-brand-gold group-hover:text-brand-gold/80 transition-colors">
               Anastácio
             </span>
           </h1>
@@ -47,8 +47,8 @@ export function Header() {
             <Link
               key={link.name}
               href={link.href}
-              className={`text-md font-medium transition-colors hover:text-amber-600 ${
-                isScrolled ? 'text-slate-600' : 'text-slate-600'
+              className={`text-md font-medium transition-colors hover:text-brand-gold ${
+                isScrolled ? 'text-brand-navy' : 'text-brand-navy'
               }`}
             >
               {link.name}
@@ -59,7 +59,7 @@ export function Header() {
         {/* Mobile Toggle */}
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="md:hidden relative z-50 p-2 text-slate-900"
+          className="md:hidden relative z-50 p-2 text-slate-900 cursor-pointer"
           aria-label="Menu"
         >
           {isMobileMenuOpen ? <X /> : <Menu />}
@@ -78,7 +78,7 @@ export function Header() {
                 key={link.name}
                 href={link.href}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="text-lg font-medium text-slate-800 hover:text-amber-600 transition-colors"
+                className="text-lg font-medium text-brand-navy hover:text-brand-gold transition-colors"
               >
                 {link.name}
               </Link>

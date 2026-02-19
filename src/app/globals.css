@@ -24,6 +24,10 @@ html {
   --color-amber-600: #d97706;
   --color-amber-900: #78350f;
 
+  /* Cores da marca */
+  --color-brand-navy: #1d2e40;
+  --color-brand-gold: #b09e82;
+
   --color-lp-primary: #1f2937;
   --color-lp-secondary: #d97706;
   --color-deep-navy: #0f172a;
