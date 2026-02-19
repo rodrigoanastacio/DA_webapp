@@ -86,8 +86,8 @@ export const AuthorityBio = () => {
                 Ao longo de mais de 10 anos atuando no mercado jurídico e
                 corporativo, acompanhei de perto o crescimento de negócios que
                 expandiram rápido — mas sem estrutura suficiente para sustentar
-                o próprio "sucesso" . O resultado quase sempre era o mesmo:
-                sobrecarga, retrabalho e decisões tomadas sob pressão.
+                o próprio &quot;sucesso&quot; . O resultado quase sempre era o
+                mesmo: sobrecarga, retrabalho e decisões tomadas sob pressão.
               </p>
 
               <p className="text-lg text-gray-600 leading-relaxed max-w-3xl mt-4">
