@@ -16,17 +16,18 @@ export interface IHeroContent {
 
 export const heroContent: IHeroContent = {
   badge: {
-    text: 'Gestão Jurídica e Organização',
+    text: 'Gestão Estratégica e Organização',
     showPulse: true
   },
   headline: {
-    line1: 'Pare de ser refém do seu próprio escritório.',
-    line2: 'Tenha processos que funcionam sem você.'
+    line1: 'Estruture sua empresa para crescer com previsibilidade.',
+    line2:
+      'Tenha processos que funcionam sem depender 100% da sua presença operacional.'
   },
   subheadline:
-    'Serviços especializados em gestão, processos e previsibilidade para escritórios e advogados que buscam crescimento sustentável.',
+    'Gestão mensal estratégica para organizar processos, rotina e decisões — garantindo consistência, liberdade operacional e evolução sustentável.',
   cta: {
-    text: 'Fazer diagnóstico gratuito do meu escritório',
+    text: 'Solicitar diagnóstico estratégico',
     href: '/diagnostico-de-gestao'
   }
 }

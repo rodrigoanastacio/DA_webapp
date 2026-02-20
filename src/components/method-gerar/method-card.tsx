@@ -30,13 +30,13 @@ export const MethodCard = ({
       } border-gray-200 hover:bg-gray-50 transition-colors group`}
     >
       <span
-        className="text-6xl font-black text-blue-600/10 group-hover:text-blue-600/20 transition-colors select-none"
+        className="text-6xl font-black text-brand-gold/20 group-hover:text-brand-gold/50 transition-colors select-none"
         aria-hidden="true"
       >
         {letter}
       </span>
       <div>
-        <h3 className="text-gray-900 text-xl font-bold mb-2">{title}</h3>
+        <h3 className="text-brand-navy/80 text-xl font-bold mb-2">{title}</h3>
         <p className="text-gray-500 text-sm leading-relaxed">{description}</p>
       </div>
     </motion.div>

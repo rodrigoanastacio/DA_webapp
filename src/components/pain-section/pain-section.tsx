@@ -125,20 +125,18 @@ export const PainSection = () => {
                 Realidade Operacional
               </p>
               <p className="text-white/20 text-xs italic">
-                Pilhas de documentos, prazos fatais e processos intermináveis.
+                Tarefas sem critério, pilhas de documentos, trabalho que "nunca
+                termina".
               </p>
             </div>
           </div>
 
           <div className="space-y-12">
             <header ref={headerRef}>
-              <span className="text-amber-500 font-bold text-xs tracking-[0.3em] uppercase mb-4 block font-display">
-                Obstáculos ao Sucesso
-              </span>
               <h2 className="text-3xl md:text-5xl font-extrabold text-white leading-tight mb-6">
-                Você construiu um escritório lucrativo, mas se tornou o{' '}
+                Você construiu uma empresa para ter sucesso, e se tornou o{' '}
                 <span className="text-gray-500 italic">
-                  maior gargalo dele.
+                  maior gargalo dela.
                 </span>
               </h2>
             </header>
@@ -186,11 +184,12 @@ export const PainSection = () => {
                 </div>
                 <div>
                   <h4 className="text-white/90 font-bold text-lg mb-1">
-                    Visibilidade Financeira
+                    Visibilidade Operacional
                   </h4>
                   <p className="text-gray-400 text-sm leading-relaxed">
-                    Incerteza sobre a rentabilidade real de cada área ou
-                    contrato. Você fatura, mas não sabe quanto lucra.
+                    Incerteza sobre o que precisa ser feito diariamente. Você
+                    faz tudo no improviso, sem clareza e direcionamento sobre o
+                    que é importante.
                   </p>
                 </div>
               </article>

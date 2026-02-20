@@ -17,26 +17,25 @@ export const Hero = () => {
         <div className="max-w-4xl mx-auto text-center flex flex-col items-center">
           <FadeIn delay={0.1}>
             <motion.div
-              className="inline-flex items-center gap-2 px-6 py-2 mb-8 text-sm font-bold text-blue-700 bg-white/80 backdrop-blur-sm border border-blue-100 rounded-full cursor-default shadow-sm"
+              className="inline-flex items-center gap-2 px-6 py-2 mb-8 text-sm font-bold text-brand-gold bg-white/80 backdrop-blur-sm border border-brand-gold/20 rounded-full cursor-default"
               whileHover={{ scale: 1.05 }}
             >
               {badge.showPulse && (
                 <span className="relative flex h-2.5 w-2.5" aria-hidden="true">
-                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-blue-600" />
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-brand-gold" />
                 </span>
               )}
               {badge.text}
             </motion.div>
           </FadeIn>
 
-          {/* Headline */}
           <FadeIn delay={0.2} duration={0.8}>
             <div className="mb-8 space-y-4">
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-gray-900 tracking-tight leading-[1.1]">
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-brand-navy tracking-tight leading-[1.1]">
                 {headline.line1}
               </h1>
 
-              <h2 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-blue-600 tracking-tight leading-[1.1]">
+              <h2 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-brand-gold tracking-tight leading-[1.1]">
                 {headline.line2}
               </h2>
             </div>

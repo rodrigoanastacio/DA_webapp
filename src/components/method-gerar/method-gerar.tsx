@@ -20,24 +20,26 @@ export const MethodGerar = () => {
       <div className="container mx-auto px-4 relative z-10">
         <header className="text-center mb-16">
           <FadeIn>
-            <span className="text-blue-600 font-bold tracking-widest text-sm uppercase mb-3 block">
+            <span className="text-brand-gold font-bold tracking-widest text-sm uppercase mb-3 block">
               Metodologia Exclusiva
             </span>
           </FadeIn>
           <FadeIn delay={0.1}>
-            <h2 className="text-4xl md:text-5xl font-extrabold text-deep-navy mb-6">
-              Os 5 Pilares do Método GERAR
+            <h2 className="text-4xl md:text-5xl font-extrabold text-brand-navy mb-6">
+              Método GERAR
             </h2>
           </FadeIn>
           <FadeIn delay={0.2}>
             <p className="text-lg text-gray-500 max-w-3xl mx-auto leading-relaxed">
-              Nossa metodologia exclusiva para transformar a gestão do seu
-              escritório de advocacia em uma máquina de eficiência.
+              Estrutura organizacional aplicada e ajustada continuamente.
+            </p>
+            <p className="text-lg text-gray-500 max-w-3xl mx-auto leading-relaxed">
+              O Método GERAR atua em cinco frentes essenciais:
             </p>
           </FadeIn>
         </header>
 
-        <StaggerContainer className="grid grid-cols-1 md:grid-cols-5 gap-0 mb-24 border border-gray-200 rounded-xl overflow-hidden bg-white">
+        <StaggerContainer className="grid grid-cols-1 md:grid-cols-5 gap-0 mb-24 border border-brand-gold/20 rounded-xl overflow-hidden bg-white">
           {methodSteps.map((step, index) => (
             <MethodCard
               key={index}
