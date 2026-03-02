@@ -1,28 +1,31 @@
 import { TestimonialCard } from './testimonial-card'
 
+interface TestimonialData {
+  quote: string
+  authorName: string
+  authorRole: string
+  authorImage?: string
+}
+
 const SocialProof = () => {
-  const testimonials = [
+  const testimonials: TestimonialData[] = [
     {
       quote:
-        'Eu faturava bem, mas não via meus filhos. Depois do acompanhamento da Dayane, recuperei minhas noites e o escritório finalmente parou de depender de cada decisão minha.',
-      authorName: 'Dr. Carlos S.',
-      authorRole: 'Direito Empresarial',
-      authorInitials: 'CS'
+        'Pela primeira vez eu sinto que eu mando no escritório. Meu dia rende e a rotina flui, eu **ganhei tempo e foco**, inclusive para cuidar de coisas pessoais, saúde, **a gestão mudou tudo!** Você mudou meu jeito de trabalhar, só tenho a agradecer!',
+      authorName: 'Dr. Ricardo',
+      authorRole: 'Advogado'
     },
     {
       quote:
-        'O maior ganho foi a paz. Hoje eu abro o Dashboard e sei exatamente o que está acontecendo sem precisar perguntar nada a ninguém.',
-      authorName: 'Dra. Mariana F.',
-      authorRole: 'Advocacia Cível',
-      authorInitials: 'MF',
-      authorImage: '/assets/dayane-anastacio.jpg'
+        'Eu achava que gestão era um custo. Já tive problemas com contratações antes e era muito centralizador, não confiava em delegar nada. Com a sua gestão e organização do escritório, eu vi o quanto **é um investimento, não um custo**. \n\nGanhei **confiança para delegar**, consegui tempo para reuniões de negócios, fiquei uma semana de férias e tudo continuou funcionando bem! Além disso, a gestão **melhorou o faturamento** do escritório! Valeu muito a pena! Eu te agradeço demais pela confiança e pela transformação que trouxe pro meu escritório!',
+      authorName: 'Marcos',
+      authorRole: 'Contador'
     },
     {
       quote:
-        'Antes eu passava o dia apagando incêndios. Agora tenho tempo para pensar em estratégia e expansão. A diferença é brutal.',
-      authorName: 'Dr. Roberto L.',
-      authorRole: 'Direito Trabalhista',
-      authorInitials: 'RL'
+        'Eu agradeço demais pela ajuda, organização e profissionalismo. Na advocacia, as coisas surgem muito rápido — é um prazo em cima do outro, clientes, diligências — e ter esse suporte na organização e no contato intermediário com o cliente **está salvando a gente!**\n\nJá temos que lidar com a pressão dos prazos processuais e do próprio cliente, então ter alguém que controla e tem essa capacidade de gestão que você tem é **essencial**. É um trabalho incrível que **faz toda a diferença** no dia a dia do escritório.',
+      authorName: 'Dr. Fabio',
+      authorRole: 'Advogado'
     }
   ]
 
@@ -104,7 +107,6 @@ const SocialProof = () => {
                 quote={testimonial.quote}
                 authorName={testimonial.authorName}
                 authorRole={testimonial.authorRole}
-                authorInitials={testimonial.authorInitials}
                 authorImage={testimonial.authorImage}
               />
             ))}

@@ -1,31 +1,70 @@
+import { Quote, Star } from 'lucide-react'
 import Image from 'next/image'
+import { FormattedQuote } from '../ui/formatted-quote'
 
 interface TestimonialCardProps {
   quote: string
   authorName: string
   authorRole: string
-  authorInitials: string
+  authorInitials?: string
   authorImage?: string
+  variant?: 'primary' | 'secondary'
 }
 
 export const TestimonialCard = ({
-  quote,
   authorName,
   authorRole,
   authorInitials,
-  authorImage
+  authorImage,
+  quote,
+  variant = 'primary'
 }: TestimonialCardProps) => {
+  const isDark = variant === 'secondary'
+
+  const initials =
+    authorInitials ||
+    authorName
+      .split(' ')
+      .map((n) => n[0])
+      .join('')
+      .substring(0, 2)
+      .toUpperCase()
+
   return (
-    <article className="bg-lp-bg-light p-10 rounded-2xl border border-gray-200 relative hover:shadow-lg transition-shadow flex flex-col justify-between">
-      <div className="absolute -top-4 -left-4 size-12 rounded-full bg-lp-primary flex items-center justify-center text-white text-2xl font-bold shadow-lg">
-        &ldquo;
+    <article
+      className={`p-8 rounded-3xl border transition-all duration-300 flex flex-col relative h-full group ${
+        isDark
+          ? 'bg-brand-navy/50 border-slate-800 hover:border-brand-gold/30'
+          : 'bg-white border-gray-100 shadow-sm hover:shadow-md hover:border-brand-gold/20'
+      }`}
+    >
+      <Quote
+        className={`absolute top-8 right-8 w-12 h-12 rotate-180 transition-colors duration-300 ${
+          isDark ? 'text-slate-800' : 'text-slate-200'
+        }`}
+        fill="currentColor"
+      />
+      <div className="flex gap-1 mb-6">
+        {[...Array(5)].map((_, i) => (
+          <Star key={i} size={16} className="text-brand-gold fill-brand-gold" />
+        ))}
       </div>
-      <p className="text-gray-700 text-lg leading-relaxed mb-6 italic">
-        {quote}
-      </p>
-      <div className="flex items-center gap-4">
+
+      <FormattedQuote
+        quote={quote}
+        className={`italic font-manrope leading-relaxed mb-8 grow relative z-10 ${
+          isDark ? 'text-slate-300' : 'text-gray-700'
+        }`}
+        highlightClassName="text-brand-gold font-bold not-italic"
+      />
+
+      <div
+        className={`flex items-center gap-4 mt-auto pt-6 border-t ${
+          isDark ? 'border-slate-800' : 'border-gray-100'
+        }`}
+      >
         {authorImage ? (
-          <div className="relative size-12 rounded-full overflow-hidden bg-gray-200 shrink-0">
+          <div className="relative size-12 rounded-full overflow-hidden bg-gray-200 shrink-0 border border-transparent group-hover:border-brand-gold/30 transition-colors">
             <Image
               src={authorImage}
               alt={authorName}
@@ -34,13 +73,31 @@ export const TestimonialCard = ({
             />
           </div>
         ) : (
-          <div className="size-12 rounded-full bg-lp-primary/20 flex items-center justify-center text-lp-primary font-bold shrink-0">
-            {authorInitials}
+          <div
+            className={`size-12 rounded-full flex items-center justify-center font-bold shrink-0 border transition-colors ${
+              isDark
+                ? 'bg-slate-800 text-slate-400 border-slate-700'
+                : 'bg-brand-gold/10 text-brand-gold border-brand-gold/20'
+            }`}
+          >
+            {initials}
           </div>
         )}
         <div>
-          <strong className="text-deep-navy block">{authorName}</strong>
-          <span className="text-gray-500 text-sm">{authorRole}</span>
+          <strong
+            className={`block text-base leading-tight font-bold ${
+              isDark ? 'text-white' : 'text-brand-navy'
+            }`}
+          >
+            {authorName}
+          </strong>
+          <span
+            className={`text-xs uppercase tracking-wide font-bold mt-1 block ${
+              isDark ? 'text-brand-gold' : 'text-brand-gold'
+            }`}
+          >
+            {authorRole}
+          </span>
         </div>
       </div>
     </article>
