@@ -6,24 +6,24 @@ import { Quote, Star } from 'lucide-react'
 const testimonials = [
   {
     quote:
-      'A consultoria foi o divisor de águas para nossa firma. Aumentamos nossa eficiência operacional em 40% no primeiro semestre. Uma transformação real na nossa gestão técnica e financeira.',
-    name: 'Dr. Ricardo Almeida',
-    role: 'CEO - Advocacia Almeida',
+      'Pela primeira vez eu sinto que eu mando no escritório. Meu dia rende e a rotina flui, eu **ganhei tempo e foco**, inclusive para cuidar de coisas pessoais, saúde, **a gestão mudou tudo!** Você mudou meu jeito de trabalhar, só tenho a agradecer!',
+    name: 'Dr. Ricardo',
+    role: 'Advogado',
     image: '/assets/avatar-1.jpg' // Placeholder, will use initials if not found
   },
   {
     quote:
-      'Estratégia impecável para escala. Conseguimos profissionalizar processos que antes eram gargalos críticos na firma. O retorno sobre o investimento superou todas as expectativas iniciais.',
-    name: 'Dra. Helena Souza',
-    role: 'Sócia - Boutique Jurídica',
+      'Eu achava que gestão era um custo. Já tive problemas com contratações antes e era muito centralizador, não confiava em delegar nada. Com a sua gestão e organização do escritório, eu vi o quanto **é um investimento, não um custo**. \n\nGanhei **confiança para delegar**, consegui tempo para reuniões de negócios, fiquei uma semana de férias e tudo continuou funcionando bem! Além disso, a gestão **melhorou o faturamento** do escritório! Valeu muito a pena! Eu te agradeço demais pela confiança e pela transformação que trouxe pro meu escritório!',
+    name: 'Marcos',
+    role: 'Contador',
     image: '/assets/avatar-2.jpg'
   },
   {
     quote:
-      'A consultoria trouxe a maturidade digital que precisávamos para competir no mercado de alto ticket com autoridade. Hoje somos referência em inovação no setor jurídico.',
-    name: 'Dr. Carlos Mendes',
-    role: 'Diretor Jurídico - TechLaw',
-    image: '/assets/avatar-3.jpg'
+      'Eu agradeço demais pela ajuda, organização e profissionalismo. Na advocacia, as coisas surgem muito rápido — é um prazo em cima do outro, clientes, diligências — e ter esse suporte na organização e no contato intermediário com o cliente **está salvando a gente!**\n\nJá temos que lidar com a pressão dos prazos processuais e do próprio cliente, então ter alguém que controla e tem essa capacidade de gestão que você tem é **essencial**. É um trabalho incrível que **faz toda a diferença** no dia a dia do escritório.',
+    name: 'Dr. Fabio',
+    role: 'Advogado',
+    image: ''
   }
 ]
 
@@ -91,8 +91,28 @@ export function TestimonialsSection() {
               </div>
 
               {/* Text */}
-              <blockquote className="text-slate-300 italic font-manrope leading-relaxed mb-8 grow relative z-10">
-                &ldquo;{testimonial.quote}&rdquo;
+              <blockquote className="text-slate-300 italic font-manrope leading-relaxed mb-8 grow relative z-10 space-y-4">
+                {testimonial.quote
+                  .split('\n\n')
+                  .map((paragraph, pIdx, array) => (
+                    <p key={pIdx}>
+                      {pIdx === 0 && <>&ldquo;</>}
+                      {paragraph.split(/(\*\*.*?\*\*)/g).map((part, i) => {
+                        if (part.startsWith('**') && part.endsWith('**')) {
+                          return (
+                            <strong
+                              key={i}
+                              className="text-brand-gold font-bold not-italic"
+                            >
+                              {part.slice(2, -2)}
+                            </strong>
+                          )
+                        }
+                        return part
+                      })}
+                      {pIdx === array.length - 1 && <>&rdquo;</>}
+                    </p>
+                  ))}
               </blockquote>
 
               {/* Profile */}
