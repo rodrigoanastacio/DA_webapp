@@ -125,8 +125,8 @@ export const PainSection = () => {
                 Realidade Operacional
               </p>
               <p className="text-white/20 text-xs italic">
-                Tarefas sem critério, pilhas de documentos, trabalho que "nunca
-                termina".
+                Tarefas sem critério, pilhas de documentos, trabalho que
+                &quot;nunca termina&quot;.
               </p>
             </div>
           </div>
