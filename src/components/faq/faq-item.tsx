@@ -22,7 +22,7 @@ export const FAQItem = ({ question, answer, index }: FAQItemProps) => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: ANIMATION_DURATION, delay: index * 0.1 }}
-      className="bg-white border border-gray-200 rounded-3xl overflow-hidden hover:border-lp-primary/30 transition-colors"
+      className="bg-white border border-gray-200 rounded-3xl overflow-hidden hover:border-lp-primary/30 transition-all duration-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-lp-primary/50 focus-within:border-lp-primary/50"
     >
       <button
         onClick={() => {
@@ -39,7 +39,7 @@ export const FAQItem = ({ question, answer, index }: FAQItemProps) => {
         aria-expanded={isOpen}
         aria-controls={`faq-answer-${index}`}
         aria-label={`Pergunta ${index + 1}: ${question}`}
-        className="w-full flex justify-between items-center p-6 font-bold text-gray-900 text-left hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-lp-primary/50 focus:ring-offset-2 cursor-pointer"
+        className="w-full flex justify-between items-center p-6 font-bold text-gray-900 text-left hover:bg-gray-50 transition-colors focus:outline-none cursor-pointer"
       >
         <span className="text-lg pr-4">{question}</span>
         <motion.span

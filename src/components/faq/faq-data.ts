@@ -5,23 +5,26 @@ export interface IFAQItem {
 
 export const faqData: IFAQItem[] = [
   {
-    question: 'Como funciona a contratação?',
+    question: 'Isso substitui um gerente interno?',
     answer:
-      'Tudo começa com o diagnóstico. Preencha o formulário e agendaremos uma reunião para entender sua demanda. O contrato é flexível e baseado na necessidade real do seu escritório.'
+      'Não. Estruturamos a base para que você possa crescer com governança, inclusive facilitando futuras contratações.'
   },
   {
-    question: 'Você atende escritórios de qual tamanho?',
-    answer:
-      'Desde advogados autônomos que estão crescendo e não dão mais conta sozinhos, até escritórios pequenos com 2 ou 3 sócios que precisam de processos claros.'
+    question: 'Eu preciso ter equipe para aplicar?',
+    answer: 'Não necessariamente. O método adapta à fase do escritório.'
   },
   {
-    question: 'Preciso dar acesso às minhas contas bancárias?',
-    answer:
-      'Não necessariamente. Trabalhamos com níveis de acesso secundário ou preparo de pagamentos para sua aprovação final. A segurança é prioridade absoluta.'
+    question: 'Isso é mentoria ou execução?',
+    answer: 'É implementação estratégica assistida.'
   },
   {
-    question: 'Como é a comunicação no dia a dia?',
+    question: 'Qual o nível de comprometimento necessário?',
     answer:
-      'Estabelecemos canais oficiais (geralmente Trello/Asana + WhatsApp para urgências) para que você não seja interrompido o tempo todo.'
+      'Alto. Escritórios que não estão dispostos a mudar sua cultura não devem aplicar.'
+  },
+  {
+    question: 'Em quanto tempo vejo resultados?',
+    answer:
+      'A partir das primeiras 4 semanas já há redução de sobrecarga e clareza operacional.'
   }
 ]
