@@ -16,7 +16,7 @@ export function HeroInstitucional() {
           <FadeInRight delay={0.3} className="h-full">
             <div className="relative h-full">
               <Image
-                src="/assets/dayane-anastacio.jpg"
+                src="/assets/dayane-anastacio-institucional.jpeg"
                 alt="Dayane Anastácio - Consultora em Gestão Jurídica"
                 fill
                 className="object-cover"
@@ -30,7 +30,7 @@ export function HeroInstitucional() {
         {/* Mobile Image - above text, edge to edge */}
         <div className="lg:hidden w-full overflow-hidden">
           <Image
-            src="/assets/dayane-anastacio.jpg"
+            src="/assets/dayane-anastacio-institucional.jpeg"
             alt="Dayane Anastácio - Consultora em Gestão Jurídica"
             width={800}
             height={1000}
@@ -62,9 +62,9 @@ export function HeroInstitucional() {
               <FadeIn delay={0.2} duration={0.8}>
                 <div className="space-y-3">
                   <h1 className="font-montserrat text-4xl md:text-5xl lg:text-6xl font-bold text-brand-navy tracking-tight leading-[1.1]">
-                    Gestão e processos para{' '}
+                    Gestão Estratégica para{' '}
                     <strong className="text-4xl md:text-5xl lg:text-6xl font-bold text-brand-gold tracking-tight leading-[1.1]">
-                      escritórios de advocacia e negócios digitais
+                      Escritórios Juridicos e Negocios Digitais
                     </strong>
                   </h1>
                 </div>
@@ -72,9 +72,9 @@ export function HeroInstitucional() {
 
               <FadeIn delay={0.4}>
                 <p className="text-lg text-gray-600 max-w-xl leading-relaxed">
-                  Estrutura empresarial, rotina sustentável e decisões
-                  estratégicas para quem busca crescer com previsibilidade e
-                  liberdade operacional.
+                  Estrutura, processos e controle operacional para advogados(a)
+                  e empresários (as) que desejam crescer com previsibilidade e
+                  base sólida.
                 </p>
               </FadeIn>
 
@@ -91,7 +91,7 @@ export function HeroInstitucional() {
                   }
                   className="inline-flex items-center px-10 py-5 text-lg font-bold text-white transition-all duration-300 bg-brand-gold rounded-2xl hover:bg-brand-gold/90 hover:shadow-amber-400 hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-amber-900 focus:ring-offset-2 w-fit"
                 >
-                  Quero estruturar meu negócio
+                  Solicite sua Análise Estrutural
                 </Link>
               </ScaleIn>
             </div>

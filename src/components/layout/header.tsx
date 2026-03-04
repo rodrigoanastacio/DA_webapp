@@ -15,10 +15,9 @@ export function Header() {
   })
 
   const navLinks = [
-    { name: 'O Método', href: '#metodo' },
-    { name: 'Resultados', href: '#resultados' },
+    { name: 'O que eu entrego', href: '#servicos' },
     { name: 'Sobre', href: '#sobre' },
-    { name: 'FAQ', href: '#faq' }
+    { name: 'Depoimentos', href: '#depoimentos' }
   ]
 
   return (
@@ -68,7 +67,9 @@ export function Header() {
         {/* Mobile Toggle */}
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="lg:hidden relative z-50 p-2 text-brand-navy cursor-pointer flex items-center justify-center"
+          className={`lg:hidden relative z-50 p-2 cursor-pointer flex items-center justify-center transition-colors ${
+            isMobileMenuOpen || !isScrolled ? 'text-white' : 'text-brand-navy'
+          }`}
           aria-label="Menu"
         >
           {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}

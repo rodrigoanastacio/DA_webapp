@@ -52,10 +52,8 @@ export function ServicesSection() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="font-montserrat text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight"
           >
-            Soluções para quem deseja{' '}
-            <span className="text-brand-gold">
-              sair do improviso e do caos diário
-            </span>
+            A maioria das empresas cresce em faturamento{' '}
+            <span className="text-brand-gold">antes de crescer em gestão</span>
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
