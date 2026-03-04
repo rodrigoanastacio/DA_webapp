@@ -7,7 +7,7 @@ import Link from 'next/link'
 import { heroContent } from './hero.data'
 
 export const Hero = () => {
-  const { badge, headline, subheadline, cta, backgroundImage } = heroContent
+  const { badge, subheadline, cta, backgroundImage } = heroContent
 
   return (
     <section className="relative min-h-[95vh] flex items-center justify-center py-20 md:py-32 overflow-hidden bg-white">
