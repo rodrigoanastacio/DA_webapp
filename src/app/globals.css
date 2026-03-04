@@ -53,10 +53,19 @@ html {
       height: 0;
     }
   }
+
+  @keyframes shine {
+    100% {
+      left: 125%;
+    }
+  }
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+  .animate-shine {
+    animation: shine 1.5s infinite;
   }
 }

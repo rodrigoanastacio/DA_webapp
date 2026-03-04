@@ -2,12 +2,6 @@
 
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import {
-  LucideBarChart3,
-  LucideClock,
-  LucideFileWarning,
-  LucideUsers
-} from 'lucide-react'
 import Image from 'next/image'
 import { useEffect, useRef } from 'react'
 
@@ -21,9 +15,22 @@ export const PainSection = () => {
   const headerRef = useRef<HTMLElement>(null)
   const painPointsRef = useRef<HTMLElement>(null)
   const quoteRef = useRef<HTMLDivElement>(null)
+  const sectionTitleRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      // Animação do título principal
+      gsap.from(sectionTitleRef.current, {
+        y: 40,
+        opacity: 0,
+        duration: 1,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: sectionTitleRef.current,
+          start: 'top 85%'
+        }
+      })
+
       gsap.to(imageRef.current, {
         y: -50,
         ease: 'none',
@@ -45,41 +52,18 @@ export const PainSection = () => {
           start: 'top 80%'
         }
       })
-
       const painArticles = painPointsRef.current?.querySelectorAll('article')
       if (painArticles) {
         gsap.from(painArticles, {
-          x: -30,
+          x: -20,
           opacity: 0,
-          scale: 0.95,
-          duration: 0.6,
-          stagger: 0.15,
+          duration: 0.5,
+          stagger: 0.1,
           ease: 'power2.out',
           scrollTrigger: {
             trigger: painPointsRef.current,
-            start: 'top 75%'
-          }
-        })
-
-        painArticles.forEach((article) => {
-          const icon = article.querySelector('.pain-icon')
-          if (icon) {
-            article.addEventListener('mouseenter', () => {
-              gsap.to(icon, {
-                scale: 1.1,
-                rotate: 5,
-                duration: 0.3,
-                ease: 'back.out(1.7)'
-              })
-            })
-            article.addEventListener('mouseleave', () => {
-              gsap.to(icon, {
-                scale: 1,
-                rotate: 0,
-                duration: 0.3,
-                ease: 'power2.out'
-              })
-            })
+            start: 'top 85%',
+            toggleActions: 'play none none none'
           }
         })
       }
@@ -105,6 +89,19 @@ export const PainSection = () => {
       className="bg-[#121212] py-24 relative overflow-hidden"
     >
       <div className="max-w-[1200px] mx-auto px-6 relative z-10">
+        <div
+          ref={sectionTitleRef}
+          className="text-center max-w-4xl mx-auto mb-20 space-y-4"
+        >
+          <h2 className="text-3xl md:text-5xl font-extrabold text-white leading-tight">
+            Você não está sobrecarregado por falta de capacidade.{' '}
+            <span className="text-brand-gold mt-2">
+              Você está sobrecarregado por falta de estrutura.
+            </span>
+          </h2>
+          <div className="w-24 h-1 bg-brand-gold/30 mx-auto rounded-full mt-6"></div>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div
             ref={imageRef}
@@ -133,97 +130,49 @@ export const PainSection = () => {
 
           <div className="space-y-12">
             <header ref={headerRef}>
-              <h2 className="text-3xl md:text-5xl font-extrabold text-white leading-tight mb-6">
-                Você construiu uma empresa para ter sucesso, e se tornou o{' '}
-                <span className="text-gray-500 italic">
-                  maior gargalo dela.
-                </span>
-              </h2>
+              <h3 className="text-2xl md:text-4xl font-extrabold text-white leading-tight mb-6">
+                Hoje você até pode até faturar bem, mas:{' '}
+              </h3>
             </header>
 
-            <section ref={painPointsRef} className="grid gap-8 font-display">
-              <article className="flex gap-6 group">
-                <div className="pain-icon size-12 shrink-0 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-amber-500">
-                  <span className="text-2xl text-white/10 group-hover:text-white/50 transition-colors">
-                    <LucideFileWarning />
-                  </span>
-                </div>
-                <div>
-                  <h4 className="text-white/90 font-bold text-lg mb-1">
-                    Processos Despadronizados
+            <section ref={painPointsRef} className="flex flex-col gap-6">
+              {[
+                'Ainda centraliza todas as decisões',
+                'Sua equipe depende demais de você',
+                'Processos não estão padronizados',
+                'A comunicação é desalinhada',
+                'O retrabalho consome seu tempo e energia',
+                'Você vive resolvendo urgências operacionais'
+              ].map((text, idx) => (
+                <article
+                  key={idx}
+                  className="group flex items-center gap-4 py-2 border-b border-white/5 hover:border-brand-gold/30 transition-[border-color] duration-500"
+                >
+                  <div className="w-6 h-px bg-brand-gold/40 group-hover:w-10 group-hover:bg-brand-gold transition-all duration-500 shrink-0" />
+                  <h4 className="text-gray-300 group-hover:text-white font-medium text-xl md:text-2xl transition-[color] duration-500">
+                    {text}
                   </h4>
-                  <p className="text-gray-400 text-sm leading-relaxed">
-                    A falta de padronização gera retrabalho, erros e
-                    inconsistência nos resultados.
-                  </p>
-                </div>
-              </article>
-
-              <article className="flex gap-6 group">
-                <div className="pain-icon size-12 shrink-0 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-amber-500">
-                  <span className="text-white/10 group-hover:text-white/50 transition-colors">
-                    <LucideUsers />
-                  </span>
-                </div>
-                <div>
-                  <h4 className="text-white/90 font-bold text-lg mb-1">
-                    Dificuldade na Delegação
-                  </h4>
-                  <p className="text-gray-400 text-sm leading-relaxed">
-                    Dependência total para decisões simples do dia a dia,
-                    criando uma rotina que trava sua produtividade.
-                  </p>
-                </div>
-              </article>
-
-              <article className="flex gap-6 group">
-                <div className="pain-icon size-12 shrink-0 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-amber-500">
-                  <span className="text-white/10 group-hover:text-white/50 transition-colors">
-                    <LucideBarChart3 />
-                  </span>
-                </div>
-                <div>
-                  <h4 className="text-white/90 font-bold text-lg mb-1">
-                    Visibilidade Operacional
-                  </h4>
-                  <p className="text-gray-400 text-sm leading-relaxed">
-                    Incerteza sobre o que precisa ser feito diariamente. Você
-                    faz tudo no improviso, sem clareza e direcionamento sobre o
-                    que é importante.
-                  </p>
-                </div>
-              </article>
-
-              <article className="flex gap-6 group">
-                <div className="pain-icon size-12 shrink-0 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-amber-500">
-                  <span className="text-white/10 group-hover:text-white/50 transition-colors">
-                    <LucideClock />
-                  </span>
-                </div>
-                <div>
-                  <h4 className="text-white/90 font-bold text-lg mb-1">
-                    Sobrecarga de Gestão
-                  </h4>
-                  <p className="text-gray-400 text-sm leading-relaxed">
-                    O tempo gasto com tarefas administrativas impede o foco no
-                    que realmente importa: o olhar estrategico para o seu
-                    negócio.
-                  </p>
-                </div>
-              </article>
+                </article>
+              ))}
             </section>
 
-            <div ref={quoteRef} className="pt-8">
-              <div className="p-8 border-l-2 border-amber-500 bg-white/2 rounded-r-2xl backdrop-blur-sm">
-                <p className="text-xl italic font-light text-gray-300 leading-relaxed">
-                  &quot;Trabalhar aos fins de semana não é um sinal de
-                  dedicação, é um{' '}
-                  <span className="text-white font-semibold underline decoration-amber-500/30 underline-offset-4">
-                    sintoma de falta de processos.
-                  </span>
-                  &quot;
-                </p>
+            <div ref={quoteRef} className="pt-12 space-y-6">
+              <div className="flex items-center gap-3 text-amber-500/80 uppercase tracking-[0.2em] text-[10px] font-bold">
+                <div className="w-8 h-px bg-amber-500/50" />E isso gera algo
+                perigoso:
               </div>
+
+              <h3 className="text-4xl md:text-5xl font-black text-white italic tracking-tighter uppercase">
+                Crescimento <span className="text-brand-gold">instável.</span>
+              </h3>
+
+              <p className="text-lg md:text-xl text-gray-400 leading-relaxed max-w-lg font-light">
+                Enquanto você continuar sendo o principal{' '}
+                <span className="text-white italic font-medium">
+                  &quot;gestor operacional&quot;
+                </span>
+                , não haverá escala — pois tudo gira em torno de você.
+              </p>
             </div>
           </div>
         </div>

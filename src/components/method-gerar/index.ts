@@ -1,4 +1,7 @@
+export { EntryProcessSection } from './entry-process-section'
 export { MethodCard } from './method-card'
 export { MethodGerar } from './method-gerar'
 export { methodSteps } from './method-gerar.data'
 export type { IMethodStep } from './method-gerar.data'
+export { QualificationsSection } from './qualifications-section'
+export { TransformationSection } from './transformation-section'

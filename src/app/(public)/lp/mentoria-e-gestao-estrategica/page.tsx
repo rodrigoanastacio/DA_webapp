@@ -1,9 +1,15 @@
-import { CallToAction } from '@/components/cta'
+import { LastCTA } from '@/components/cta'
 import { FAQ } from '@/components/faq'
 import { Footer } from '@/components/Footer'
 import { Hero } from '@/components/hero'
-import { MethodGerar } from '@/components/method-gerar'
-import { PainSection } from '@/components/pain-section'
+import { AuthoritySectionLP } from '@/components/home/AuthoritySectionLP'
+import {
+  EntryProcessSection,
+  MethodGerar,
+  QualificationsSection,
+  TransformationSection
+} from '@/components/method-gerar'
+import { ConsequenceSection, PainSection } from '@/components/pain-section'
 import { SocialProof } from '@/components/testimonials'
 
 export default function MentoriaPage() {
@@ -11,10 +17,15 @@ export default function MentoriaPage() {
     <main className="min-h-screen bg-white">
       <Hero />
       <PainSection />
+      <ConsequenceSection />
       <MethodGerar />
-      <CallToAction />
+      <TransformationSection />
+      <QualificationsSection />
+      <AuthoritySectionLP />
       <SocialProof />
+      <EntryProcessSection />
       <FAQ />
+      <LastCTA />
       <Footer />
     </main>
   )

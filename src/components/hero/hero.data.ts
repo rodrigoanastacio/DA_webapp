@@ -3,15 +3,13 @@ export interface IHeroContent {
     text: string
     showPulse: boolean
   }
-  headline: {
-    line1: string
-    line2: string
-  }
+  headline: string
   subheadline: string
   cta: {
     text: string
     href: string
   }
+  backgroundImage?: string
 }
 
 export const heroContent: IHeroContent = {
@@ -19,15 +17,13 @@ export const heroContent: IHeroContent = {
     text: 'Gestão Estratégica e Organização',
     showPulse: true
   },
-  headline: {
-    line1: 'Estruture sua empresa para crescer com previsibilidade.',
-    line2:
-      'Tenha processos que funcionam sem depender 100% da sua presença operacional.'
-  },
+  headline:
+    'Em até 90 dias, estruturamos a operação do seu escritório ou empresa para funcionar com previsibilidade, controle e menor dependência de você',
   subheadline:
-    'Gestão mensal estratégica para organizar processos, rotina e decisões — garantindo consistência, liberdade operacional e evolução sustentável.',
+    'Você já fatura bem, tem um negócio consolidado, mas sente que seu próximo nível de crescimento está limitado pela desorganização interna, sobrecarga e retrabalho — o problema não é falta de clientes. É falta de estrutura estratégica.',
   cta: {
-    text: 'Solicitar diagnóstico estratégico',
+    text: 'Agendar Conversa Estratégica de Reestruturação',
     href: '/diagnostico-de-gestao'
-  }
+  },
+  backgroundImage: '/assets/avatar.jpg' // Apenas troque pelo caminho da imagem final aqui
 }

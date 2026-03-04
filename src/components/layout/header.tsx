@@ -15,26 +15,24 @@ export function Header() {
   })
 
   const navLinks = [
-    { name: 'Início', href: '#inicio' },
-    { name: 'Serviços', href: '#servicos' },
+    { name: 'O Método', href: '#metodo' },
+    { name: 'Resultados', href: '#resultados' },
     { name: 'Sobre', href: '#sobre' },
-    { name: 'Depoimentos', href: '#depoimentos' }
+    { name: 'FAQ', href: '#faq' }
   ]
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled
-          ? 'bg-white/90 backdrop-blur-md shadow-sm py-3'
-          : 'bg-transparent py-6'
+          ? 'bg-white/80 backdrop-blur-xl shadow-2xl shadow-brand-navy/5 py-3 border-b border-gray-100'
+          : 'bg-transparent py-8'
       }`}
     >
-      <div className="container mx-auto px-4 flex items-center justify-between">
+      <div className="container mx-auto px-6 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="relative z-50 group">
-          <h1
-            className={`font-montserrat text-xl md:text-2xl font-bold tracking-tight transition-colors duration-300 ${isScrolled ? 'text-brand-navy' : 'text-brand-navy'}`}
-          >
+          <h1 className="font-montserrat text-xl md:text-2xl font-black uppercase tracking-tighter text-brand-navy">
             Dayane{' '}
             <span className="text-brand-gold group-hover:text-brand-gold/80 transition-colors">
               Anastácio
@@ -43,47 +41,65 @@ export function Header() {
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden lg:flex items-center gap-10">
           {navLinks.map((link) => (
             <Link
               key={link.name}
               href={link.href}
-              className={`text-md font-medium transition-colors hover:text-brand-gold ${
-                isScrolled ? 'text-brand-navy' : 'text-brand-navy'
-              }`}
+              className="group relative text-xs font-black uppercase tracking-[0.2em] text-brand-navy overflow-hidden py-2"
             >
-              {link.name}
+              <span className="relative z-10">{link.name}</span>
+              <span className="absolute bottom-0 left-0 w-full h-0.5 bg-brand-gold transition-transform duration-300 -translate-x-[105%] group-hover:translate-x-0" />
             </Link>
           ))}
+
+          <Link
+            href="/diagnostico-de-gestao"
+            className={`px-6 py-3 rounded-xl text-xs font-bold uppercase tracking-widest transition-all duration-300 ${
+              isScrolled
+                ? 'bg-brand-navy text-white shadow-xl shadow-brand-navy/20 hover:scale-105'
+                : 'bg-white text-brand-navy border border-brand-navy/10 hover:bg-brand-navy hover:text-white'
+            }`}
+          >
+            Agendar Reunião
+          </Link>
         </nav>
 
         {/* Mobile Toggle */}
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="md:hidden relative z-50 p-2 text-slate-900 cursor-pointer"
+          className="lg:hidden relative z-50 p-2 text-brand-navy cursor-pointer flex items-center justify-center"
           aria-label="Menu"
         >
-          {isMobileMenuOpen ? <X /> : <Menu />}
+          {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
 
         {/* Mobile Menu Overlay */}
         {isMobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="absolute top-0 left-0 w-full bg-white shadow-xl py-24 px-4 flex flex-col items-center gap-6 md:hidden border-b border-gray-100"
+            initial={{ opacity: 0, x: '100%' }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: '100%' }}
+            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+            className="fixed inset-0 w-full h-screen bg-brand-navy z-40 flex flex-col items-center justify-center gap-12 lg:hidden"
           >
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 href={link.href}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="text-lg font-medium text-brand-navy hover:text-brand-gold transition-colors"
+                className="text-2xl font-black uppercase tracking-[0.3em] text-white hover:text-brand-gold transition-colors"
               >
                 {link.name}
               </Link>
             ))}
+            <Link
+              href="/diagnostico-de-gestao"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="mt-6 px-10 py-5 bg-brand-gold text-brand-navy text-lg font-bold uppercase tracking-widest rounded-2xl"
+            >
+              Iniciar Conversa
+            </Link>
           </motion.div>
         )}
       </div>

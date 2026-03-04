@@ -1,3 +1,8 @@
+'use client'
+
+import Autoplay from 'embla-carousel-autoplay'
+import useEmblaCarousel from 'embla-carousel-react'
+import { useCallback, useEffect, useState } from 'react'
 import { TestimonialCard } from './testimonial-card'
 
 interface TestimonialData {
@@ -8,24 +13,49 @@ interface TestimonialData {
 }
 
 const SocialProof = () => {
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    { loop: true, align: 'start' },
+    [Autoplay({ delay: 5000, stopOnInteraction: false })]
+  )
+  const [selectedIndex, setSelectedIndex] = useState(0)
+  const [scrollSnaps, setScrollSnaps] = useState<number[]>([])
+
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return
+    setSelectedIndex(emblaApi.selectedScrollSnap())
+  }, [emblaApi])
+
+  useEffect(() => {
+    if (!emblaApi) return
+    setScrollSnaps(emblaApi.scrollSnapList())
+    emblaApi.on('select', onSelect)
+    onSelect()
+  }, [emblaApi, setScrollSnaps, onSelect])
+
   const testimonials: TestimonialData[] = [
     {
       quote:
-        'Pela primeira vez eu sinto que eu mando no escritório. Meu dia rende e a rotina flui, eu **ganhei tempo e foco**, inclusive para cuidar de coisas pessoais, saúde, **a gestão mudou tudo!** Você mudou meu jeito de trabalhar, só tenho a agradecer!',
-      authorName: 'Dr. Ricardo',
-      authorRole: 'Advogado'
+        '“Antes do processo, eu **centralizava tudo e vivia apagando incêndios**. Hoje minha equipe funciona com mais autonomia e minha agenda deixou de ser um caos. A estrutura implementada **mudou completamente** nossa forma de trabalhar.”',
+      authorName: 'Dr. Rafael M.',
+      authorRole: 'Advogado Sócio'
     },
     {
       quote:
-        'Eu achava que gestão era um custo. Já tive problemas com contratações antes e era muito centralizador, não confiava em delegar nada. Com a sua gestão e organização do escritório, eu vi o quanto **é um investimento, não um custo**. \n\nGanhei **confiança para delegar**, consegui tempo para reuniões de negócios, fiquei uma semana de férias e tudo continuou funcionando bem! Além disso, a gestão **melhorou o faturamento** do escritório! Valeu muito a pena! Eu te agradeço demais pela confiança e pela transformação que trouxe pro meu escritório!',
-      authorName: 'Marcos',
-      authorRole: 'Contador'
+        '“Não era falta de clientes. Era **falta de organização estratégica**. Em poucas semanas já percebemos **redução de retrabalho** e mais clareza nas decisões.”',
+      authorName: 'Fernanda T.',
+      authorRole: 'Sócia fundadora'
     },
     {
       quote:
-        'Eu agradeço demais pela ajuda, organização e profissionalismo. Na advocacia, as coisas surgem muito rápido — é um prazo em cima do outro, clientes, diligências — e ter esse suporte na organização e no contato intermediário com o cliente **está salvando a gente!**\n\nJá temos que lidar com a pressão dos prazos processuais e do próprio cliente, então ter alguém que controla e tem essa capacidade de gestão que você tem é **essencial**. É um trabalho incrível que **faz toda a diferença** no dia a dia do escritório.',
-      authorName: 'Dr. Fabio',
-      authorRole: 'Advogado'
+        '“O método trouxe **governança**. Hoje conseguimos acompanhar indicadores, planejar metas e **crescer com mais segurança**.”',
+      authorName: 'Henrique L.',
+      authorRole: 'Diretor de Vendas'
+    },
+    {
+      quote:
+        '“Com a implementação da estrutura de gestão, nossa **rotina ficou muito mais previsível e organizada**. Hoje temos clareza dos processos, controle das demandas e mais segurança. Conseguimos trabalhar com mais tranquilidade, **menos improviso e muito mais profissionalismo**.”',
+      authorName: 'Dr. Fabio G.',
+      authorRole: 'Sócio'
     }
   ]
 
@@ -53,7 +83,7 @@ const SocialProof = () => {
     review: testimonials.map((testimonial) => ({
       '@type': 'Review',
       itemReviewed: {
-        '@type': 'Service',
+        '@type': 'Review',
         name: 'Mentoria e Gestão Estratégica para Escritórios de Advocacia',
         description:
           'Programa de mentoria estratégica focado em otimização de processos, implementação de sistemas de gestão e escalabilidade para escritórios de advocacia.',
@@ -85,13 +115,13 @@ const SocialProof = () => {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(reviewSchema) }}
       />
 
-      <section className="py-24 bg-white">
+      <section id="resultados" className="py-24 bg-white overflow-hidden">
         <div className="container mx-auto px-6">
           <header className="text-center mb-16">
-            <span className="inline-block px-4 py-1.5 mb-6 text-xs font-bold tracking-widest uppercase bg-lp-primary/10 text-lp-primary rounded-full">
+            <span className="inline-block px-4 py-1.5 mb-6 text-xs font-bold tracking-widest uppercase bg-brand-navy/5 text-brand-navy border border-brand-navy/10 rounded-full">
               Prova Social
             </span>
-            <h2 className="text-3xl md:text-4xl font-extrabold text-deep-navy mb-4">
+            <h2 className="text-3xl md:text-4xl font-extrabold text-brand-navy mb-4">
               O Efeito Antes e Depois
             </h2>
             <p className="text-gray-500 max-w-[600px] mx-auto">
@@ -100,17 +130,41 @@ const SocialProof = () => {
             </p>
           </header>
 
-          <main className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, idx) => (
-              <TestimonialCard
-                key={idx}
-                quote={testimonial.quote}
-                authorName={testimonial.authorName}
-                authorRole={testimonial.authorRole}
-                authorImage={testimonial.authorImage}
-              />
-            ))}
-          </main>
+          <div className="relative max-w-7xl mx-auto">
+            <div className="overflow-hidden" ref={emblaRef}>
+              <div className="flex -ml-4 md:-ml-8">
+                {testimonials.map((testimonial, idx) => (
+                  <div
+                    key={idx}
+                    className="flex-[0_0_100%] md:flex-[0_0_33.33%] min-w-0 pl-4 md:pl-8 py-4"
+                  >
+                    <TestimonialCard
+                      quote={testimonial.quote}
+                      authorName={testimonial.authorName}
+                      authorRole={testimonial.authorRole}
+                      authorImage={testimonial.authorImage}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Pagination */}
+            <div className="flex justify-center gap-3 mt-12">
+              {scrollSnaps.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => emblaApi?.scrollTo(index)}
+                  className={`size-2.5 rounded-full transition-all duration-300 ${
+                    index === selectedIndex
+                      ? 'bg-brand-gold w-8'
+                      : 'bg-gray-200 hover:bg-gray-300'
+                  }`}
+                  aria-label={`Ir para slide ${index + 1}`}
+                />
+              ))}
+            </div>
+          </div>
         </div>
       </section>
     </>

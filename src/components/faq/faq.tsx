@@ -24,10 +24,10 @@ export const FAQ = () => {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
-      <section className="py-24 bg-lp-bg-light">
+      <section id="faq" className="py-24 bg-lp-bg-light">
         <header className="text-center mb-16">
           <div className="max-w-[900px] mx-auto px-6">
-            <span className="inline-block px-4 py-1.5 mb-6 text-xs font-bold tracking-widest uppercase bg-lp-primary/10 text-lp-primary rounded-full">
+            <span className="inline-block px-4 py-1.5 mb-6 text-xs font-bold tracking-widest uppercase bg-brand-navy/5 text-brand-navy border border-brand-navy/10 rounded-full">
               Dúvidas Frequentes
             </span>
             <h2 className="text-3xl md:text-4xl font-extrabold text-deep-navy mb-4">

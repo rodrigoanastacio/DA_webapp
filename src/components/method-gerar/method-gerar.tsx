@@ -6,7 +6,10 @@ import { methodSteps } from './method-gerar.data'
 
 export const MethodGerar = () => {
   return (
-    <section className="py-24 bg-linear-to-b from-gray-50 to-white relative overflow-hidden">
+    <section
+      id="metodo"
+      className="py-24 bg-linear-to-b from-gray-50 to-white relative overflow-hidden"
+    >
       <div
         className="absolute inset-0 opacity-5 z-0"
         style={{
@@ -25,17 +28,34 @@ export const MethodGerar = () => {
             </span>
           </FadeIn>
           <FadeIn delay={0.1}>
-            <h2 className="text-4xl md:text-5xl font-extrabold text-brand-navy mb-6">
-              Método GERAR
+            <h2 className="text-4xl md:text-6xl font-extrabold text-brand-navy mb-8 leading-tight">
+              Método GERAR™
+              <span className="block text-xl md:text-2xl font-medium text-gray-400 mt-4 max-w-4xl mx-auto">
+                Sistema Estratégico de Estruturação para Escritórios Jurídicos e
+                Empresas
+              </span>
             </h2>
           </FadeIn>
           <FadeIn delay={0.2}>
-            <p className="text-lg text-gray-500 max-w-3xl mx-auto leading-relaxed">
-              Estrutura organizacional aplicada e ajustada continuamente.
-            </p>
-            <p className="text-lg text-gray-500 max-w-3xl mx-auto leading-relaxed">
-              O Método GERAR atua em cinco frentes essenciais:
-            </p>
+            <div className="max-w-4xl mx-auto space-y-6">
+              <p className="text-xl text-gray-600 leading-relaxed">
+                O Método GERAR é um modelo de reestruturação operacional
+                desenvolvido para negócios que cresceram em faturamento, mas não
+                em organização e governança.
+              </p>
+
+              <div className="flex flex-wrap justify-center gap-4 text-sm font-bold uppercase tracking-widest text-gray-400 italic">
+                <span>Não é assistência operacional</span>
+                <span className="hidden md:inline">•</span>
+                <span>Não é consultoria genérica</span>
+                <span className="hidden md:inline">•</span>
+                <span>Não é organização pontual</span>
+              </div>
+
+              <p className="text-2xl font-extrabold text-brand-gold bg-brand-gold/5 py-4 px-8 rounded-2xl inline-block mt-4">
+                É implementação estratégica assistida.
+              </p>
+            </div>
           </FadeIn>
         </header>
 
