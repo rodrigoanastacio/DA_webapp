@@ -14,15 +14,19 @@ export function StepWrapper({
 }: StepWrapperProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: -20 }}
-      transition={{ duration: 0.3 }}
-      className="w-full max-w-2xl mx-auto"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.5, ease: 'easeOut' }}
+      className="w-full max-w-3xl mx-auto font-manrope"
     >
-      <div className="mb-8 text-center">
-        <h2 className="text-2xl font-bold text-gray-800 mb-2">{title}</h2>
-        {description && <p className="text-gray-600">{description}</p>}
+      <div className="mb-12 text-center md:text-left">
+        <h2 className="text-3xl md:text-4xl font-black text-brand-navy uppercase tracking-tighter mb-4">
+          {title}
+        </h2>
+        {description && (
+          <p className="text-gray-500 text-lg leading-relaxed">{description}</p>
+        )}
       </div>
       {children}
     </motion.div>

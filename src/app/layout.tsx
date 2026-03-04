@@ -18,6 +18,7 @@ const montserrat = Montserrat({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://dayaneanastacio.com.br'),
   title: {
     template: '%s | Dayane Anastacio',
     default: 'Dayane Anastacio | Gestão Jurídica e Organização'

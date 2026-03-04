@@ -29,6 +29,13 @@ export const metadata: Metadata = {
         alt: 'Método GERAR - Estruturação Estratégica'
       }
     ]
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Método GERAR™ | Dayane Anastácio',
+    description:
+      'Reestruturação operacional para escritórios jurídicos de alto faturamento.',
+    images: ['/assets/og-mentoria-premium.png']
   }
 }
 

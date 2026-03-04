@@ -12,88 +12,84 @@ export function Step1Introduction() {
   } = useFormContext<LeadFormData>()
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-12 font-manrope">
       {/* Step Title/Header */}
-      <div className="flex flex-col gap-2 border-b border-gray-100 pb-6">
-        <h1 className="text-blue-300 text-3xl md:text-4xl font-extrabold leading-tight tracking-tight">
-          Diagnóstico Inicial | Estruturação de Negócios
+      <div className="flex flex-col gap-6 border-b border-gray-50 pb-10">
+        <h1 className="text-brand-navy text-3xl md:text-5xl font-black leading-[1.1] tracking-tighter uppercase">
+          Diagnóstico <span className="text-brand-gold">Estratégico</span>
         </h1>
-        <p className="text-gray-400 text-base md:text-lg leading-relaxed max-w-2xl">
-          Esse formulário é um diagnóstico inicial para que eu possa entender o
-          momento atual da sua empresa, seus desafios e objetivos de
-          crescimento.
-        </p>
-        <p className="text-gray-400 text-base md:text-lg leading-relaxed max-w-2xl">
-          Através do meu <strong>método de Gestão</strong>, eu já ajudei
-          empresas e escritórios a sairem do caos operacional, sobrecarga
-          diária, e da rotina de passar o dia &ldquo;apagando incêndios&rdquo;.
-        </p>
-        <p className="text-gray-400 text-base md:text-lg leading-relaxed max-w-2xl">
-          O objetivo do meu trabalho é organizar o seu negócio, para que você
-          possa crescer de forma mais <strong>previsível e sustentável</strong>.
-        </p>
-        <p className="text-gray-400 text-base md:text-lg leading-relaxed max-w-2xl">
-          Permitir que você tenha{' '}
-          <strong>mais tempo, clareza e direcionamento</strong> para conduzir
-          sua empresa e o melhor: fazer as coisas funcionarem sem que tudo
-          dependa &ldquo;exclusivamente de você&rdquo;!
-        </p>
-        <p className="text-gray-400 text-base md:text-lg leading-relaxed max-w-2xl">
-          Então, basta preencher o formulário e descobrir o caminho para ter{' '}
-          <strong>mais clareza, controle e planejamento do seu negócio.</strong>
-        </p>
+
+        <div className="space-y-4 text-gray-500 text-base md:text-lg leading-relaxed max-w-3xl">
+          <p>
+            Este formulário é o primeiro passo para entendermos os{' '}
+            <span className="text-brand-navy font-bold">gargalos reais</span> da
+            sua operação e definir seus objetivos de escala.
+          </p>
+          <p>
+            Através do Método GERAR™, já ajudei diversas empresas a saírem do{' '}
+            <span className="text-brand-navy font-bold italic">
+              caos operacional
+            </span>{' '}
+            e da sobrecarga diária para uma gestão de alta performance.
+          </p>
+          <p className="pt-2 text-brand-navy font-medium italic border-l-2 border-brand-gold pl-6">
+            &quot;O objetivo aqui é transformar seu negócio em uma estrutura
+            previsível, sustentável e que não dependa exclusivamente de
+            você.&quot;
+          </p>
+        </div>
       </div>
 
       {/* Inputs Grid */}
-      <div className="flex flex-col gap-6">
-        <div className="flex flex-col md:flex-row gap-6">
-          <label className="flex flex-col flex-1">
-            <span className="text-blue-300 text-sm font-semibold pb-2">
-              Nome completo <span className="text-blue-300">*</span>
+      <div className="flex flex-col gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <label className="flex flex-col gap-2">
+            <span className="text-brand-navy text-xs font-black uppercase tracking-widest ml-1">
+              Nome completo <span className="text-brand-gold">*</span>
             </span>
             <input
               {...register('name')}
               placeholder="Ex: João Silva"
               type="text"
-              className={`form-input w-full rounded-lg border bg-white focus:ring-1 focus:ring-blue-700 placeholder:text-gray-400 h-12 px-3 text-sm transition-colors ${
+              className={`w-full rounded-2xl border bg-gray-50/50 focus:bg-white focus:ring-2 focus:ring-brand-gold/20 placeholder:text-gray-300 h-14 px-5 text-sm transition-all outline-none ${
                 errors.name
-                  ? 'border-red-300 focus:border-red-500'
-                  : 'border-gray-200 focus:border-blue-700'
+                  ? 'border-red-200 focus:border-red-400'
+                  : 'border-gray-100 focus:border-brand-gold/50'
               }`}
             />
             {errors.name && (
-              <span className="text-red-500 text-xs mt-1">
+              <span className="text-red-500 text-[10px] font-bold uppercase tracking-wider mt-1 ml-1">
                 {errors.name.message}
               </span>
             )}
           </label>
 
-          <label className="flex flex-col flex-1">
-            <span className="text-blue-300 text-sm font-semibold pb-2">
-              E-mail profissional <span className="text-blue-300">*</span>
+          <label className="flex flex-col gap-2">
+            <span className="text-brand-navy text-xs font-black uppercase tracking-widest ml-1">
+              E-mail profissional <span className="text-brand-gold">*</span>
             </span>
             <input
               {...register('email')}
               placeholder="nome@email.com.br"
               type="email"
-              className={`form-input w-full rounded-lg border bg-white focus:ring-1 focus:ring-blue-700 placeholder:text-gray-400 h-12 px-3 text-sm transition-colors ${
+              className={`w-full rounded-2xl border bg-gray-50/50 focus:bg-white focus:ring-2 focus:ring-brand-gold/20 placeholder:text-gray-300 h-14 px-5 text-sm transition-all outline-none ${
                 errors.email
-                  ? 'border-red-300 focus:border-red-500'
-                  : 'border-gray-200 focus:border-blue-700'
+                  ? 'border-red-200 focus:border-red-400'
+                  : 'border-gray-100 focus:border-brand-gold/50'
               }`}
             />
             {errors.email && (
-              <span className="text-red-500 text-xs mt-1">
+              <span className="text-red-500 text-[10px] font-bold uppercase tracking-wider mt-1 ml-1">
                 {errors.email.message}
               </span>
             )}
           </label>
         </div>
 
-        <div className="flex flex-col md:flex-row gap-6">
-          <label className="flex flex-col flex-1">
-            <span className="text-blue-300 text-sm font-semibold pb-2">
-              WhatsApp <span className="text-blue-300">*</span>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <label className="flex flex-col gap-2">
+            <span className="text-brand-navy text-xs font-black uppercase tracking-widest ml-1">
+              WhatsApp <span className="text-brand-gold">*</span>
             </span>
             <Controller
               name="whatsapp"
@@ -104,38 +100,37 @@ export function Step1Introduction() {
                   onChange={(value) => field.onChange(value)}
                   placeholder="(00) 00000-0000"
                   className={cn(
-                    'h-12',
+                    'h-14 rounded-2xl bg-gray-50/50 transition-all border-gray-100',
                     errors.whatsapp
-                      ? 'border-red-300 focus:border-red-500'
-                      : 'border-gray-200 focus:border-blue-700'
+                      ? 'border-red-200 focus:border-red-400'
+                      : 'border-gray-100 focus:border-brand-gold/50'
                   )}
                 />
               )}
             />
             {errors.whatsapp && (
-              <span className="text-red-500 text-xs mt-1">
+              <span className="text-red-500 text-[10px] font-bold uppercase tracking-wider mt-1 ml-1">
                 {errors.whatsapp.message}
               </span>
             )}
           </label>
 
-          <label className="flex flex-col flex-1">
-            <span className="text-blue-300 text-sm font-semibold pb-2">
-              @ de Instagram da sua empresa{' '}
-              <span className="text-blue-300">*</span>
+          <label className="flex flex-col gap-2">
+            <span className="text-brand-navy text-xs font-black uppercase tracking-widest ml-1">
+              @ Instagram da Empresa <span className="text-brand-gold">*</span>
             </span>
             <input
               {...register('instagram')}
               placeholder="@seu_instagram"
               type="text"
-              className={`form-input w-full rounded-lg border bg-white focus:ring-1 focus:ring-blue-700 placeholder:text-gray-400 h-12 px-3 text-sm transition-colors ${
+              className={`w-full rounded-2xl border bg-gray-50/50 focus:bg-white focus:ring-2 focus:ring-brand-gold/20 placeholder:text-gray-300 h-14 px-5 text-sm transition-all outline-none ${
                 errors.instagram
-                  ? 'border-red-300 focus:border-red-500'
-                  : 'border-gray-200 focus:border-blue-700'
+                  ? 'border-red-200 focus:border-red-400'
+                  : 'border-gray-100 focus:border-brand-gold/50'
               }`}
             />
             {errors.instagram && (
-              <span className="text-red-500 text-xs mt-1">
+              <span className="text-red-500 text-[10px] font-bold uppercase tracking-wider mt-1 ml-1">
                 {errors.instagram.message}
               </span>
             )}
