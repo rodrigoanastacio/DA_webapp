@@ -40,7 +40,7 @@ export const AuthorityBio = () => {
             <div className="relative aspect-4/5 rounded-3xl overflow-hidden shadow-2xl shadow-stone-200">
               <Image
                 src="/assets/avatar.jpg"
-                alt="Dayane Anastácio - Consultora de Gestão"
+                alt="Dayane Anastácio - Consultora em Gestão Estratégica e Criadora do Método GERAR"
                 fill
                 className="object-cover object-top hover:scale-105 transition-transform duration-700"
                 sizes="(max-width: 768px) 100vw, 100vw"

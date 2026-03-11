@@ -1,4 +1,5 @@
 import { AuthorityBio } from '@/components/home/AuthorityBio'
+import { FaqSection } from '@/components/home/FaqSection'
 import { HeroInstitucional } from '@/components/home/HeroInstitucional'
 import { ServicesSection } from '@/components/home/ServicesSection'
 import { TestimonialsSection } from '@/components/home/TestimonialsSection'
@@ -13,12 +14,14 @@ export const metadata: Metadata = {
   description:
     'Especialista em gestão e processos para escritórios de advocacia e negócios digitais que cresceram, mas não têm estrutura para sustentar o crescimento.',
   keywords: [
+    'gestão estratégica',
+    'gestão para negócios digitais',
     'gestão jurídica',
     'consultoria escritório advocacia',
     'gestão de escritório de advocacia',
     'organização jurídica',
     'processos jurídicos',
-    'consultoria jurídica empresarial',
+    'consultoria empresarial',
     'método gerar',
     'dayane anastacio'
   ],
@@ -36,7 +39,7 @@ export const metadata: Metadata = {
         url: 'https://dayaneanastacio.com.br/assets/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Dayane Anastácio - Gestão para Escritórios de Advocacia'
+        alt: 'Dayane Anastácio - Estruturação de Negócios e Gestão'
       }
     ]
   },
@@ -62,6 +65,7 @@ export default function Home() {
       <ServicesSection />
       <AuthorityBio />
       <TestimonialsSection />
+      <FaqSection />
       <Footer />
     </main>
   )

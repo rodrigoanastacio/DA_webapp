@@ -17,7 +17,7 @@ export function HeroInstitucional() {
             <div className="relative h-full">
               <Image
                 src="/assets/dayane-anastacio-institucional.jpeg"
-                alt="Dayane Anastácio - Consultora em Gestão Jurídica"
+                alt="Dayane Anastácio - Consultoria em Gestão de Escritórios e Negócios Digitais"
                 fill
                 className="object-cover"
                 priority
@@ -31,7 +31,7 @@ export function HeroInstitucional() {
         <div className="lg:hidden w-full overflow-hidden">
           <Image
             src="/assets/dayane-anastacio-institucional.jpeg"
-            alt="Dayane Anastácio - Consultora em Gestão Jurídica"
+            alt="Dayane Anastácio - Gestão Estratégica para Empresas"
             width={800}
             height={1000}
             className="w-full h-auto object-cover object-top max-h-[70vh]"
